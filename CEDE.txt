@@ -1,0 +1,88 @@
+package wordsearcher;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Scanner;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
+public class Main {
+
+	public static void main(String[]args){
+		boolean seleccionado=false;
+		String ruta="";
+		//Con el fileChooser obtenemos la ruta del fichero a leer
+		Scanner entrada = null;
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.showOpenDialog(fileChooser);
+		try{
+			ruta =fileChooser.getSelectedFile().getAbsolutePath();
+			seleccionado=true;
+		}catch(NullPointerException e){
+			System.err.println("No se ha seleccionado ningún fichero");
+		}catch(Exception e){
+			System.err.println(e.getMessage());
+		}finally{
+			if(entrada !=null){
+				entrada.close();
+			}
+		}
+		
+		if(seleccionado) {
+			String palabra="";
+			palabra = JOptionPane.showInputDialog("Escribe la palabra a poner en mayúsculas");
+			palabra=palabra.toUpperCase();
+			if(palabra.length()!=0) {	
+				try {
+					RandomAccessFile raf = new RandomAccessFile(ruta, "rw");
+					
+					boolean palabraencontrada=false;
+					
+					
+					for(int i=0;i<raf.length();i++) {
+						
+						palabraencontrada=true;
+						
+						String aux=(char)raf.read()+"";
+						aux=aux.toUpperCase();
+							
+						if(aux.charAt(0)==palabra.charAt(0)) {
+							for(int j=1;j<palabra.length();j++) {
+								aux=(char)raf.read()+"";
+								aux=aux.toUpperCase();
+								if(palabra.charAt(j)!=aux.charAt(0)) {
+									palabraencontrada=false;
+									break;
+								} 
+							}
+						}else palabraencontrada=false;
+						
+						if(palabraencontrada) {
+							raf.seek(i);
+							raf.writeBytes(palabra);
+							try {
+								Thread.sleep(5*100);
+							} catch (InterruptedException e) {
+								System.err.println(e.getMessage());
+							}
+							i--;
+						}
+						
+					}
+					
+					raf.close();
+				} catch (FileNotFoundException e) {
+					System.err.println(e.getMessage());
+				} catch (IOException e) {
+					System.err.println(e.getMessage());
+				}
+			}
+			
+		}
+		
+		
+	}
+	
+}
