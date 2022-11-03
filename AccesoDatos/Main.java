@@ -127,7 +127,54 @@ public class Main {
 	}
 	
 	private static void sustituirNum(RandomAccessFile fichero) {
+		boolean repeat;
+		String numSus;
 		
+		do {
+		repeat=true;
+		numSus=JOptionPane.showInputDialog("Escribe el número que deseas cambiar");
+		System.out.println(numSus);
+		if(numSus==null)repeat=false;
+		else if(isInteger(numSus)||isDouble(numSus))repeat=false;
+		else JOptionPane.showMessageDialog(null, "Eso no es un número");
+		}while(repeat);
+		
+		if(numSus != null) {
+			if(isInteger(numSus))numSus=""+Integer.parseInt(numSus);
+			StringBuilder auxBuilder;
+			long pos=0;
+			String linea;
+			try {
+				linea=fichero.readLine();
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+			}
+			
+		}
+		
+	}
+	
+	private static boolean isInteger(String s) {
+	    try { 
+	        Integer.parseInt(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    } catch(NullPointerException e) {
+	        return false;
+	    }
+	    return true;
+	}
+	
+	private static boolean isDouble(String s) {
+		try { 
+	        Double.parseDouble(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    } catch(NullPointerException e) {
+	        return false;
+	    }
+	    return true;
 	}
 
 }
+
