@@ -128,24 +128,62 @@ public class Main {
 	
 	private static void sustituirNum(RandomAccessFile fichero) {
 		boolean repeat;
-		String numSus;
+		String numSus, numNew = null;
+		
+		try {
+			fichero.seek(0);
+		} catch (IOException e1) {
+			System.err.println(e1.getMessage());
+		}
 		
 		do {
-		repeat=true;
-		numSus=JOptionPane.showInputDialog("Escribe el número que deseas cambiar");
-		System.out.println(numSus);
-		if(numSus==null)repeat=false;
-		else if(isInteger(numSus)||isDouble(numSus))repeat=false;
-		else JOptionPane.showMessageDialog(null, "Eso no es un número");
+			repeat=true;
+			numSus=JOptionPane.showInputDialog("Escribe el número que deseas cambiar");
+			if(numSus==null)repeat=false;
+			else if(isInteger(numSus)||isDouble(numSus))repeat=false;
+			else JOptionPane.showMessageDialog(null, "Eso no es un número");
 		}while(repeat);
 		
-		if(numSus != null) {
+		if(numSus!=null) {
+			do {
+				repeat=true;
+				numNew=JOptionPane.showInputDialog("Escribe el nuevo número");
+				if(numNew==null)repeat=false;
+				else if(isInteger(numNew)||isDouble(numNew))repeat=false;
+				else JOptionPane.showMessageDialog(null, "Eso no es un número");
+			}while(repeat);
+		}
+		
+		if(numSus != null&&numNew !=null) {
 			if(isInteger(numSus))numSus=""+Integer.parseInt(numSus);
+			if(isInteger(numNew))numNew=""+Integer.parseInt(numNew);
 			StringBuilder auxBuilder;
 			long pos=0;
 			String linea;
+			int indice;
 			try {
 				linea=fichero.readLine();
+				while(linea!=null) {
+					indice = linea.indexOf(numSus); 
+	                while(indice!=-1){
+	                	System.out.println("indice:"+indice);
+	                    auxBuilder = new StringBuilder(linea); 
+	                    if(numSus.length()<=numNew.length())auxBuilder.replace(indice, indice+numSus.length(), numNew);
+	                    else {
+	                    	System.out.println("poraqeui");
+	                    	auxBuilder.replace(indice, indice+numSus.length(), numNew); 
+	                    	auxBuilder.delete(indice+numNew.length(),numSus.length());
+	                    }
+	                    linea = auxBuilder.toString();
+	                    fichero.seek(pos);
+	                    fichero.writeBytes(linea);
+	                   
+	                    indice = linea.indexOf(numSus);
+	                }
+	                pos = fichero.getFilePointer();
+	                linea=fichero.readLine();
+				}
+				        
 			} catch (Exception e) {
 				System.err.println(e.getMessage());
 			}
