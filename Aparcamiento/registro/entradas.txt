@@ -1,0 +1,10 @@
+matricula=1234ABC
+marca=seat ibiza
+color=gris
+fecha_mov=16/01/2023 11:15:00
+------------------------------
+matricula=4321CBA
+marca=ford focus
+color=azul
+fecha_mov=16/01/2023 11:18:00
+------------------------------

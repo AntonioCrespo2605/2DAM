@@ -1,0 +1,5 @@
+matricula=1234ABC
+marca=seat ibiza
+color=gris
+fecha_mov=17/01/2023 11:15:00
+------------------------------
