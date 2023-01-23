@@ -22,6 +22,14 @@ public class Vehiculo {
 		this.color=v.getColor();
 		this.fecha_mov=v.getFecha_mov();
 	}
+	
+	//constructor vacio
+	public Vehiculo() {
+		this.matricula="";
+		this.marca="";
+		this.color="";
+		this.fecha_mov="";
+	}
 
 	//getters y setters
 	public String getMatricula() {
@@ -59,9 +67,9 @@ public class Vehiculo {
 	//toString
 	@Override
 	public String toString() {
-		return "Matricula:"+getMatricula()+"\n"
-				+ "Marca:"+getMarca()+"\n"
-				+ "Color:"+getColor();
+		return "Matricula: "+getMatricula()+"\n"
+				+ "Marca: "+getMarca()+"\n"
+				+ "Color: "+getColor();
 	}
 	
 	public String toStringInFile() {

@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class VehiculoController {
 	private void readVehiculo() throws FileNotFoundException{
 		this.vehiculos=readFromFile(this.folder+"\\vehiculos.txt");
 		this.entradas=readFromFile(this.folder+"\\entradas.txt");
-		this.salidas=readFromFile(this.folder+"\salidas.txt");
+		this.salidas=readFromFile(this.folder+"\\salidas.txt");
 	}
 	
 	//lee un fichero y lo devuelve traducido al arrayList
@@ -89,11 +88,10 @@ public class VehiculoController {
 	        		cont++;
 	        		break;
 	        	case 4:
-	        		cont=0;
 	        		v.add(new Vehiculo(mat, marca, color, fecha));
+	        		cont=0;
 	        		break;
 	        }
-	        cont++;
 		}
 		myReader.close();
 		return v;
@@ -153,28 +151,15 @@ public class VehiculoController {
 	/**añadir entrada salida y vehiculo**/
 	/********************************************************************************************/
 	
-	//añadir vehiculo, entrada o salida al fichero
-	private void addVehiculoInFile(Vehiculo v, String file) throws IOException {
-		File f = new File(file);
-		
-		PrintWriter out = new PrintWriter(new FileWriter(f, true));
-		out.append("matricula="+v.getMatricula());
-		out.append("marca="+v.getMarca());
-		out.append("color="+v.getColor());
-		out.append("fecha_mov="+v.getFecha_mov());
-		out.append("------------------------------");
-		out.close();
-	}
-	
 	//comprueba una nueva entrada y si es viable la crea
 	//devuelve un pequeño mensaje con la acción realizada para usar desde fuera
 	public String checkAddEntrada(Vehiculo newV) throws IOException, ParseException {
 		//si no existe aun lo añade a vehiculos y a entradas
 		if(!vehiculoExists(newV)) {
-			addVehiculoInFile(newV, this.folder+"\\entradas.txt");
-			this.entradas.add(newV);
-			addVehiculoInFile(newV, this.folder+"\\vehiculos.txt");
 			this.vehiculos.add(newV);
+			this.entradas.add(newV);
+			updateVehiculosFile(folder+"\\vehiculos.txt", entradas);
+			updateVehiculosFile(folder+"\\entradas.txt", entradas);
 			return "vehiculo nuevo";
 		}
 		
@@ -185,8 +170,8 @@ public class VehiculoController {
 		
 		if(isInside(newV))return "ya esta dentro";
 		else {
-			addVehiculoInFile(newV, this.folder+"\\entradas.txt");
 			this.entradas.add(newV);
+			updateVehiculosFile(folder+"\\entradas.txt", entradas);
 			newDateOnVehiculo(newV);
 			return "hecho";
 		}
@@ -200,8 +185,16 @@ public class VehiculoController {
 		return false;
 	}
 	
+	//comprueba si existe un vehiculo en el registro de vehiculos a partir de su matricula
+	public boolean vehiculoExists(String vCheck) {
+		for(Vehiculo v : vehiculos) {
+			if(v.getMatricula().equals(vCheck))return true;
+		}
+		return false;
+	}
+	
 	//devuelve true si el vehiculo esta dentro del aparcamiento y false si está fuera
-	private boolean isInside(Vehiculo v) throws ParseException {
+	public boolean isInside(Vehiculo v) throws ParseException {
 		boolean encontradoSalida=false;
 		for(Vehiculo v2 : salidas) {
 			if(v2.getMatricula().equals(v.getMatricula())) {
@@ -273,8 +266,8 @@ public class VehiculoController {
 	public String checkAddSalida(Vehiculo newV) throws ParseException, IOException {
 		if(!vehiculoExists(newV))return "no encontrado";
 		if(isInside(newV)) {
-			addVehiculoInFile(newV, folder+"\\salidas.txt");
 			this.salidas.add(newV);
+			updateVehiculosFile(folder+"//salidas.txt", salidas);
 			newDateOnVehiculo(newV);
 			return "hecho";
 		}else return "esta fuera";
@@ -285,8 +278,8 @@ public class VehiculoController {
 	public boolean chechAddVehiculo(Vehiculo newV) throws IOException {
 		if(vehiculoExists(newV))return false;
 		else {
-			addVehiculoInFile(newV, folder+"\\vehiculos.txt");
 			this.vehiculos.add(newV);
+			updateVehiculosFile(folder+"//vehiculos.txt", vehiculos);
 			return true;
 		}
 	}
@@ -329,13 +322,8 @@ public class VehiculoController {
 	
 	//borra un vehiculo del registro dada su posición, por lo que también se borra de las entradas y las salidas
 	public void deleteVehiculo(int pos) throws IOException {
-		vehiculos.remove(pos);
-		entradas.remove(pos);
-		salidas.remove(pos);
-			
-		updateVehiculosFile(folder+"\\vehiculos.txt", vehiculos);
-		updateVehiculosFile(folder+"\\entradas.txt", entradas);
-		updateVehiculosFile(folder+"\\salidas.txt", salidas);
+		String matricula=vehiculos.get(pos).getMatricula();
+		deleteVehiculo(matricula);
 	}
 	
 	//borra un vehiculo del registro de entradas dada su posición en el array
@@ -399,16 +387,80 @@ public class VehiculoController {
 	
 	//muestra todos los vehiculos registrados
 	public String showAllVehiculos() {
+		if(vehiculos.size()==0)return "No se han encontrado vehiculos registrados";
 		String toret="";
 		int cont=0;
 		for(Vehiculo v : vehiculos) {
-			toret+="Posición vehículo:"+cont+"\n";
+			toret+="Posición vehículo: "+cont+"\n";
 			toret+=v.toString()+"\n";
-			toret+="Ultimo movimiento:"+v.getFecha_mov()+"\n";
-			toret+="------------------------------\n";
+			toret+="Ultimo movimiento: "+v.getFecha_mov()+"\n";
+			toret+="------------------------------------------------------------\n";
+			cont++;
 		}
 		return toret;
 	}
 	
-	public String 
+	//muestra todas las entradas registradas
+	public String showAllEntradas() {
+		if(entradas.size()==0)return "No se han encontrado registros de entradas";
+		String toret="";
+		int cont=0;
+		for(Vehiculo v : entradas) {
+			toret+="Posición entrada: "+cont+"\n";
+			toret+=v.toString()+"\n";
+			toret+="Entrada: "+v.getFecha_mov()+"\n";
+			toret+="------------------------------------------------------------\n";
+			cont++;
+		}
+		return toret;
+	}
+	
+	//muestra todas las salidas registradas
+	public String showAllSalidas() {
+		if(salidas.size()==0)return "No se han encontrado registros de salidas";
+		String toret="";
+		int cont=0;
+		for(Vehiculo v : salidas) {
+			toret+="Posición salida: "+cont+"\n";
+			toret+=v.toString()+"\n";
+			toret+="Salida: "+v.getFecha_mov()+"\n";
+			toret+="------------------------------------------------------------\n";
+			cont++;
+		}
+		return toret;
+	}
+	
+	public ArrayList<String> showAllMatriculasVehiculos() {
+		ArrayList<String>toret=new ArrayList<String>();
+		for(Vehiculo v : vehiculos) {
+			toret.add(v.getMatricula());
+		}
+		return toret;
+	}
+	
+	public ArrayList<String> showAllMatriculasFechaSalidas() {
+		ArrayList<String>toret=new ArrayList<String>();
+		for(Vehiculo v : salidas) {
+			toret.add(v.getMatricula()+" "+v.getFecha_mov());
+		}
+		return toret;
+	}
+	
+	public ArrayList<String> showAllMatriculasFechaEntradas() {
+		ArrayList<String>toret=new ArrayList<String>();
+		for(Vehiculo v : entradas) {
+			toret.add(v.getMatricula()+" "+v.getFecha_mov());
+		}
+		return toret;
+	}
+	
+	//conseguir un vehiculo a partir de su matrícula
+	/********************************************************************************************/
+	public Vehiculo getVehiculo(String matricula) {
+		for(Vehiculo v : vehiculos) {
+			if(v.getMatricula().equals(matricula))return new Vehiculo(v);
+		}
+		return null;
+	}
+	
 }
