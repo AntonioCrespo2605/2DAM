@@ -1,0 +1,1 @@
+Base para juego clásico del ahoracado
