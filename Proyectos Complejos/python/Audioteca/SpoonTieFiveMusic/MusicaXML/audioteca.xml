@@ -1,0 +1,82 @@
+<audioteca>
+    <disco nombre="disco0" anho="1980" imagen="">
+        <artista>artista 1</artista>
+        <artista>artista 2</artista>
+        <artista>artista 3</artista>
+        <artista>artista 4</artista>
+        <artista>artista 5</artista>
+        <artista>artista 6</artista>
+        <canciones>
+            <cancion nombre="cancion 1" duracion="5:30" link="./src/mp3/primavera.mp3" />
+            <cancion nombre="cancion 2" duracion="5:30" link="" />
+            <cancion nombre="cancion 3" duracion="5:30" link="" />
+            <cancion nombre="aaa" duracion="5:30" link="" />
+            <cancion nombre="cancion 5" duracion="5:30" link="" />
+            <cancion nombre="cancion 6" duracion="5:30" link="" />
+            <cancion nombre="cancion 7" duracion="5:30" link="" />
+            <cancion nombre="cancion 8" duracion="5:30" link="" />
+            <cancion nombre="cancion 9" duracion="5:30" link="" />
+            <cancion nombre="ivan" duracion="3:00" link="" />
+            <cancion nombre="las divinas 2" duracion="3:00" link="" />
+            <cancion nombre="primavera" duracion="3:00" link="" /></canciones>
+    <genero>electronic</genero><genero>jazz</genero><genero>trap</genero><artista>artista 8</artista></disco>
+    <disco nombre="disco1" anho="1990" imagen="">
+        <genero>pop</genero>
+        <artista>Paquito</artista>
+        <canciones>
+            <cancion nombre="chocolatero" duracion="1:20" link="" />
+            <cancion nombre="colacao" duracion="5:30" link="" />
+        </canciones>
+    </disco>
+    <disco nombre="disco2" anho="1990" imagen="">
+        <genero>pop</genero>
+        <artista>Las divinas</artista>
+        <canciones>
+            <cancion nombre="las divinas" duracion="1:20" link="" />
+        </canciones>
+    </disco>
+    <disco nombre="disco3" anho="2000" imagen="">
+        <genero>rock</genero>
+        <artista>Manolo escobar</artista>
+        <canciones>
+            <cancion nombre="me lo robaron" duracion="5:30" link="" />
+        </canciones>
+    </disco>
+    <disco nombre="disco4" anho="1990" imagen="">
+        <genero>pop</genero>
+        <artista>Paquito</artista>
+        <canciones>
+            <cancion nombre="chocolatero" duracion="1:20" link="" />
+            <cancion nombre="colacao" duracion="5:30" link="" />
+        </canciones>
+    </disco>
+    <disco nombre="disco5" anho="2000" imagen="">
+        <genero>rock</genero>
+        <artista>Manolo escobar</artista>
+        <canciones>
+            <cancion nombre="me lo robaron" duracion="5:30" link="" />
+        </canciones>
+    </disco>
+    <disco nombre="disco6" anho="1990" imagen="">
+        <genero>pop</genero>
+        <artista>Paquito</artista>
+        <canciones>
+            <cancion nombre="chocolatero" duracion="1:20" link="" />
+            <cancion nombre="colacao" duracion="5:30" link="" />
+        </canciones>
+    </disco>
+    <disco nombre="disco7" anho="1990" imagen="">
+        <genero>pop</genero>
+        <artista>Las divinas</artista>
+        <canciones>
+            <cancion nombre="las divinas" duracion="1:20" link="" />
+        </canciones>
+    </disco>
+    <disco nombre="disco8" anho="2000" imagen="">
+        <genero>rock</genero>
+        <artista>Manolo escobar</artista>
+        <canciones>
+            <cancion nombre="me lo robaron" duracion="5:30" link="" />
+        </canciones>
+    </disco>
+    <disco nombre="puta" anho="12" imagen=""><genero>electronic</genero><genero>rock</genero><genero>jazz</genero><genero>pop</genero><genero>classic</genero><genero>reggaeton</genero><genero>trap</genero><genero>others</genero><artista>puta vida</artista><canciones><cancion nombre="primavera remix" duracion="3:00" link="" /></canciones></disco></audioteca>

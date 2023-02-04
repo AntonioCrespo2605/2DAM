@@ -1,0 +1,22 @@
+<audioteca>
+    <disco nombre="disco0" anho="2000" imagen="">
+        <genero>Rock</genero>
+        <artista>Manolo escobar</artista>
+        <artista>Manolo escobar</artista>
+        <artista>Manolo escobar</artista>
+        <artista>Manolo escobar</artista>
+        <canciones>
+            <cancion nombre="cancion 1" duracion="5:30" link="" />
+            <cancion nombre="cancion 2" duracion="5:30" link="" />
+            <cancion nombre="cancion 3" duracion="5:30" link="" />
+            <cancion nombre="cancion 4" duracion="5:30" link="" />
+            <cancion nombre="cancion 5" duracion="5:30" link="" />
+            <cancion nombre="cancion 6" duracion="5:30" link="" />
+            <cancion nombre="cancion 7" duracion="5:30" link="" />
+            <cancion nombre="cancion 8" duracion="5:30" link="" />
+            <cancion nombre="cancion 9" duracion="5:30" link="" />
+        <cancion nombre="cancionpython" duracion="5:30" link="" /></canciones>
+    </disco>
+    
+  
+</audioteca>
