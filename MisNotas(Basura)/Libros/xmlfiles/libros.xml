@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<libros>
+    <libro>
+        <id>1</id>
+        <anho>2000</anho>
+        <nombre>libro 0</nombre>
+        <autor>autor 0</autor>
+    </libro>
+    <libro>
+        <id>2</id>
+        <anho>2001</anho>
+        <nombre>libro 1</nombre>
+        <autor>autor 1</autor>
+    </libro>
+</libros>
