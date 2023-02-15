@@ -16,4 +16,4 @@ Pantalla de menú para seleccionar las opciones
 
 Pantalla de juego
 
-<img src="https://github.com/AntonioCrespo2605/2DAM/tree/main/Proyectos%20Android%20Studio/Ruleta%20rusa" style=" width:200px" align="center" >
+<img src="https://github.com/AntonioCrespo2605/2DAM/blob/main/Proyectos%20Android%20Studio/Ruleta%20rusa/juego.jpeg" style=" width:200px" align="center" >
