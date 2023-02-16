@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libros>
+    <libro>
+        <paginas>5</paginas>
+        <autor>paco</autor>
+        <anho>2020</anho>
+    </libro>
+    <libro>
+        <paginas>3</paginas>
+        <autor>juan</autor>
+        <anho>2021</anho>
+    </libro>
+</libros>
