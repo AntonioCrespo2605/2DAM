@@ -1,0 +1,1 @@
+utiliza DOM para leer información de un xml, mostrarla y añadirla desde una interfáz en jswing
