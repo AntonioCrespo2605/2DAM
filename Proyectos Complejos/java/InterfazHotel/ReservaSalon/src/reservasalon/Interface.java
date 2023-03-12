@@ -4,6 +4,12 @@
  */
 package reservasalon;
 
+import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 /**
  *
  * @author Alumno
@@ -13,8 +19,9 @@ public class Interface extends javax.swing.JFrame {
     /**
      * Creates new form Interface
      */
-    public Interface() {
+    public Interface(int themeOption, int sizeOption) {
         initComponents();
+        changeSizeAndLook(themeOption, sizeOption);
     }
 
     /**
@@ -30,26 +37,26 @@ public class Interface extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        letraGrande = new javax.swing.JLabel();
         panel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        letraMedia2 = new javax.swing.JLabel();
         inputTelefono = new javax.swing.JTextField();
         inputNombre = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        letraMedia1 = new javax.swing.JLabel();
         panel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        letraMedia3 = new javax.swing.JLabel();
         evento = new javax.swing.JComboBox<>();
         panel3 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         numPersonas = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        letraMedia4 = new javax.swing.JLabel();
         bMenos = new java.awt.Button();
         bMas = new java.awt.Button();
         panel5 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        letraMedia6 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         panel4 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        letraMedia5 = new javax.swing.JLabel();
         spinnerMes = new javax.swing.JSpinner();
         spinnerDia = new javax.swing.JSpinner();
         spinnerAnho = new javax.swing.JSpinner();
@@ -57,16 +64,16 @@ public class Interface extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         panelOcultar = new javax.swing.JPanel();
-        ajustesDe = new javax.swing.JLabel();
+        letraMedia7 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         numX = new javax.swing.JLabel();
-        numTexto = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        letraPeque2 = new javax.swing.JLabel();
+        letraPeque1 = new javax.swing.JLabel();
         bMas1 = new java.awt.Button();
         bMenos1 = new java.awt.Button();
         boxVariable = new javax.swing.JComboBox<>();
         jPanel12 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        letraMedia8 = new javax.swing.JLabel();
         pagar = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -106,23 +113,22 @@ public class Interface extends javax.swing.JFrame {
         jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(244, 255, 230));
 
-        jLabel1.setBackground(new java.awt.Color(61, 61, 61));
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(61, 61, 61));
-        jLabel1.setText("Reserva aquí tu dino salón");
+        letraGrande.setBackground(new java.awt.Color(61, 61, 61));
+        letraGrande.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        letraGrande.setForeground(new java.awt.Color(61, 61, 61));
+        letraGrande.setText("Reserva aquí tu dino salón");
 
         panel1.setBackground(new java.awt.Color(211, 239, 175));
         panel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panel1.setForeground(new java.awt.Color(61, 117, 28));
 
-        jLabel2.setBackground(new java.awt.Color(61, 61, 61));
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(61, 61, 61));
-        jLabel2.setText("Teléfono:");
+        letraMedia2.setBackground(new java.awt.Color(61, 61, 61));
+        letraMedia2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        letraMedia2.setForeground(new java.awt.Color(61, 61, 61));
+        letraMedia2.setText("Teléfono:");
 
         inputTelefono.setBackground(new java.awt.Color(244, 255, 230));
         inputTelefono.setForeground(new java.awt.Color(61, 61, 61));
@@ -130,10 +136,10 @@ public class Interface extends javax.swing.JFrame {
         inputNombre.setBackground(new java.awt.Color(244, 255, 230));
         inputNombre.setForeground(new java.awt.Color(61, 61, 61));
 
-        jLabel4.setBackground(new java.awt.Color(61, 61, 61));
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(61, 61, 61));
-        jLabel4.setText("Nombre:");
+        letraMedia1.setBackground(new java.awt.Color(61, 61, 61));
+        letraMedia1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        letraMedia1.setForeground(new java.awt.Color(61, 61, 61));
+        letraMedia1.setText("Nombre:");
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -142,8 +148,8 @@ public class Interface extends javax.swing.JFrame {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addGap(74, 74, 74)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
+                    .addComponent(letraMedia2)
+                    .addComponent(letraMedia1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(inputNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
@@ -155,12 +161,12 @@ public class Interface extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
+                    .addComponent(letraMedia1)
                     .addComponent(inputNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(inputTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(letraMedia2))
                 .addGap(23, 23, 23))
         );
 
@@ -168,10 +174,10 @@ public class Interface extends javax.swing.JFrame {
         panel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panel2.setForeground(new java.awt.Color(61, 117, 28));
 
-        jLabel3.setBackground(new java.awt.Color(61, 61, 61));
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(61, 61, 61));
-        jLabel3.setText("Evento:");
+        letraMedia3.setBackground(new java.awt.Color(61, 61, 61));
+        letraMedia3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        letraMedia3.setForeground(new java.awt.Color(61, 61, 61));
+        letraMedia3.setText("Evento:");
 
         evento.setForeground(new java.awt.Color(244, 255, 230));
         evento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Congreso", "Banquete", "Jornada" }));
@@ -187,7 +193,7 @@ public class Interface extends javax.swing.JFrame {
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
                 .addGap(87, 87, 87)
-                .addComponent(jLabel3)
+                .addComponent(letraMedia3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -198,7 +204,7 @@ public class Interface extends javax.swing.JFrame {
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(letraMedia3)
                 .addGap(18, 18, 18)
                 .addComponent(evento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(32, Short.MAX_VALUE))
@@ -232,10 +238,10 @@ public class Interface extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel9.setBackground(new java.awt.Color(61, 61, 61));
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(61, 61, 61));
-        jLabel9.setText("Personas:");
+        letraMedia4.setBackground(new java.awt.Color(61, 61, 61));
+        letraMedia4.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        letraMedia4.setForeground(new java.awt.Color(61, 61, 61));
+        letraMedia4.setText("Personas:");
 
         bMenos.setLabel("-");
         bMenos.addActionListener(new java.awt.event.ActionListener() {
@@ -264,14 +270,14 @@ public class Interface extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bMas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel9))
+                    .addComponent(letraMedia4))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel3Layout.setVerticalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel9)
+                .addComponent(letraMedia4)
                 .addGap(12, 12, 12)
                 .addGroup(panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -284,10 +290,10 @@ public class Interface extends javax.swing.JFrame {
         panel5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panel5.setForeground(new java.awt.Color(61, 117, 28));
 
-        jLabel8.setBackground(new java.awt.Color(61, 61, 61));
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(61, 61, 61));
-        jLabel8.setText("Tipo cocina:");
+        letraMedia6.setBackground(new java.awt.Color(61, 61, 61));
+        letraMedia6.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        letraMedia6.setForeground(new java.awt.Color(61, 61, 61));
+        letraMedia6.setText("Tipo cocina:");
 
         jComboBox2.setForeground(new java.awt.Color(244, 255, 230));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bufé", "Carta", "Pedir cita con el chef", "No procede" }));
@@ -300,7 +306,7 @@ public class Interface extends javax.swing.JFrame {
                 .addContainerGap(40, Short.MAX_VALUE)
                 .addGroup(panel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel5Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addComponent(letraMedia6)
                         .addGap(48, 48, 48))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel5Layout.createSequentialGroup()
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -310,7 +316,7 @@ public class Interface extends javax.swing.JFrame {
             panel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8)
+                .addComponent(letraMedia6)
                 .addGap(27, 27, 27)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -320,10 +326,10 @@ public class Interface extends javax.swing.JFrame {
         panel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panel4.setForeground(new java.awt.Color(61, 117, 28));
 
-        jLabel6.setBackground(new java.awt.Color(61, 61, 61));
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(61, 61, 61));
-        jLabel6.setText("Fecha:");
+        letraMedia5.setBackground(new java.awt.Color(61, 61, 61));
+        letraMedia5.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        letraMedia5.setForeground(new java.awt.Color(61, 61, 61));
+        letraMedia5.setText("Fecha:");
 
         spinnerMes.setModel(new javax.swing.SpinnerListModel(new String[] {"Diciembre", "Noviembre", "Octubre", "Septiembre", "Agosto", "Julio", "Junio", "Mayo", "Abril", "Marzo", "Febrero", "Enero"}));
         spinnerMes.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -364,7 +370,7 @@ public class Interface extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel4Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
+                        .addComponent(letraMedia5)
                         .addGap(81, 81, 81))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel4Layout.createSequentialGroup()
                         .addGroup(panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -382,7 +388,7 @@ public class Interface extends javax.swing.JFrame {
             panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
+                .addComponent(letraMedia5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(spinnerDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -402,10 +408,10 @@ public class Interface extends javax.swing.JFrame {
         panelOcultar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelOcultar.setForeground(new java.awt.Color(61, 117, 28));
 
-        ajustesDe.setBackground(new java.awt.Color(61, 61, 61));
-        ajustesDe.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        ajustesDe.setForeground(new java.awt.Color(61, 61, 61));
-        ajustesDe.setText("Ajustes de congreso");
+        letraMedia7.setBackground(new java.awt.Color(61, 61, 61));
+        letraMedia7.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        letraMedia7.setForeground(new java.awt.Color(61, 61, 61));
+        letraMedia7.setText("Ajustes de congreso");
 
         jPanel5.setBackground(new java.awt.Color(244, 255, 230));
 
@@ -431,15 +437,15 @@ public class Interface extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        numTexto.setBackground(new java.awt.Color(61, 61, 61));
-        numTexto.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        numTexto.setForeground(new java.awt.Color(61, 61, 61));
-        numTexto.setText("Numéro de jornadas");
+        letraPeque2.setBackground(new java.awt.Color(61, 61, 61));
+        letraPeque2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        letraPeque2.setForeground(new java.awt.Color(61, 61, 61));
+        letraPeque2.setText("Numéro de jornadas");
 
-        jLabel14.setBackground(new java.awt.Color(61, 61, 61));
-        jLabel14.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(61, 61, 61));
-        jLabel14.setText("Selecciona una opción:");
+        letraPeque1.setBackground(new java.awt.Color(61, 61, 61));
+        letraPeque1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        letraPeque1.setForeground(new java.awt.Color(61, 61, 61));
+        letraPeque1.setText("Selecciona una opción:");
 
         bMas1.setLabel("+");
         bMas1.addActionListener(new java.awt.event.ActionListener() {
@@ -468,13 +474,13 @@ public class Interface extends javax.swing.JFrame {
             panelOcultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelOcultarLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ajustesDe)
+                .addComponent(letraMedia7)
                 .addGap(135, 135, 135))
             .addGroup(panelOcultarLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(panelOcultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(boxVariable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(letraPeque1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelOcultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOcultarLayout.createSequentialGroup()
@@ -485,18 +491,18 @@ public class Interface extends javax.swing.JFrame {
                         .addComponent(bMas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(63, 63, 63))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOcultarLayout.createSequentialGroup()
-                        .addComponent(numTexto)
+                        .addComponent(letraPeque2)
                         .addGap(26, 26, 26))))
         );
         panelOcultarLayout.setVerticalGroup(
             panelOcultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOcultarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ajustesDe)
+                .addComponent(letraMedia7)
                 .addGap(18, 18, 18)
                 .addGroup(panelOcultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(numTexto)
-                    .addComponent(jLabel14))
+                    .addComponent(letraPeque2)
+                    .addComponent(letraPeque1))
                 .addGroup(panelOcultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelOcultarLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
@@ -515,10 +521,10 @@ public class Interface extends javax.swing.JFrame {
         jPanel12.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel12.setForeground(new java.awt.Color(61, 117, 28));
 
-        jLabel5.setBackground(new java.awt.Color(61, 61, 61));
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(61, 61, 61));
-        jLabel5.setText("Total: 100.000$");
+        letraMedia8.setBackground(new java.awt.Color(61, 61, 61));
+        letraMedia8.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        letraMedia8.setForeground(new java.awt.Color(61, 61, 61));
+        letraMedia8.setText("Total: 100.000$");
 
         pagar.setBackground(new java.awt.Color(163, 232, 73));
         pagar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -534,7 +540,7 @@ public class Interface extends javax.swing.JFrame {
                 .addContainerGap(9, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(letraMedia8)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                         .addComponent(pagar)
@@ -544,7 +550,7 @@ public class Interface extends javax.swing.JFrame {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5)
+                .addComponent(letraMedia8)
                 .addGap(18, 18, 18)
                 .addComponent(pagar)
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -565,7 +571,7 @@ public class Interface extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addComponent(letraGrande)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -595,7 +601,7 @@ public class Interface extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(letraGrande, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
@@ -613,7 +619,7 @@ public class Interface extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 65, Short.MAX_VALUE)
+                                .addGap(0, 71, Short.MAX_VALUE)
                                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -637,6 +643,7 @@ public class Interface extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //botones más y menos
     private int numP=1;
     private void bMenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMenosActionPerformed
         numP--;
@@ -661,18 +668,19 @@ public class Interface extends javax.swing.JFrame {
         numX.setText(numIn+"");
     }//GEN-LAST:event_bMenos1ActionPerformed
 
+    //cada vez que se cambia el evento se ajusta el panel de ajustes
     private void eventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventoActionPerformed
         int selected=evento.getSelectedIndex();
         
         if(selected==0){
             panelOcultar.setVisible(true);
-            numTexto.setText("Número de jornadas");
-            ajustesDe.setText("Ajustes de congreso");
+            letraPeque2.setText("Número de jornadas");
+            letraMedia7.setText("Ajustes de congreso");
             boxVariable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Con habitaciones", "Sin habitaciones" }));
         }else if(selected==1){
             panelOcultar.setVisible(true);
-            numTexto.setText("Comensales por mesa");
-            ajustesDe.setText("Ajustes de banquete");
+            letraPeque2.setText("Comensales por mesa");
+            letraMedia7.setText("Ajustes de banquete");
             boxVariable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mesa redonda", "Mesa rectangular" }));
         }else{
             panelOcultar.setVisible(false);
@@ -683,6 +691,7 @@ public class Interface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_boxVariableActionPerformed
 
+    //cuando se ajusta el mes o el año se comprueba que el día exista
     private void spinnerMesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerMesStateChanged
         checkDay();
     }//GEN-LAST:event_spinnerMesStateChanged
@@ -691,43 +700,8 @@ public class Interface extends javax.swing.JFrame {
         checkDay();
     }//GEN-LAST:event_spinnerAnhoStateChanged
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Interface().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel ajustesDe;
     private java.awt.Button bMas;
     private java.awt.Button bMas1;
     private java.awt.Button bMenos;
@@ -737,22 +711,13 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JTextField inputNombre;
     private javax.swing.JTextField inputTelefono;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel3;
@@ -760,8 +725,18 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel letraGrande;
+    private javax.swing.JLabel letraMedia1;
+    private javax.swing.JLabel letraMedia2;
+    private javax.swing.JLabel letraMedia3;
+    private javax.swing.JLabel letraMedia4;
+    private javax.swing.JLabel letraMedia5;
+    private javax.swing.JLabel letraMedia6;
+    private javax.swing.JLabel letraMedia7;
+    private javax.swing.JLabel letraMedia8;
+    private javax.swing.JLabel letraPeque1;
+    private javax.swing.JLabel letraPeque2;
     private javax.swing.JLabel numPersonas;
-    private javax.swing.JLabel numTexto;
     private javax.swing.JLabel numX;
     private javax.swing.JButton pagar;
     private javax.swing.JPanel panel1;
@@ -775,7 +750,7 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JSpinner spinnerMes;
     // End of variables declaration//GEN-END:variables
 
-    
+    //cambia el día si al cambiar de mes o año no existe
     private void checkDay() {
         int day=Integer.parseInt(spinnerDia.getValue().toString());
         String mes=spinnerMes.getValue().toString();
@@ -786,6 +761,7 @@ public class Interface extends javax.swing.JFrame {
         if(day>diasCorr)spinnerDia.setValue(diasCorr);
     }
     
+    //devuelve el número de mes correspondiente a su nombre
     public static int getMonthNumber(String monthName) {
         monthName=monthName.toLowerCase();
         int monthNumber = 0;
@@ -835,6 +811,7 @@ public class Interface extends javax.swing.JFrame {
         return monthNumber;
     }
     
+    //devuelve el número de días de un mes
     public static int getNumberOfDays(int month, int year) {
         int numberOfDays = 0;
 
@@ -858,5 +835,41 @@ public class Interface extends javax.swing.JFrame {
         }
 
         return numberOfDays;
+    }
+
+    private void changeSizeAndLook(int themeOption, int sizeOption) {
+        if(themeOption!=0){
+            try {
+                UIManager.setLookAndFeel(UIManager.getInstalledLookAndFeels()[themeOption-1].getClassName());
+            } catch (Exception ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if(sizeOption==1){
+            letraGrande.setFont(new Font(letraGrande.getFont().getName(), Font.BOLD,24));
+            letraMedia1.setFont(new Font(letraMedia1.getFont().getName(), Font.BOLD,18));
+            letraMedia2.setFont(new Font(letraMedia2.getFont().getName(), Font.BOLD,18));
+            letraMedia3.setFont(new Font(letraMedia3.getFont().getName(), Font.BOLD,18));
+            letraMedia4.setFont(new Font(letraMedia4.getFont().getName(), Font.BOLD,18));
+            letraMedia5.setFont(new Font(letraMedia5.getFont().getName(), Font.BOLD,18));
+            letraMedia6.setFont(new Font(letraMedia6.getFont().getName(), Font.BOLD,18));
+            letraMedia7.setFont(new Font(letraMedia7.getFont().getName(), Font.BOLD,18));
+            letraMedia8.setFont(new Font(letraMedia8.getFont().getName(), Font.BOLD,18));
+            letraPeque1.setFont(new Font(letraPeque1.getFont().getName(), Font.BOLD,12));
+            letraPeque2.setFont(new Font(letraPeque2.getFont().getName(), Font.BOLD,12));
+        }else if(sizeOption==2){
+            letraGrande.setFont(new Font(letraGrande.getFont().getName(), Font.BOLD,40));
+            letraMedia1.setFont(new Font(letraMedia1.getFont().getName(), Font.BOLD,36));
+            letraMedia2.setFont(new Font(letraMedia2.getFont().getName(), Font.BOLD,36));
+            letraMedia3.setFont(new Font(letraMedia3.getFont().getName(), Font.BOLD,36));
+            letraMedia4.setFont(new Font(letraMedia4.getFont().getName(), Font.BOLD,36));
+            letraMedia5.setFont(new Font(letraMedia5.getFont().getName(), Font.BOLD,36));
+            letraMedia6.setFont(new Font(letraMedia6.getFont().getName(), Font.BOLD,36));
+            letraMedia7.setFont(new Font(letraMedia7.getFont().getName(), Font.BOLD,36));
+            letraMedia8.setFont(new Font(letraMedia8.getFont().getName(), Font.BOLD,36));
+            letraPeque1.setFont(new Font(letraPeque1.getFont().getName(), Font.BOLD,24));
+            letraPeque2.setFont(new Font(letraPeque2.getFont().getName(), Font.BOLD,24));
+        }
     }
 }
