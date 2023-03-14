@@ -3,6 +3,7 @@ package com.example.erp.DBControllers;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 public class DBHandler extends SQLiteOpenHelper {
     //db info
     private static final String DB_NAME="dinosDB.sqlite";
-    private static int DB_VERSION=1;
+    private static final int DB_VERSION=1;
 
     //table names
     private static final String SUPPLIER_TABLE="supplier";
@@ -63,7 +64,7 @@ public class DBHandler extends SQLiteOpenHelper {
         //Create table supplie
         queryTable="CREATE TABLE "+SUPPLIE_TABLE+" ("
                 +"id INTEGER PRIMARY KEY, "
-                +"id_supplier INTEGER NOT NULL REFERENCES "+SUPPLIER_TABLE+", "
+                +"id_supplier INTEGER NOT NULL REFERENCES "+SUPPLIER_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE,"
                 +"date TEXT NOT NULL, "
                 +"state INTEGER NOT NULL,"
                 +"shipping_costs TEXT NOT NULL);";
@@ -83,8 +84,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
         //Create table product_supplie
         queryTable="CREATE TABLE "+PRODUCT_SUPPLIE_TABLE+" ("
-                +"id_product INTEGER NOT NULL REFERENCES "+PRODUCT_TABLE+", "
-                +"id_supplie INTEGER NOT NULL REFERENCES "+SUPPLIE_TABLE+", "
+                +"id_product INTEGER NOT NULL REFERENCES "+PRODUCT_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "
+                +"id_supplie INTEGER NOT NULL REFERENCES "+SUPPLIE_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE,"
                 +"amount INTEGER NOT NULL,"
                 +"ind_price TEXT NOT NULL,"
                 +"PRIMARY KEY(id_product, id_supplie));";
@@ -108,7 +109,7 @@ public class DBHandler extends SQLiteOpenHelper {
         //Create table salary
         queryTable="CREATE TABLE "+SALARY_TABLE+" ("
                 +"date TEXT NOT NULL, "
-                +"id_employee INTEGER NOT NULL REFERENCES "+EMPLOYEE_TABLE+", "
+                +"id_employee INTEGER NOT NULL REFERENCES "+EMPLOYEE_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "
                 +"salary TEXT NOT NULL, "
                 +"PRIMARY KEY(date, id_eployee));";
 
@@ -131,15 +132,15 @@ public class DBHandler extends SQLiteOpenHelper {
                 +"date TEXT NOT NULL,"
                 +"shipping_costs TEXT NOT NULL, "
                 +"state INTEGER NOT NULL,"
-                +"id_employee INTEGER NOT NULL REFERENCES "+EMPLOYEE_TABLE+", "
-                +"id_customer INTEGER NOT NULL REFERENCES "+CUSTOMER_TABLE+");";
+                +"id_employee INTEGER NOT NULL REFERENCES "+EMPLOYEE_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "
+                +"id_customer INTEGER NOT NULL REFERENCES "+CUSTOMER_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE);";
 
         db.execSQL(queryTable);
 
         //Create table product_sale
         queryTable="CREATE TABLE "+PRODUCT_SALE_TABLE+" ("
-                +"id_product INTEGER NOT NULL REFERENCES "+PRODUCT_TABLE+", "
-                +"id_sale INTEGER NOT NULL REFERENCES "+SALE_TABLE+", "
+                +"id_product INTEGER NOT NULL REFERENCES "+PRODUCT_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "
+                +"id_sale INTEGER NOT NULL REFERENCES "+SALE_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "
                 +"amount INTEGER NOT NULL,"
                 +"ind_price INTEGER NOT NULL,"
                 +"PRIMARY KEY(sale, id_product));";
@@ -148,8 +149,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
         //Create table shopping cart
         queryTable="CREATE TABLE "+SHOPPING_CART+" ("
-                +"id_product INTEGER NOT NULL REFERENCES "+PRODUCT_TABLE+", "
-                +"id_customer INTEGER NOT NULL REFERENCES "+CUSTOMER_TABLE+", "
+                +"id_product INTEGER NOT NULL REFERENCES "+PRODUCT_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "
+                +"id_customer INTEGER NOT NULL REFERENCES "+CUSTOMER_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "
                 +"cant INTEGER NOT NULL, "
                 +"PRIMARY KEY(id_product, id_customer));";
 
@@ -157,7 +158,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         //Create table message
         queryTable="CREATE TABLE "+MESSAGE_TABLE+"("
-                +"id_customer INTEGER REFERENCES "+CUSTOMER_TABLE+","
+                +"id_customer INTEGER REFERENCES "+CUSTOMER_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE,"
                 +"date TEXT NOT NULL,"
                 +"content TEXT NOT NULL,"
                 +"received INTEGER NOT NULL);";
@@ -385,8 +386,11 @@ public class DBHandler extends SQLiteOpenHelper {
 
     //add a new Customer to the database
     public void addCustomer(Customer customer){
+
+
         int id=1;
-        while(existsCustomer(id)){
+        while(existsCustomer(customer.getId())){
+            customer.setId(id);
             id++;
         }
         customer.setId(id);
@@ -436,7 +440,8 @@ public class DBHandler extends SQLiteOpenHelper {
     //add a new Employee to the database
     public void addEmployee(Employee employee){
         int id=1;
-        while(existsEmployee(id)){
+        while(existsEmployee(employee.getId())){
+            employee.setId(id);
             id++;
         }
         employee.setId(id);
@@ -474,7 +479,8 @@ public class DBHandler extends SQLiteOpenHelper {
     //add a new Product to the database
     public void addProduct(Product product){
         int id=1;
-        while(existsProduct(id)){
+        while(existsProduct(product.getId())){
+            product.setId(id);
             id++;
         }
         product.setId(id);
@@ -497,7 +503,8 @@ public class DBHandler extends SQLiteOpenHelper {
     //add a new Supplier to the database
     public void addSupplier(Supplier supplier){
         int id=1;
-        while(existsSupplier(id)){
+        while(existsSupplier(supplier.getId())){
+            supplier.setId(id);
             id++;
         }
         supplier.setId(id);
@@ -519,7 +526,8 @@ public class DBHandler extends SQLiteOpenHelper {
     //add a new Supplie to the database
     public void addSupplie(Supplie supplie){
         int id=1;
-        while(existsSupplie(id)){
+        while(existsSupplie(supplie.getId())){
+            supplie.setId(id);
             id++;
         }
         supplie.setId(id);
@@ -556,7 +564,8 @@ public class DBHandler extends SQLiteOpenHelper {
     //add a new Sale to the database
     public void addSale(Sale sale){
         int id=1;
-        while(existsSale(id)){
+        while(existsSale(sale.getId())){
+            sale.setId(id);
             id++;
         }
         sale.setId(id);
@@ -717,11 +726,157 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM "+MESSAGE_TABLE+" WHERE EXISTS" +
                 "(SELECT * FROM "+MESSAGE_TABLE+" WHERE id_customer="+id_customer+" AND date="+date+")");
         db.close();
+
+        readCustomers();
     }
 
-    private void checkEmptySupplies(){}
+    /************************************************************************/
+    //automatic delete methods
+    private void checkEmptySupplies(){
+        for(Supplie s:supplies){
+            if(s.getLines().size()==0){
+                deleteSupplie(s.getId());
+            }
+        }
+        readSupplies();
+    }
 
-    private void checkEmptySales(){}
+    private void checkEmptySales(){
+        for(Sale s:sales){
+            if(s.getLines().size()==0){
+                deleteSale(s.getId());
+            }
+        }
+        readSales();
+    }
+
+    /************************************************************************/
+    //update methods
+
+    public void updateSupplier(Supplier supplier){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("id",supplier.getId());
+        values.put("name", supplier.getName());
+        values.put("tel", supplier.getTel());
+        values.put("address", supplier.getAddress());
+        values.put("logo", fromBitmapToBlob(supplier.getLogo()));
+
+        db.update(SUPPLIER_TABLE, values, "id="+supplier.getId(), null);
+        db.close();
+
+        readSuppliers();
+        readSupplies();
+    }
+
+    public void updateSupplie(Supplie supplie){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("id", supplie.getId());
+        values.put("id_supplier",supplie.getSupplier().getId());
+        values.put("date", supplie.getDate());
+        int state=0;
+        if(supplie.isState())state=1;
+        values.put("state", state);
+        values.put("shipping_costs", supplie.getShipping_costs()+"");
+
+        db.update(SUPPLIE_TABLE, values, "id="+supplie.getId(), null);
+
+        readSupplies();
+    }
+
+
+    public void updateSupplieProduct(ProductSale newLine, int id_supplie){
+        SQLiteDatabase db =this.getWritableDatabase();
+
+        String sql = "UPDATE "+PRODUCT_SUPPLIE_TABLE+" SET amount = ?, ind_price = ? WHERE id_product = ? AND id_supplie = ?";
+        Object[] params = {newLine.getAmount(), newLine.getIndPrice(), newLine.getProduct().getId(), id_supplie};
+        db.execSQL(sql, params);
+        db.close();
+
+        readSupplies();
+    }
+
+    public void updateProduct(Product product){
+        SQLiteDatabase db =this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("id", product.getId());
+        values.put("name", product.getName());
+        values.put("description", product.getDescription());
+        values.put("stock", product.getStock());
+        values.put("current_price",product.getCurrent_price()+"");
+        values.put("photo", fromBitmapToBlob(product.getPhoto()));
+
+        db.update(PRODUCT_TABLE, values, "id="+product.getId(), null);
+        db.close();
+
+        readProducts();
+    }
+
+    public void updateCustomer(Customer customer){
+        SQLiteDatabase db =this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("id", customer.getId());
+        values.put("name",customer.getName());
+        values.put("tel", customer.getTel());
+        values.put("email", customer.getEmail());
+        values.put("photo",fromBitmapToBlob(customer.getPhoto()));
+        values.put("password", customer.getPassword());
+
+        db.update(CUSTOMER_TABLE, values, "id="+customer.getId(), null);
+        db.close();
+        readCustomers();
+        readSales();
+    }
+
+    public void updateEmployee(Employee employee){
+        SQLiteDatabase db =this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("id", employee.getId());
+        values.put("dni", employee.getDni());
+        values.put("name",employee.getName());
+        values.put("tel", employee.getTel());
+        values.put("workstation", employee.getWorkstation());
+        values.put("bank_number",employee.getBank_number());
+        values.put("current_salary", employee.getCurrent_salary());
+        values.put("photo",fromBitmapToBlob(employee.getPhoto()));
+        values.put("password", employee.getPassword());
+
+        db.update(EMPLOYEE_TABLE, values, "id="+employee.getId(), null);
+        db.close();
+    }
+
+    /*
+        ContentValues values = new ContentValues();
+        values.put("valor1", 123);
+        values.put("valor2", "Nuevo valor 2");
+
+        String whereClause = "id1 = ? AND id2 = ?";
+        String[] whereArgs = {"123", "Valor de ID2"};
+
+        int rowsUpdated = db.update("MiTabla", values, whereClause, whereArgs);
+    */
+    public void updateSale(Sale sale){
+        SQLiteDatabase db =this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("id",sale.getId());
+        values.put("date",sale.getDate());
+        values.put("shipping_costs",sale.getShipping_costs());
+        int state=0;
+        if(sale.isState())state=1;
+        values.put("state",state);
+        values.put("id_employee", sale.getSeller().getId());
+        values.put("id_customer",sale.getBuyer().getId());
+
+        db.update(SALE_TABLE, values, "id="+sale.getId(), null);
+        db.close();
+    }
 
 
     /************************************************************************/
@@ -784,4 +939,54 @@ public class DBHandler extends SQLiteOpenHelper {
         return outputStream.toByteArray();
     }
 
+    /************************************************************************/
+    //getters and setters
+
+    public ArrayList<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(ArrayList<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(ArrayList<Employee> employees) {
+        this.employees = employees;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+    }
+
+    public ArrayList<Supplie> getSupplies() {
+        return supplies;
+    }
+
+    public void setSupplies(ArrayList<Supplie> supplies) {
+        this.supplies = supplies;
+    }
+
+    public ArrayList<Supplier> getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(ArrayList<Supplier> suppliers) {
+        this.suppliers = suppliers;
+    }
+
+    public ArrayList<Sale> getSales() {
+        return sales;
+    }
+
+    public void setSales(ArrayList<Sale> sales) {
+        this.sales = sales;
+    }
 }
