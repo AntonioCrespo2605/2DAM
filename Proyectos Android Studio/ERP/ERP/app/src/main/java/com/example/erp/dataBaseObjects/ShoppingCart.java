@@ -3,20 +3,20 @@ package com.example.erp.dataBaseObjects;
 import java.util.ArrayList;
 
 public class ShoppingCart {
-    private ArrayList<Integer>cants;
+    private ArrayList<Integer>amounts;
     private ArrayList<Product>products;
 
     public ShoppingCart() {
-        this.cants = new ArrayList<Integer>();
+        this.amounts = new ArrayList<Integer>();
         this.products = new ArrayList<Product>();
     }
 
-    public ArrayList<Integer> getCants() {
-        return cants;
+    public ArrayList<Integer> getAmounts() {
+        return amounts;
     }
 
-    public void setCants(ArrayList<Integer> cants) {
-        this.cants = cants;
+    public void setAmounts(ArrayList<Integer> amounts) {
+        this.amounts = amounts;
     }
 
     public ArrayList<Product> getProducts() {
@@ -27,8 +27,8 @@ public class ShoppingCart {
         this.products = products;
     }
 
-    public void addProduct(Product product, int cant){
+    public void addProduct(Product product, int amount){
         products.add(product);
-        cants.add(cant);
+        amounts.add(amount);
     }
 }
