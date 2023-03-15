@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backlogin"
+    tools:context=".CreateUser">
+
+    <ImageView
+        android:id="@+id/profileicon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/usericon" />
+
+    <ImageView
+        android:id="@+id/border"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="@+id/profileicon"
+        app:layout_constraintEnd_toEndOf="@+id/profileicon"
+        app:layout_constraintStart_toStartOf="@+id/profileicon"
+        app:layout_constraintTop_toTopOf="@+id/profileicon"
+        app:srcCompat="@drawable/circleborder" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/galley"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="@+id/profileicon"
+        app:layout_constraintEnd_toEndOf="@+id/profileicon"
+        app:srcCompat="@drawable/galery"
+        app:tint="#E4DDD1" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="520dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileicon">
+
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="correo@gmail.com"
+            android:textColor="#574D49"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/inputName"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="#E9E4E0"
+            android:ems="10"
+            android:hint="Nombre"
+            android:inputType="textPersonName"
+            android:paddingLeft="20dp"
+            android:textColor="#574D49"
+            android:textColorHint="#BAB3AE"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
+
+        <EditText
+            android:id="@+id/inputTel"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="#E9E4E0"
+            android:ems="10"
+            android:hint="Teléfono"
+            android:inputType="textPersonName"
+            android:paddingLeft="20dp"
+            android:textColor="#574D49"
+            android:textColorHint="#BAB3AE"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
+
+        <EditText
+            android:id="@+id/inputPassCreate"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="#E9E4E0"
+            android:ems="10"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:paddingLeft="20dp"
+            android:textColor="#574D49"
+            android:textColorHint="#BAB3AE"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
+
+        <EditText
+            android:id="@+id/inputPassRepeat"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="#E9E4E0"
+            android:ems="10"
+            android:hint="Repite contraseña"
+            android:inputType="textPassword"
+            android:paddingLeft="20dp"
+            android:textColor="#574D49"
+            android:textColorHint="#BAB3AE"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom">
+
+            <Button
+                android:id="@+id/createAcount"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="80dp"
+                android:backgroundTint="#574D49"
+                android:text="Crear cuenta"
+                android:textColor="#ECEAEB"
+                android:layout_marginBottom="50dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

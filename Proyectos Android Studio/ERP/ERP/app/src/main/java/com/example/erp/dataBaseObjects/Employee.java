@@ -26,6 +26,7 @@ public class Employee {
         this.current_salary = current_salary;
         this.salaries = salaries;
         this.photo=photo;
+        this.password=password;
     }
 
     public Employee(int id, String dni, String name, String tel, String workstation, String bank_number, double current_salary, Bitmap photo, String password) {
@@ -38,6 +39,7 @@ public class Employee {
         this.current_salary = current_salary;
         this.salaries = new ArrayList<Salary>();
         this.photo=photo;
+        this.password=password;
     }
 
     public int getId() {

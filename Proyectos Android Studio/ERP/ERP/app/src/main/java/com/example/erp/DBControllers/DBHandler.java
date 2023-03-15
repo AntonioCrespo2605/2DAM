@@ -109,9 +109,9 @@ public class DBHandler extends SQLiteOpenHelper {
         //Create table salary
         queryTable="CREATE TABLE "+SALARY_TABLE+" ("
                 +"date TEXT NOT NULL, "
-                +"id_employee INTEGER NOT NULL REFERENCES "+EMPLOYEE_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "
+                +"id_employee INTEGER NOT NULL REFERENCES "+EMPLOYEE_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "//
                 +"salary TEXT NOT NULL, "
-                +"PRIMARY KEY(date, id_eployee));";
+                +"PRIMARY KEY(date, id_employee));";
 
         db.execSQL(queryTable);
 
@@ -143,7 +143,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 +"id_sale INTEGER NOT NULL REFERENCES "+SALE_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "
                 +"amount INTEGER NOT NULL,"
                 +"ind_price INTEGER NOT NULL,"
-                +"PRIMARY KEY(sale, id_product));";
+                +"PRIMARY KEY(id_sale, id_product));";
 
         db.execSQL(queryTable);
 
@@ -392,7 +392,6 @@ public class DBHandler extends SQLiteOpenHelper {
             customer.setId(id);
             id++;
         }
-        customer.setId(id);
 
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values =new ContentValues();
@@ -443,7 +442,6 @@ public class DBHandler extends SQLiteOpenHelper {
             employee.setId(id);
             id++;
         }
-        employee.setId(id);
 
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values =new ContentValues();
@@ -482,7 +480,6 @@ public class DBHandler extends SQLiteOpenHelper {
             product.setId(id);
             id++;
         }
-        product.setId(id);
 
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values =new ContentValues();
@@ -506,7 +503,6 @@ public class DBHandler extends SQLiteOpenHelper {
             supplier.setId(id);
             id++;
         }
-        supplier.setId(id);
 
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values =new ContentValues();
@@ -529,7 +525,6 @@ public class DBHandler extends SQLiteOpenHelper {
             supplie.setId(id);
             id++;
         }
-        supplie.setId(id);
 
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values =new ContentValues();
@@ -567,7 +562,6 @@ public class DBHandler extends SQLiteOpenHelper {
             sale.setId(id);
             id++;
         }
-        sale.setId(id);
 
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values =new ContentValues();
