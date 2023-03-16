@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.erp.DBControllers.DBHandler;
+import com.example.erp.dbControllers.DBHandler;
 import com.example.erp.dataBaseObjects.Customer;
 import com.example.erp.dataBaseObjects.Employee;
 

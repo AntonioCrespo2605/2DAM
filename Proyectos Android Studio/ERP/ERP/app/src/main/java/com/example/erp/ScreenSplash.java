@@ -10,7 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.erp.DBControllers.DBHandler;
+import com.example.erp.dataBaseObjects.Product;
+import com.example.erp.dbControllers.DBHandler;
 import com.example.erp.dataBaseObjects.Employee;
 
 import java.util.Timer;
@@ -66,12 +67,18 @@ public class ScreenSplash extends AppCompatActivity {
         if (!started) {
             Toast.makeText(this, "Inicializando base de datos...", Toast.LENGTH_SHORT).show();
 
-            Bitmap default_icon= BitmapFactory.decodeResource(this.getResources(), R.drawable.trex);
-            handler.addEmployee(new Employee(0,"00000000A","BOT","000000000","bot","0",0,default_icon,"0"));
-            handler.addEmployee(new Employee(1,"111111111A","ADMIN","000000000","administrador jefe","0",0,default_icon,"admin"));
+            handler.addEmployee(new Employee(0,"00000000A","BOT","000000000","bot","0",0,fromIntToBitmap(R.drawable.trex),"0"));
+            handler.addEmployee(new Employee(1,"111111111A","ADMIN","000000000","administrador jefe","0",0,fromIntToBitmap(R.drawable.trex),"admin"));
+
+            handler.addProduct(new Product(1, "TRex","Carnívoro",1, 1000000.99,fromIntToBitmap(R.drawable.dinosaur1)));
+            handler.addProduct(new Product(2, "Espinosaurio","Carnívoro",2, 1200000.50,fromIntToBitmap(R.drawable.dinosaur1)));
 
             editor.putBoolean("started", true);
             editor.commit();
         }
+    }
+
+    private Bitmap fromIntToBitmap(int img){
+        return BitmapFactory.decodeResource(this.getResources(), img);
     }
 }

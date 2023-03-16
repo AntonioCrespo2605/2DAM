@@ -1,9 +1,8 @@
-package com.example.erp.DBControllers;
+package com.example.erp.dbControllers;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
@@ -367,7 +366,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return null;
     }
 
-    private Employee getEmployeeById(int id){
+    public Employee getEmployeeById(int id){
         for(Employee employee:employees){
             if(employee.getId()==id)return employee;
         }
@@ -1030,4 +1029,6 @@ public class DBHandler extends SQLiteOpenHelper {
     public void setSales(ArrayList<Sale> sales) {
         this.sales = sales;
     }
+
+
 }

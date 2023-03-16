@@ -10,6 +10,10 @@ public class Product {
     private double current_price;
     private Bitmap photo;
 
+    public Product(){
+
+    }
+
     public Product(int id, String name, String description, int stock, double current_price, Bitmap photo) {
         this.id = id;
         this.name = name;
