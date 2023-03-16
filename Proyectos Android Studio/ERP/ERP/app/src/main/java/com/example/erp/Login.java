@@ -160,7 +160,11 @@ public class Login extends AppCompatActivity {
     private void checkPosition(Employee employee){
         switch (employee.getWorkstation()){
             case "administrador jefe":
-                Toast.makeText(this, "Accediendo cómo admin", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Login.this, AdminView.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("employeeID",employee.getId());
+                startActivity(intent);
+                finish();
                 break;
             case "bot":
                 Toast.makeText(this, "Accediendo como bot", Toast.LENGTH_SHORT).show();
