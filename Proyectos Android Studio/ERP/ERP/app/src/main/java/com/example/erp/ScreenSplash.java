@@ -68,7 +68,7 @@ public class ScreenSplash extends AppCompatActivity {
             Toast.makeText(this, "Inicializando base de datos...", Toast.LENGTH_SHORT).show();
 
             handler.addEmployee(new Employee(0,"00000000A","BOT","000000000","bot","0",0,fromIntToBitmap(R.drawable.trex),"0"));
-            handler.addEmployee(new Employee(1,"111111111A","ADMIN","000000000","administrador jefe","0",0,fromIntToBitmap(R.drawable.trex),"admin"));
+            handler.addEmployee(new Employee(1,"111111111A","ADMIN","000000000","administrador jefe","0",0,fromIntToBitmap(R.drawable.admin),"admin"));
 
             handler.addProduct(new Product(1, "TRex","Carnívoro",1, 1000000.99,fromIntToBitmap(R.drawable.dinosaur1)));
             handler.addProduct(new Product(2, "Espinosaurio","Carnívoro",2, 1200000.50,fromIntToBitmap(R.drawable.dinosaur1)));

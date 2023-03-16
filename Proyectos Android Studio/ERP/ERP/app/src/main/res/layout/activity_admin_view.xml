@@ -100,7 +100,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/customers" />
+                app:srcCompat="@drawable/customers"
+                app:tint="#E4DDD1"/>
 
             <ImageView
                 android:id="@+id/productsOption"
@@ -115,14 +116,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/suppliers" />
+                app:srcCompat="@drawable/suppliers"
+                app:tint="#E4DDD1" />
 
             <ImageView
                 android:id="@+id/moneyOption"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/suppliers" />
+                app:srcCompat="@drawable/accounting"
+                app:tint="#E4DDD1"/>
 
         </LinearLayout>
 

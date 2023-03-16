@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="right">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#D3C9C0"
+        android:orientation="vertical"></LinearLayout>
+</LinearLayout>
+
+<!--https://www.youtube.com/watch?v=plnLs6aST1M&ab_channel=CodingDemos-->
