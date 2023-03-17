@@ -90,13 +90,13 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
         public ViewHolder(View itemView) {
             super(itemView);
 
-            ll_letter=itemView.findViewById(R.id.ll_letter);
-            ll_customer=itemView.findViewById(R.id.ll_customer);
-            letter=itemView.findViewById(R.id.letter);
-            nameCustomer=itemView.findViewById(R.id.nameCustomer);
+            ll_letter=itemView.findViewById(R.id.ll_letter2);
+            ll_customer=itemView.findViewById(R.id.ll_customer2);
+            letter=itemView.findViewById(R.id.letter2);
+            nameCustomer=itemView.findViewById(R.id.nameSupplier);
             emailCustomer=itemView.findViewById(R.id.emailCustomer);
-            rl_profile=itemView.findViewById(R.id.rl_profile);
-            profile=itemView.findViewById(R.id.profileCustomer);
+            rl_profile=itemView.findViewById(R.id.rl_logo);
+            profile=itemView.findViewById(R.id.logoSupplier);
         }
 
         void binData(final Customer item){

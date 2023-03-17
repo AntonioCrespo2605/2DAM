@@ -127,11 +127,10 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
         empleadosText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, EmployeesFragment.class, null)
-                .setReorderingAllowed(true)
-                .addToBackStack("name")
-                .commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.fragmentContainerView, EmployeesFragment.class, null);
+        transaction.commit();
 
     }
 
@@ -141,11 +140,10 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
         clientesText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, CustomersFragment.class, null)
-                .setReorderingAllowed(true)
-                .addToBackStack("name")
-                .commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.fragmentContainerView, CustomersFragment.class, null);
+        transaction.commit();
     }
 
     private void productSelected(){
@@ -154,11 +152,10 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
         productosText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, ProductsFragment.class, null)
-                .setReorderingAllowed(true)
-                .addToBackStack("name")
-                .commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.fragmentContainerView, ProductsFragment.class, null);
+        transaction.commit();
     }
 
     private void supplierSelected(){
@@ -167,11 +164,10 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
         proveedoresText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, SuppliersFragment.class, null)
-                .setReorderingAllowed(true)
-                .addToBackStack("name")
-                .commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.fragmentContainerView, SuppliersFragment.class, null);
+        transaction.commit();
     }
 
     private void moneySelected(){
@@ -233,13 +229,13 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
         return super.onTouchEvent(event);
     }
 
-    private void swipeLeft() {
+    public void swipeLeft() {
         fragmentSelected--;
         if(fragmentSelected<1)fragmentSelected=5;
         changeFragment();
     }
 
-    private void swipeRight() {
+    public void swipeRight() {
         fragmentSelected++;
         if(fragmentSelected>5)fragmentSelected=1;
         changeFragment();
