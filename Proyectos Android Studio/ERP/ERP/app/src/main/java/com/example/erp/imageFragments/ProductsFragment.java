@@ -87,6 +87,6 @@ public class ProductsFragment extends Fragment {
         rv.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rv.setAdapter(adapter);
 
-        return inflater.inflate(R.layout.fragment_products, container, false);
+        return view;
     }
 }

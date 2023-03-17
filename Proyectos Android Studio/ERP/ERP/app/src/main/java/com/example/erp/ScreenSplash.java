@@ -10,10 +10,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.erp.dataBaseObjects.Customer;
+import com.example.erp.dataBaseObjects.Message;
 import com.example.erp.dataBaseObjects.Product;
+import com.example.erp.dataBaseObjects.ShoppingCart;
 import com.example.erp.dbControllers.DBHandler;
 import com.example.erp.dataBaseObjects.Employee;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -67,12 +71,20 @@ public class ScreenSplash extends AppCompatActivity {
         if (!started) {
             Toast.makeText(this, "Inicializando base de datos...", Toast.LENGTH_SHORT).show();
 
+            //default employees
             handler.addEmployee(new Employee(0,"00000000A","BOT","000000000","bot","0",0,fromIntToBitmap(R.drawable.trex),"0"));
             handler.addEmployee(new Employee(1,"111111111A","ADMIN","000000000","administrador jefe","0",0,fromIntToBitmap(R.drawable.admin),"admin"));
 
+            //default products
             handler.addProduct(new Product(1, "TRex","Carnívoro",1, 1000000.99,fromIntToBitmap(R.drawable.dinosaur1)));
             handler.addProduct(new Product(2, "Espinosaurio","Carnívoro",2, 1200000.50,fromIntToBitmap(R.drawable.dinosaur1)));
 
+            //default customers
+            handler.addCustomer(new Customer(1, "Juan", "111111111", "juan@gmail.com", new ShoppingCart(), fromIntToBitmap(R.drawable.juan),new ArrayList<Message>(),"juan"));
+            handler.addCustomer(new Customer(2, "Bender","222222222","bender@hotmail.com",new ShoppingCart(), fromIntToBitmap(R.drawable.bender),new ArrayList<Message>(),"bender"));
+
+
+            //started for first time
             editor.putBoolean("started", true);
             editor.commit();
         }

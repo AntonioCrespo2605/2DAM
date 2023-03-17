@@ -36,6 +36,21 @@ public class Customer {
         this.password=password;
     }
 
+    public Customer(Customer customer) {
+        this.id = customer.getId();
+        this.name = customer.getName();
+        this.tel = customer.getTel();
+        this.email = customer.getEmail();
+        this.shoppingCart = customer.getShoppingCart();
+        this.photo = customer.getPhoto();
+        this.mailbox = customer.getMailbox();
+        this.password = customer.getPassword();
+    }
+
+    public Customer(){
+        this.id=-10;
+    }
+
     public int getId() {
         return id;
     }

@@ -3,12 +3,17 @@ package com.example.erp.imageFragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.erp.R;
+import com.example.erp.dbControllers.DBHandler;
+import com.example.erp.uiControllers.ListAdapterCustomer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +30,10 @@ public class CustomersFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ListAdapterCustomer la;
+    private DBHandler handler;
+    private RecyclerView rv;
+
 
     public CustomersFragment() {
         // Required empty public constructor
@@ -61,6 +70,18 @@ public class CustomersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customers, container, false);
+        View view=inflater.inflate(R.layout.fragment_customers, container, false);
+
+        handler=new DBHandler(getContext());
+
+        rv=view.findViewById(R.id.recyclerCustomers);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        la=new ListAdapterCustomer(handler.getCustomers(), getContext());
+        rv.setAdapter(la);
+
+
+        return view;
     }
 }

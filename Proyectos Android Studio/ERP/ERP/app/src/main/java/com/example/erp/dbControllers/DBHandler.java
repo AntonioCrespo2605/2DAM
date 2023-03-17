@@ -211,7 +211,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             do{
                 Customer customer=(new Customer(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), fromBlobToBitmap(cursor.getBlob(4)),cursor.getString(5)));
-                cursor2=db.rawQuery("SELECT * FROM "+SHOPPING_CART+" WHERE id_costumer="+cursor.getInt(0), null);
+                cursor2=db.rawQuery("SELECT * FROM "+SHOPPING_CART+" WHERE id_customer="+cursor.getInt(0), null);
                 ShoppingCart shoppingCart=new ShoppingCart();
                 if(cursor2.moveToFirst()){
                     do{
