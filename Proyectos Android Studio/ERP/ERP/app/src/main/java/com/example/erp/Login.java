@@ -152,8 +152,6 @@ public class Login extends AppCompatActivity {
             if(finded) Toast.makeText(this, "Usuario ya existente", Toast.LENGTH_SHORT).show();
             else if(correctEmailFormat(input1.getText().toString()))createUser(input1.getText().toString());
             else Toast.makeText(this, "Formato de correo erróneo", Toast.LENGTH_SHORT).show();
-
-
         }
     }
 
@@ -164,7 +162,6 @@ public class Login extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("employeeID",employee.getId());
                 startActivity(intent);
-                finish();
                 break;
             case "bot":
                 Toast.makeText(this, "Accediendo como bot", Toast.LENGTH_SHORT).show();

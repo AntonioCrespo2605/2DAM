@@ -82,6 +82,7 @@ public class ScreenSplash extends AppCompatActivity {
             //default customers
             handler.addCustomer(new Customer(1, "Juan", "111111111", "juan@gmail.com", new ShoppingCart(), fromIntToBitmap(R.drawable.juan),new ArrayList<Message>(),"juan"));
             handler.addCustomer(new Customer(2, "Bender","222222222","bender@hotmail.com",new ShoppingCart(), fromIntToBitmap(R.drawable.bender),new ArrayList<Message>(),"bender"));
+            handler.addCustomer(new Customer(3, "Bender2","222222222","bender2@hotmail.com",new ShoppingCart(), fromIntToBitmap(R.drawable.bender),new ArrayList<Message>(),"bender"));
 
 
             //started for first time

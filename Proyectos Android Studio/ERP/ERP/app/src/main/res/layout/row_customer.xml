@@ -1,95 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#E4DDD1"
-    android:backgroundTint="#E4DDD1">
-
-    <LinearLayout
+    >
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="#E4DDD1"
+        android:backgroundTint="#E4DDD1">
 
         <LinearLayout
-            android:id="@+id/ll_letter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/letter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="A"
-                android:textColor="#F1F1F1"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="#F1F1F1"
-                android:orientation="vertical"></LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_customer"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_margin="5dp"
-            android:background="#D3C9C0"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:id="@+id/rl_profile"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_margin="5dp">
-
-                <ImageView
-                    android:id="@+id/profileCustomer"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    app:srcCompat="@drawable/juan" />
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/circleborder" />
-            </RelativeLayout>
-
-            <LinearLayout
+                android:id="@+id/ll_letter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/nameCustomer"
+                    android:id="@+id/letter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="Juan"
-                    android:textColor="#574D49"
+                    android:text="A"
+                    android:textColor="#F1F1F1"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/emailCustomer"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="juan@gmail.com"
-                    android:textColor="#574D49"
-                    android:textStyle="bold" />
+                    android:layout_height="3dp"
+                    android:background="#F1F1F1"
+                    android:orientation="vertical"></LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_customer"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_margin="5dp"
+                android:background="#D3C9C0"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/rl_profile"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="5dp">
+
+                    <ImageView
+                        android:id="@+id/profileCustomer"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        app:srcCompat="@drawable/juan" />
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/circleborder" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nameCustomer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Juan"
+                        android:textColor="#574D49"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/emailCustomer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="juan@gmail.com"
+                        android:textColor="#574D49"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

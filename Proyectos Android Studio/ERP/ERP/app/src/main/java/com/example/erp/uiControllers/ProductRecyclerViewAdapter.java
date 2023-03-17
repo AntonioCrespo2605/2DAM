@@ -45,10 +45,11 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
             holder.productStock.setVisibility(View.GONE);
             holder.productName.setText("Nuevo producto");
             holder.productName.setTextSize(18f);
+            holder.circle.setVisibility(View.GONE);
         }else{
             holder.imgProduct.setImageBitmap(mData.get(position).getPhoto());
             holder.productName.setText(mData.get(position).getName());
-            holder.productStock.setText("Stock: "+mData.get(position).getStock());
+            holder.productStock.setText(""+mData.get(position).getStock());
         }
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +74,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView productName, productStock;
-        ImageView imgProduct;
+        ImageView imgProduct, circle;
         CardView cardView;
         LinearLayout ll;
 
@@ -85,7 +86,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
             imgProduct = itemView.findViewById(R.id.productImage);
             cardView = itemView.findViewById(R.id.cardview_id);
             ll = itemView.findViewById(R.id.llP);
-
+            circle = itemView.findViewById(R.id.circle);
         }
     }
 }

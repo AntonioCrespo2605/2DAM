@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -179,11 +180,10 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
         contabilidadText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, AccountingFragment.class, null)
-                .setReorderingAllowed(true)
-                .addToBackStack("name")
-                .commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.fragmentContainerView, AccountingFragment.class, null);
+        transaction.commit();
     }
 
     //auxiliar methods
