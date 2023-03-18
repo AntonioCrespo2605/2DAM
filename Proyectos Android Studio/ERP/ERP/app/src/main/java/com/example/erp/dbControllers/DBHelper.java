@@ -23,6 +23,8 @@ public class DBHelper extends SQLiteOpenHelper {
     static final String SHOPPING_CART="shopping_cart";
     static final String MESSAGE_TABLE="message";
 
+    static final String TRANSATION_TABLE="transation";
+
     //Constructor
     public DBHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION);
@@ -143,6 +145,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 +"received INTEGER NOT NULL);";
 
         db.execSQL(queryTable);
+
+        //create table transation
+        queryTable="CREATE TABLE "+TRANSATION_TABLE+"("
+                +"id INTEGER PRIMARY KEY,"
+                +"date TEXT NOT NULL,"
+                +"reason TEXT NOT NULL);";
+
+        db.execSQL(queryTable);
     }
 
     @Override
@@ -158,6 +168,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+SUPPLIER_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+SHOPPING_CART);
         db.execSQL("DROP TABLE IF EXISTS "+MESSAGE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+TRANSATION_TABLE);
 
         onCreate(db);
     }

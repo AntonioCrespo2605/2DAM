@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.erp.R;
+import com.example.erp.dialogs.TransactionDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +60,38 @@ public class AccountingFragment extends Fragment {
         }
     }
 
+    private LinearLayout p1, p2;
+    private TextView money, stock, values;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_accounting, container, false);
+        View view=inflater.inflate(R.layout.fragment_accounting, container, false);
+
+        p1=view.findViewById(R.id.p1);
+        p2=view.findViewById(R.id.p2);
+        money=view.findViewById(R.id.allMoney);
+        stock=view.findViewById(R.id.allStock);
+        values=view.findViewById(R.id.allValues);
+
+        p1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialogTransaction(true);
+            }
+        });
+
+        p2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialogTransaction(false);
+            }
+        });
+
+        return view;
+    }
+
+    private void openDialogTransaction(boolean positive){
+        TransactionDialog transactionDialog=new TransactionDialog(positive);
+        transactionDialog.show(getActivity().getSupportFragmentManager(), "");
     }
 }
