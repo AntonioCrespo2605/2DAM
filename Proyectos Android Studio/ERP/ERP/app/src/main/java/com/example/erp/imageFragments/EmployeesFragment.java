@@ -3,12 +3,20 @@ package com.example.erp.imageFragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.erp.R;
+import com.example.erp.dbControllers.EmployeeController;
+import com.example.erp.uiControllers.ListAdapterEmployees;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,9 +30,18 @@ public class EmployeesFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private EmployeeController employeeController;
+
+    private RecyclerView rv;
+
+    private Spinner spinner;
+    private ListAdapterEmployees la;
+
 
     public EmployeesFragment() {
         // Required empty public constructor
@@ -61,6 +78,37 @@ public class EmployeesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_employees, container, false);
+        View view=inflater.inflate(R.layout.fragment_employees, container, false);
+
+        spinner=view.findViewById(R.id.spinner);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(), R.array.workStations, R.layout.spinner_item);
+        spinner.setAdapter(adapter);
+
+        employeeController=new EmployeeController(getContext());
+
+        rv=view.findViewById(R.id.recyclerEmployees);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        la=new ListAdapterEmployees(employeeController.getEmployees(), getContext());
+        rv.setAdapter(la);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String workStation=parent.getItemAtPosition(position).toString();
+                la=new ListAdapterEmployees(employeeController.getEmployeesInWorkStation(workStation), getContext());
+                rv.setAdapter(la);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        return view;
     }
+
+
 }

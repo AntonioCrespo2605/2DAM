@@ -187,6 +187,16 @@ public class EmployeeController{
         return false;
     }
 
+    public ArrayList<Employee>getEmployeesInWorkStation(String workStation){
+        if(workStation.equals("Todos"))return this.employees;
+
+        ArrayList<Employee>toret=new ArrayList<Employee>();
+        for(Employee employee:employees){
+            if(employee.getWorkstation().equals(workStation))toret.add(new Employee(employee));
+        }
+        return toret;
+    }
+
     /************************************************************************/
     //getters && setters
 

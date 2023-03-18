@@ -89,12 +89,12 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
         public ViewHolder(View itemView) {
             super(itemView);
 
-            ll_letter=itemView.findViewById(R.id.ll_letter2);
-            ll_customer=itemView.findViewById(R.id.ll_supplier);
-            letter=itemView.findViewById(R.id.letter2);
+            ll_letter=itemView.findViewById(R.id.ll_letter3);
+            ll_customer=itemView.findViewById(R.id.ll_employee);
+            letter=itemView.findViewById(R.id.letter3);
             nameCustomer=itemView.findViewById(R.id.nameSupplier);
             emailCustomer=itemView.findViewById(R.id.phoneSupplier);
-            rl_profile=itemView.findViewById(R.id.rl_logo);
+            rl_profile=itemView.findViewById(R.id.rl_profileEmployee);
             profile=itemView.findViewById(R.id.logoSupplier);
         }
 

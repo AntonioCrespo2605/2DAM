@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Supplier;
-import com.example.erp.dbControllers.DBHelper;
 import com.example.erp.dbControllers.SupplieController;
 
 import java.util.ArrayList;
@@ -89,12 +88,12 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
 
         public ViewHolder2(View itemView) {
             super(itemView);
-            ll_letter=itemView.findViewById(R.id.ll_letter2);
-            ll_supplier=itemView.findViewById(R.id.ll_supplier);
-            letter=itemView.findViewById(R.id.letter2);
+            ll_letter=itemView.findViewById(R.id.ll_letter3);
+            ll_supplier=itemView.findViewById(R.id.ll_employee);
+            letter=itemView.findViewById(R.id.letter3);
             nameSupplier=itemView.findViewById(R.id.nameSupplier);
             numberSupplier=itemView.findViewById(R.id.phoneSupplier);
-            rl_logo=itemView.findViewById(R.id.rl_logo);
+            rl_logo=itemView.findViewById(R.id.rl_profileEmployee);
             logo=itemView.findViewById(R.id.logoSupplier);
             stock=itemView.findViewById(R.id.supplies);
             circle=itemView.findViewById(R.id.circleSupplier);

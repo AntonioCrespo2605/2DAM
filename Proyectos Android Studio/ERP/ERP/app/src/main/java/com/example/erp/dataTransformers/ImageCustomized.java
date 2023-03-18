@@ -1,5 +1,6 @@
 package com.example.erp.dataTransformers;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -15,5 +16,9 @@ public class ImageCustomized {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
         return outputStream.toByteArray();
+    }
+
+    public static Bitmap fromIntToBitmap(int img, Context context){
+        return BitmapFactory.decodeResource(context.getResources(), img);
     }
 }

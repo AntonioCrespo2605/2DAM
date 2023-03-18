@@ -42,6 +42,23 @@ public class Employee {
         this.password=password;
     }
 
+    public Employee (Employee employee){
+        this.id = employee.getId();
+        this.dni = employee.getDni();
+        this.name = employee.getName();
+        this.tel = employee.getTel();
+        this.workstation = employee.getWorkstation();
+        this.bank_number = employee.getBank_number();
+        this.current_salary = employee.getCurrent_salary();
+        this.salaries = employee.getSalaries();
+        this.photo=employee.getPhoto();
+        this.password=employee.getPassword();
+    }
+
+    public Employee(){
+        this.id=-10;
+    }
+
     public int getId() {
         return id;
     }

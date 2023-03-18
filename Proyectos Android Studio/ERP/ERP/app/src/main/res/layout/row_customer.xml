@@ -17,7 +17,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ll_letter2"
+                android:id="@+id/ll_letter3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
@@ -27,7 +27,7 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/letter2"
+                    android:id="@+id/letter3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="A"
@@ -43,7 +43,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_supplier"
+                android:id="@+id/ll_employee"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_margin="5dp"
@@ -51,7 +51,7 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:id="@+id/rl_logo"
+                    android:id="@+id/rl_profileEmployee"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_margin="5dp">
