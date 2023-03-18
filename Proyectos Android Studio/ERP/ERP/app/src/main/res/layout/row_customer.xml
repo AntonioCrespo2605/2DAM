@@ -43,7 +43,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_customer2"
+                android:id="@+id/ll_supplier"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_margin="5dp"
@@ -87,7 +87,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/emailCustomer"
+                        android:id="@+id/phoneSupplier"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="juan@gmail.com"

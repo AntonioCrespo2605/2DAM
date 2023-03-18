@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.example.erp.dataBaseObjects.Customer;
 import com.example.erp.dataBaseObjects.Employee;
@@ -18,10 +16,11 @@ import com.example.erp.dataBaseObjects.Sale;
 import com.example.erp.dataBaseObjects.ShoppingCart;
 import com.example.erp.dataBaseObjects.Supplie;
 import com.example.erp.dataBaseObjects.Supplier;
+import com.example.erp.dataTransformers.ImageCustomized;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
+@Deprecated
 public class DBHandler extends SQLiteOpenHelper {
     //db info
     private static final String DB_NAME="dinosDB.sqlite";
@@ -47,6 +46,9 @@ public class DBHandler extends SQLiteOpenHelper {
     private ArrayList<Supplie>supplies;
     private ArrayList<Supplier>suppliers;
     private ArrayList<Sale>sales;
+
+    //image format customized
+    ImageCustomized ic;
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -169,13 +171,15 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+PRODUCT_SALE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+SALE_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS "+SALE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+SALARY_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+EMPLOYEE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+CUSTOMER_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+PRODUCT_SUPPLIE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+SUPPLIE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+PRODUCT_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+SUPPLIER_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+SHOPPING_CART);
+        db.execSQL("DROP TABLE IF EXISTS "+MESSAGE_TABLE);
 
         onCreate(db);
     }
@@ -210,7 +214,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                Customer customer=(new Customer(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), fromBlobToBitmap(cursor.getBlob(4)),cursor.getString(5)));
+                Customer customer=(new Customer(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), ic.fromBlobToBitmap(cursor.getBlob(4)),cursor.getString(5)));
                 cursor2=db.rawQuery("SELECT * FROM "+SHOPPING_CART+" WHERE id_customer="+cursor.getInt(0), null);
                 ShoppingCart shoppingCart=new ShoppingCart();
                 if(cursor2.moveToFirst()){
@@ -244,7 +248,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                suppliers.add(new Supplier(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),fromBlobToBitmap(cursor.getBlob(4))));
+                suppliers.add(new Supplier(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),ic.fromBlobToBitmap(cursor.getBlob(4))));
             }while(cursor.moveToNext());
         }
     }
@@ -259,7 +263,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             do{
                 double current_price=Double.parseDouble(cursor.getString(4));
-                products.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),current_price,fromBlobToBitmap(cursor.getBlob(5))));
+                products.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),current_price,ic.fromBlobToBitmap(cursor.getBlob(5))));
             }while(cursor.moveToNext());
         }
     }
@@ -275,7 +279,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             do{
                 Employee employee=new Employee(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4), cursor.getString(5), Double.parseDouble(cursor.getString(6)),fromBlobToBitmap(cursor.getBlob(7)),cursor.getString(8));
+                        cursor.getString(4), cursor.getString(5), Double.parseDouble(cursor.getString(6)),ic.fromBlobToBitmap(cursor.getBlob(7)),cursor.getString(8));
 
                 cursor2=db.rawQuery("SELECT * FROM "+SALARY_TABLE+" WHERE id_employee="+cursor.getInt(0), null);
                 ArrayList<Salary>salaries=new ArrayList<Salary>();
@@ -380,6 +384,17 @@ public class DBHandler extends SQLiteOpenHelper {
         return null;
     }
 
+    public ArrayList<Supplie>getPendingSuppliesOfSupplier(int id){
+        ArrayList<Supplie>toret=new ArrayList<Supplie>();
+
+        for(Supplie supplie:supplies){
+            if(supplie.getSupplier().getId()==id && !supplie.isState()){
+                toret.add(supplie);
+            }
+        }
+        return toret;
+    }
+
     /************************************************************************/
     //adding Methods
 
@@ -399,7 +414,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put("name",customer.getName());
         values.put("tel",customer.getTel());
         values.put("email",customer.getEmail());
-        values.put("photo",fromBitmapToBlob(customer.getPhoto()));
+        values.put("photo",ic.fromBitmapToBlob(customer.getPhoto()));
         values.put("password",customer.getPassword());
 
         db.insert(CUSTOMER_TABLE, null, values);
@@ -452,7 +467,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put("workstation", employee.getWorkstation());
         values.put("bank_number", employee.getBank_number());
         values.put("current_salary", employee.getCurrent_salary()+"");
-        values.put("photo", fromBitmapToBlob(employee.getPhoto()));
+        values.put("photo", ic.fromBitmapToBlob(employee.getPhoto()));
         values.put("password",employee.getPassword());
 
         db.insert(EMPLOYEE_TABLE, null, values);
@@ -488,7 +503,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put("description",product.getDescription());
         values.put("stock",product.getStock());
         values.put("current_price", product.getCurrent_price()+"");
-        values.put("photo", fromBitmapToBlob(product.getPhoto()));
+        values.put("photo", ic.fromBitmapToBlob(product.getPhoto()));
 
         db.insert(PRODUCT_TABLE, null, values);
         db.close();
@@ -510,7 +525,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put("name", supplier.getName());
         values.put("tel",supplier.getTel());
         values.put("address",supplier.getAddress());
-        values.put("logo", fromBitmapToBlob(supplier.getLogo()));
+        values.put("logo", ic.fromBitmapToBlob(supplier.getLogo()));
 
         db.insert(SUPPLIER_TABLE, null, values);
         db.close();
@@ -589,7 +604,6 @@ public class DBHandler extends SQLiteOpenHelper {
             values2.put("ind_price",ps.getIndPrice());
             db2.insert(PRODUCT_SALE_TABLE, null, values);
         }
-        db2.close();
         readSales();
     }
 
@@ -753,7 +767,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put("name", supplier.getName());
         values.put("tel", supplier.getTel());
         values.put("address", supplier.getAddress());
-        values.put("logo", fromBitmapToBlob(supplier.getLogo()));
+        values.put("logo", ic.fromBitmapToBlob(supplier.getLogo()));
 
         db.update(SUPPLIER_TABLE, values, "id="+supplier.getId(), null);
         db.close();
@@ -800,7 +814,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put("description", product.getDescription());
         values.put("stock", product.getStock());
         values.put("current_price",product.getCurrent_price()+"");
-        values.put("photo", fromBitmapToBlob(product.getPhoto()));
+        values.put("photo", ic.fromBitmapToBlob(product.getPhoto()));
 
         db.update(PRODUCT_TABLE, values, "id="+product.getId(), null);
         db.close();
@@ -816,7 +830,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put("name",customer.getName());
         values.put("tel", customer.getTel());
         values.put("email", customer.getEmail());
-        values.put("photo",fromBitmapToBlob(customer.getPhoto()));
+        values.put("photo",ic.fromBitmapToBlob(customer.getPhoto()));
         values.put("password", customer.getPassword());
 
         db.update(CUSTOMER_TABLE, values, "id="+customer.getId(), null);
@@ -836,7 +850,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put("workstation", employee.getWorkstation());
         values.put("bank_number",employee.getBank_number());
         values.put("current_salary", employee.getCurrent_salary());
-        values.put("photo",fromBitmapToBlob(employee.getPhoto()));
+        values.put("photo",ic.fromBitmapToBlob(employee.getPhoto()));
         values.put("password", employee.getPassword());
 
         db.update(EMPLOYEE_TABLE, values, "id="+employee.getId(), null);
@@ -962,21 +976,6 @@ public class DBHandler extends SQLiteOpenHelper {
             if(sale.getId()==id)return true;
         }
         return false;
-    }
-
-    /************************************************************************/
-    //Other auxiliar methods
-
-    //it transforms a blob(byteArray)to Bitmap
-    private Bitmap fromBlobToBitmap(byte[]imgByte){
-        return BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
-    }
-
-    //it transforms a Bitmap to blob(byteArray)
-    private byte[] fromBitmapToBlob(Bitmap bitmap){
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
-        return outputStream.toByteArray();
     }
 
     /************************************************************************/

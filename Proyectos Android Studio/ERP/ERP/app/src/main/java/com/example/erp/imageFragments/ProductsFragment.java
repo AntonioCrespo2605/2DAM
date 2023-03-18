@@ -83,7 +83,6 @@ public class ProductsFragment extends Fragment {
         products.addAll(handler.getProducts());
 
         adapter = new ProductRecyclerViewAdapter(getContext(), products);
-        Toast.makeText(getContext(), ""+products.size(), Toast.LENGTH_SHORT).show();
         rv.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rv.setAdapter(adapter);
 

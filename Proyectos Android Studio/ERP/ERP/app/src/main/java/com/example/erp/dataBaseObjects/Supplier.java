@@ -17,6 +17,18 @@ public class Supplier {
         this.logo=logo;
     }
 
+    public Supplier(){
+        this.id=-10;
+    }
+
+    public Supplier(Supplier supplier){
+        this.id = supplier.getId();
+        this.name = supplier.getName();
+        this.tel = supplier.getTel();
+        this.address = supplier.getAddress();
+        this.logo=supplier.getLogo();
+    }
+
     public int getId() {
         return id;
     }

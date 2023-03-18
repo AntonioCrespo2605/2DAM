@@ -44,7 +44,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_customer2"
+                android:id="@+id/ll_supplier"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_margin="5dp"
@@ -61,7 +61,7 @@
                         android:id="@+id/logoSupplier"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        app:srcCompat="@drawable/circle" />
+                        app:srcCompat="@drawable/jurassicpark" />
 
                     <ImageView
                         android:id="@+id/imageView5"
@@ -82,13 +82,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:text="Jurasic Park"
+                        android:text="Jurassic Park"
                         android:textColor="#574D49"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/emailCustomer"
+                        android:id="@+id/phoneSupplier"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="111111111"
@@ -103,7 +103,7 @@
                     >
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/circleSupplier"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginEnd="10dp"
@@ -112,6 +112,21 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/circle" />
+
+                    <TextView
+                        android:id="@+id/supplies"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:shadowColor="#574D49"
+                        android:text="100"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>

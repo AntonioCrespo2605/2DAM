@@ -14,6 +14,7 @@ import com.example.erp.dataBaseObjects.Customer;
 import com.example.erp.dataBaseObjects.Message;
 import com.example.erp.dataBaseObjects.Product;
 import com.example.erp.dataBaseObjects.ShoppingCart;
+import com.example.erp.dataBaseObjects.Supplier;
 import com.example.erp.dbControllers.DBHandler;
 import com.example.erp.dataBaseObjects.Employee;
 
@@ -84,6 +85,9 @@ public class ScreenSplash extends AppCompatActivity {
             handler.addCustomer(new Customer(2, "Bender","222222222","bender@hotmail.com",new ShoppingCart(), fromIntToBitmap(R.drawable.bender),new ArrayList<Message>(),"bender"));
             handler.addCustomer(new Customer(3, "Bender2","222222222","bender2@hotmail.com",new ShoppingCart(), fromIntToBitmap(R.drawable.bender),new ArrayList<Message>(),"bender"));
 
+            //default suppliers
+            handler.addSupplier(new Supplier(1, "Jurassic Park", "123123123","Av. del dinosaurio", fromIntToBitmap(R.drawable.jurassicpark)));
+            handler.addSupplier(new Supplier(2, "Tienda de dinosaurios", "321321321","Vigo", fromIntToBitmap(R.drawable.tiendadinosaurios)));
 
             //started for first time
             editor.putBoolean("started", true);

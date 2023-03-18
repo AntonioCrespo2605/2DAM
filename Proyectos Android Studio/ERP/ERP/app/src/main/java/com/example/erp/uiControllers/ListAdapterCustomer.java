@@ -24,13 +24,12 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
 
     private List<Customer>customers;
     private LayoutInflater inflater;
-    private Context context;
+
 
     private char firstLetter=' ';
 
     public ListAdapterCustomer(List<Customer>customers, Context context){
         this.inflater=LayoutInflater.from(context);
-        this.context=context;
         this.customers=orderCustomers(customers);
     }
 
@@ -91,10 +90,10 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
             super(itemView);
 
             ll_letter=itemView.findViewById(R.id.ll_letter2);
-            ll_customer=itemView.findViewById(R.id.ll_customer2);
+            ll_customer=itemView.findViewById(R.id.ll_supplier);
             letter=itemView.findViewById(R.id.letter2);
             nameCustomer=itemView.findViewById(R.id.nameSupplier);
-            emailCustomer=itemView.findViewById(R.id.emailCustomer);
+            emailCustomer=itemView.findViewById(R.id.phoneSupplier);
             rl_profile=itemView.findViewById(R.id.rl_logo);
             profile=itemView.findViewById(R.id.logoSupplier);
         }
