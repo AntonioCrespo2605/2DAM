@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.erp.R;
-import com.example.erp.dbControllers.DBHandler;
-import com.example.erp.uiControllers.ListAdapterCustomer;
+import com.example.erp.dbControllers.DBHelper;
+import com.example.erp.dbControllers.SupplierController;
 import com.example.erp.uiControllers.ListAdapterSuppliers;
 
 /**
@@ -31,7 +31,7 @@ public class SuppliersFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private DBHandler handler;
+    private SupplierController supplierController;
     private RecyclerView rv;
     private ListAdapterSuppliers la;
 
@@ -72,13 +72,13 @@ public class SuppliersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_suppliers, container, false);
 
-        handler=new DBHandler(getContext());
+        supplierController=new SupplierController(getContext());
 
         rv=view.findViewById(R.id.recyclerSuppliers);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        la=new ListAdapterSuppliers(handler.getSuppliers(), getContext());
+        la=new ListAdapterSuppliers(supplierController.getSuppliers(), getContext());
         rv.setAdapter(la);
 
         return view;

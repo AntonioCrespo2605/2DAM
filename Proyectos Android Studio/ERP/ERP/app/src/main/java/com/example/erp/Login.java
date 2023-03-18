@@ -12,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.erp.dbControllers.DBHandler;
+import com.example.erp.dbControllers.CustomerController;
+import com.example.erp.dbControllers.DBHelper;
 import com.example.erp.dataBaseObjects.Customer;
 import com.example.erp.dataBaseObjects.Employee;
+import com.example.erp.dbControllers.EmployeeController;
 
 public class Login extends AppCompatActivity {
 
@@ -23,7 +25,8 @@ public class Login extends AppCompatActivity {
     private TextView link1, link2;
     private Button button;
 
-    private DBHandler handler;
+    private EmployeeController employeeController;
+    private CustomerController customerController;
 
     private boolean interfaceEmployee=true, login=true;
 
@@ -44,7 +47,8 @@ public class Login extends AppCompatActivity {
         link2=findViewById(R.id.tv2);
         button=findViewById(R.id.button);
 
-        handler=new DBHandler(this);
+        employeeController=new EmployeeController(this);
+        customerController=new CustomerController(this);
 
         link2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +127,7 @@ public class Login extends AppCompatActivity {
     private void eventClicked(){
         if(interfaceEmployee){
             boolean finded=false;
-            for(Employee e:handler.getEmployees()){
+            for(Employee e:employeeController.getEmployees()){
                 if((e.getId()+"").equals(input1.getText().toString())&&input2.getText().toString().equals(e.getPassword())){
                     finded=true;
                     checkPosition(e);
@@ -133,7 +137,7 @@ public class Login extends AppCompatActivity {
 
         }else if(login){
             boolean finded=false;
-            for(Customer c:handler.getCustomers()){
+            for(Customer c:customerController.getCustomers()){
                 if(c.getEmail().equals(input1.getText().toString())&&input2.getText().toString().equals(c.getPassword())){
                     finded=true;
                     accessAsUser(c);
@@ -143,7 +147,7 @@ public class Login extends AppCompatActivity {
 
         }else{
             boolean finded=false;
-            for(Customer c: handler.getCustomers()){
+            for(Customer c: customerController.getCustomers()){
                 if(c.getEmail().equals(input1.getText().toString())){
                     finded=true;
                     break;

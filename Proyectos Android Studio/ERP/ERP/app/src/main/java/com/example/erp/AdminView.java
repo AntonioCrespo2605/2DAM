@@ -13,8 +13,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.erp.dbControllers.DBHandler;
+import com.example.erp.dbControllers.DBHelper;
 import com.example.erp.dataBaseObjects.Employee;
+import com.example.erp.dbControllers.EmployeeController;
 import com.example.erp.imageFragments.AccountingFragment;
 import com.example.erp.imageFragments.CustomersFragment;
 import com.example.erp.imageFragments.EmployeesFragment;
@@ -22,12 +23,12 @@ import com.example.erp.imageFragments.ProductsFragment;
 import com.example.erp.imageFragments.SuppliersFragment;
 
 public class AdminView extends AppCompatActivity implements GestureDetector.OnGestureListener {
-    private DBHandler handler;
+
+    private EmployeeController employeeController;
     private ImageView employeeOp, customerOp, productOp, supplierOp, moneyOp, menu, profile;
     private TextView name, empleadosText, clientesText, productosText, proveedoresText, contabilidadText;
 
     //variables for swipping
-    private static final String TAG="Swipe Position";
     private static final int MIN_DISTANCE=150;
     private float x1, x2, y1, y2;
     private GestureDetector gestureDetector;
@@ -58,10 +59,10 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
         proveedoresText=findViewById(R.id.proveedoresText);
         contabilidadText=findViewById(R.id.contabilidadText);
 
-        handler=new DBHandler(this);
+        employeeController=new EmployeeController(this);
 
         Bundle b = getIntent().getExtras();
-        Employee employee=handler.getEmployeeById(b.getInt("employeeID"));
+        Employee employee=employeeController.getEmployeeById(b.getInt("employeeID"));
 
         profile.setImageBitmap(employee.getPhoto());
         name.setText(employee.getName());

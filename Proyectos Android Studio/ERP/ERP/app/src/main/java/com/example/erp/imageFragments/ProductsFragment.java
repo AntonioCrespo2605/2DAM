@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.erp.dataBaseObjects.Product;
-import com.example.erp.dbControllers.DBHandler;
+import com.example.erp.dbControllers.DBHelper;
 import com.example.erp.R;
+import com.example.erp.dbControllers.ProductController;
 import com.example.erp.uiControllers.ProductRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class ProductsFragment extends Fragment {
     }
 
     private RecyclerView rv;
-    private DBHandler handler;
+    private ProductController productController;
     private ProductRecyclerViewAdapter adapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,10 +77,10 @@ public class ProductsFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_products, container, false);
         rv=view.findViewById(R.id.recyclerProducts);
 
-        handler=new DBHandler(getContext());
+        productController=new ProductController(getContext());
         ArrayList<Product>products=new ArrayList<Product>();
         products.add(new Product());
-        products.addAll(handler.getProducts());
+        products.addAll(productController.getProducts());
 
         adapter = new ProductRecyclerViewAdapter(getContext(), products);
         rv.setLayoutManager(new GridLayoutManager(getContext(), 3));

@@ -12,76 +12,35 @@ import com.example.erp.dataTransformers.ImageCustomized;
 
 import java.util.ArrayList;
 
-public class EmployeeController extends SQLiteOpenHelper {
-    private static final String DB_NAME="dinosDB.sqlite";
-    private static final int DB_VERSION=1;
-    private static final String EMPLOYEE_TABLE="employee";
-    private static final String SALARY_TABLE="salary";
-    private static final String SALE_TABLE="sale";
+public class EmployeeController{
+
+    private DBHelper dbHelper;
 
     private ArrayList<Employee>employees;
-
-    private static ImageCustomized ic;
-
 
     /************************************************************************/
     //Constructor
     public EmployeeController(Context context){
-        super(context, DB_NAME, null, DB_VERSION);
+        dbHelper=new DBHelper(context);
         readEmployees();
     }
 
-    /************************************************************************/
-    //onCreate and onUpgrade
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        //Create table employee
-        String queryTable="CREATE TABLE IF NOT EXISTS "+EMPLOYEE_TABLE+" ("
-                +"id INTEGER PRIMARY KEY, "
-                +"dni TEXT NOT NULL,"
-                +"name TEXT NOT NULL, "
-                +"tel TEXT NOT NULL,"
-                +"workstation TEXT NOT NULL,"
-                +"bank_number TEXT NOT NULL, "
-                +"current_salary TEXT NOT NULL,"
-                +"photo BLOB,"
-                +"password TEXT NOT NULL);";
-
-        db.execSQL(queryTable);
-
-        //Create table salary
-        queryTable="CREATE TABLE IF NOT EXISTS "+SALARY_TABLE+" ("
-                +"date TEXT NOT NULL, "
-                +"id_employee INTEGER NOT NULL REFERENCES "+EMPLOYEE_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "//
-                +"salary TEXT NOT NULL, "
-                +"PRIMARY KEY(date, id_employee));";
-
-        db.execSQL(queryTable);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS "+SALARY_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS "+EMPLOYEE_TABLE);
-
-        onCreate(db);
-    }
 
     /************************************************************************/
     //reads all the employees from database
     private void readEmployees(){
         this.employees=new ArrayList<Employee>();
 
-        SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.rawQuery("SELECT * FROM "+EMPLOYEE_TABLE, null);
+        SQLiteDatabase db=dbHelper.getReadableDatabase();
+        Cursor cursor=db.rawQuery("SELECT * FROM "+DBHelper.EMPLOYEE_TABLE, null);
         Cursor cursor2;
 
         if(cursor.moveToFirst()){
             do{
                 Employee employee=new Employee(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4), cursor.getString(5), Double.parseDouble(cursor.getString(6)),ic.fromBlobToBitmap(cursor.getBlob(7)),cursor.getString(8));
+                        cursor.getString(4), cursor.getString(5), Double.parseDouble(cursor.getString(6)),ImageCustomized.fromBlobToBitmap(cursor.getBlob(7)),cursor.getString(8));
 
-                cursor2=db.rawQuery("SELECT * FROM "+SALARY_TABLE+" WHERE id_employee="+cursor.getInt(0), null);
+                cursor2=db.rawQuery("SELECT * FROM "+DBHelper.SALARY_TABLE+" WHERE id_employee="+cursor.getInt(0), null);
                 ArrayList<Salary>salaries=new ArrayList<Salary>();
                 if(cursor2.moveToFirst()){
                     do{
@@ -104,7 +63,7 @@ public class EmployeeController extends SQLiteOpenHelper {
             id++;
         }
 
-        SQLiteDatabase db=this.getWritableDatabase();
+        SQLiteDatabase db=dbHelper.getWritableDatabase();
         ContentValues values =new ContentValues();
 
         values.put("id", employee.getId());
@@ -114,21 +73,21 @@ public class EmployeeController extends SQLiteOpenHelper {
         values.put("workstation", employee.getWorkstation());
         values.put("bank_number", employee.getBank_number());
         values.put("current_salary", employee.getCurrent_salary()+"");
-        values.put("photo", ic.fromBitmapToBlob(employee.getPhoto()));
+        values.put("photo", ImageCustomized.fromBitmapToBlob(employee.getPhoto()));
         values.put("password",employee.getPassword());
 
-        db.insert(EMPLOYEE_TABLE, null, values);
+        db.insert(DBHelper.EMPLOYEE_TABLE, null, values);
         db.close();
 
         //salaries
-        SQLiteDatabase db2=this.getWritableDatabase();
+        SQLiteDatabase db2=dbHelper.getWritableDatabase();
         ContentValues values2 =new ContentValues();
 
         for(int i=0;i<employee.getSalaries().size();i++){
             values2.put("date",employee.getSalaries().get(i).getDate());
             values2.put("id_employee", employee.getId());
             values2.put("salary",employee.getSalaries().get(i).getSalary()+"");
-            db2.insert(SALARY_TABLE, null, values2);
+            db2.insert(DBHelper.SALARY_TABLE, null, values2);
         }
         db2.close();
         readEmployees();
@@ -136,14 +95,14 @@ public class EmployeeController extends SQLiteOpenHelper {
 
     public void addSalary(Salary salary, int idEmployee){
         if(!existsSalary(salary.getDate(), idEmployee)) {
-            SQLiteDatabase db=this.getWritableDatabase();
+            SQLiteDatabase db=dbHelper.getWritableDatabase();
             ContentValues values =new ContentValues();
 
             values.put("date", salary.getDate());
             values.put("id_employee", idEmployee);
             values.put("salary", salary.getSalary());
 
-            db.insert(SALARY_TABLE, null, values);
+            db.insert(DBHelper.SALARY_TABLE, null, values);
             db.close();
             readEmployees();
         }
@@ -152,17 +111,17 @@ public class EmployeeController extends SQLiteOpenHelper {
     /************************************************************************/
     //delete methods
     public void deleteEmployee(int id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(EMPLOYEE_TABLE, "id="+id, null);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(DBHelper.EMPLOYEE_TABLE, "id="+id, null);
 
         readEmployees();
 
     }
 
     public void deleteSalary(int id_employee, String date){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM "+SALARY_TABLE+" WHERE EXISTS" +
-                "(SELECT * FROM "+SALARY_TABLE+" WHERE id_employee="+id_employee+" AND date="+date+")");
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM "+DBHelper.SALARY_TABLE+" WHERE EXISTS" +
+                "(SELECT * FROM "+DBHelper.SALARY_TABLE+" WHERE id_employee="+id_employee+" AND date="+date+")");
         db.close();
 
         readEmployees();
@@ -171,7 +130,7 @@ public class EmployeeController extends SQLiteOpenHelper {
     /************************************************************************/
     //update methods
     public void updateEmployee(Employee employee){
-        SQLiteDatabase db =this.getWritableDatabase();
+        SQLiteDatabase db =dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put("id", employee.getId());
@@ -181,24 +140,24 @@ public class EmployeeController extends SQLiteOpenHelper {
         values.put("workstation", employee.getWorkstation());
         values.put("bank_number",employee.getBank_number());
         values.put("current_salary", employee.getCurrent_salary());
-        values.put("photo",ic.fromBitmapToBlob(employee.getPhoto()));
+        values.put("photo",ImageCustomized.fromBitmapToBlob(employee.getPhoto()));
         values.put("password", employee.getPassword());
 
-        db.update(EMPLOYEE_TABLE, values, "id="+employee.getId(), null);
+        db.update(DBHelper.EMPLOYEE_TABLE, values, "id="+employee.getId(), null);
         db.close();
 
         readEmployees();
     }
 
     private void updateSalary(int id_employee, Salary salary){
-        SQLiteDatabase db =this.getWritableDatabase();
+        SQLiteDatabase db =dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put("id_employee", id_employee);
         values.put("date", salary.getDate());
         values.put("salary", salary.getSalary());
 
-        db.update(SALARY_TABLE, values, "id_employee="+id_employee+" AND date="+salary.getDate(),null);
+        db.update(DBHelper.SALARY_TABLE, values, "id_employee="+id_employee+" AND date="+salary.getDate(),null);
         db.close();
 
         readEmployees();
@@ -226,5 +185,16 @@ public class EmployeeController extends SQLiteOpenHelper {
             if(salary.getDate()==date)return true;
         }
         return false;
+    }
+
+    /************************************************************************/
+    //getters && setters
+
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(ArrayList<Employee> employees) {
+        this.employees = employees;
     }
 }

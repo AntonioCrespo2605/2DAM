@@ -14,9 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
-import com.example.erp.dataBaseObjects.Customer;
 import com.example.erp.dataBaseObjects.Supplier;
-import com.example.erp.dbControllers.DBHandler;
+import com.example.erp.dbControllers.DBHelper;
+import com.example.erp.dbControllers.SupplieController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
 
     private List<Supplier>suppliers;
     private LayoutInflater inflater;
-    private DBHandler handler;
+    private SupplieController supplieController;
 
     //it is used as controller for showing the letter(when next supplier has a new first letter)
     private char firstLetter=' ';
@@ -33,7 +33,7 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
     public ListAdapterSuppliers(List<Supplier> suppliers, Context context){
         this.inflater=LayoutInflater.from(context);
         this.suppliers=orderSuppliers(suppliers);
-        this.handler=new DBHandler(context);
+        supplieController=new SupplieController(context);
     }
 
     @NonNull
@@ -119,7 +119,7 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
                 nameSupplier.setText(item.getName());
                 numberSupplier.setText(item.getTel());
                 logo.setImageBitmap(item.getLogo());
-                int numPendingSupplies=handler.getPendingSuppliesOfSupplier(item.getId()).size();
+                int numPendingSupplies=supplieController.getPendingSuppliesOfSupplier(item.getId()).size();
                 if(numPendingSupplies==0){
                     circle.setVisibility(View.GONE);
                     stock.setVisibility(View.GONE);

@@ -12,13 +12,8 @@ import com.example.erp.dataBaseObjects.Supplie;
 
 import java.util.ArrayList;
 
-public class SupplieController extends SQLiteOpenHelper {
-    private static final String DB_NAME="dinosDB.sqlite";
-    private static final int DB_VERSION=1;
-    private static final String SUPPLIE_TABLE="supplie";
-    private static final String PRODUCT_SUPPLIE_TABLE="product_supplie";
-    private static final String SUPPLIER_TABLE="supplier";
-    private static final String PRODUCT_TABLE="product";
+public class SupplieController{
+    private DBHelper dbHelper;
 
     private ArrayList<Supplie>supplies;
     private SupplierController supplierController;
@@ -27,48 +22,19 @@ public class SupplieController extends SQLiteOpenHelper {
     /************************************************************************/
     //Constructor
     public SupplieController(Context context){
-        super(context, DB_NAME, null, DB_VERSION);
+        dbHelper=new DBHelper(context);
         readSupplies();
         supplierController=new SupplierController(context);
         productController=new ProductController(context);
     }
-    /************************************************************************/
-    //OnCreate & OnUpdate
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        //Create table supplie
-        String queryTable="CREATE TABLE "+SUPPLIE_TABLE+" ("
-                +"id INTEGER PRIMARY KEY, "
-                +"id_supplier INTEGER NOT NULL REFERENCES "+SUPPLIER_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE,"
-                +"date TEXT NOT NULL, "
-                +"state INTEGER NOT NULL,"
-                +"shipping_costs TEXT NOT NULL);";
 
-        db.execSQL(queryTable);
-
-        //Create table product_supplie
-        queryTable="CREATE TABLE "+PRODUCT_SUPPLIE_TABLE+" ("
-                +"id_product INTEGER NOT NULL REFERENCES "+PRODUCT_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "
-                +"id_supplie INTEGER NOT NULL REFERENCES "+SUPPLIE_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE,"
-                +"amount INTEGER NOT NULL,"
-                +"ind_price TEXT NOT NULL,"
-                +"PRIMARY KEY(id_product, id_supplie));";
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS "+PRODUCT_SUPPLIE_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS "+SUPPLIE_TABLE);
-
-        onCreate(db);
-    }
     /************************************************************************/
     //reads all supplies from db
     private void readSupplies(){
         this.supplies=new ArrayList<Supplie>();
 
-        SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.rawQuery("SELECT * FROM "+SUPPLIE_TABLE, null);
+        SQLiteDatabase db=dbHelper.getReadableDatabase();
+        Cursor cursor=db.rawQuery("SELECT * FROM "+DBHelper.SUPPLIE_TABLE, null);
         Cursor cursor2;
 
         if(cursor.moveToFirst()){
@@ -78,7 +44,7 @@ public class SupplieController extends SQLiteOpenHelper {
                 else state=true;
                 Supplie supplie=new Supplie(cursor.getInt(0), supplierController.getSupplierById(cursor.getInt(1)), cursor.getString(2), state, Double.parseDouble(cursor.getString(4)));
 
-                cursor2=db.rawQuery("SELECT * FROM "+PRODUCT_SUPPLIE_TABLE+" WHERE id_supplie="+cursor.getInt(0), null);
+                cursor2=db.rawQuery("SELECT * FROM "+DBHelper.PRODUCT_SUPPLIE_TABLE+" WHERE id_supplie="+cursor.getInt(0), null);
                 ArrayList<ProductSale>lines=new ArrayList<ProductSale>();
                 if(cursor2.moveToFirst()){
                     do{
@@ -101,7 +67,7 @@ public class SupplieController extends SQLiteOpenHelper {
             id++;
         }
 
-        SQLiteDatabase db=this.getWritableDatabase();
+        SQLiteDatabase db=dbHelper.getWritableDatabase();
         ContentValues values =new ContentValues();
 
         values.put("id", supplie.getId());
@@ -112,11 +78,11 @@ public class SupplieController extends SQLiteOpenHelper {
         values.put("state",state);
         values.put("shipping_costs", supplie.getShipping_costs()+"");
 
-        db.insert(SUPPLIE_TABLE, null, values);
+        db.insert(DBHelper.SUPPLIE_TABLE, null, values);
         db.close();
 
         //product_supplie
-        SQLiteDatabase db2=this.getWritableDatabase();
+        SQLiteDatabase db2=dbHelper.getWritableDatabase();
         ContentValues values2 =new ContentValues();
 
         for (ProductSale ps:supplie.getLines()){
@@ -124,7 +90,7 @@ public class SupplieController extends SQLiteOpenHelper {
             values2.put("id_supplie",supplie.getId());
             values2.put("amount", ps.getAmount());
             values2.put("ind_price",ps.getIndPrice());
-            db2.insert(PRODUCT_SUPPLIE_TABLE, null, values);
+            db2.insert(DBHelper.PRODUCT_SUPPLIE_TABLE, null, values);
         }
         db2.close();
         readSupplies();
@@ -132,7 +98,7 @@ public class SupplieController extends SQLiteOpenHelper {
 
     public void addProductToSupplie(ProductSale productSale, int id_supplie){
         if(!existsProductInSupplie(productSale.getProduct().getId(), id_supplie)){
-            SQLiteDatabase db=this.getWritableDatabase();
+            SQLiteDatabase db=dbHelper.getWritableDatabase();
             ContentValues values =new ContentValues();
 
             values.put("id_product", productSale.getProduct().getId());
@@ -140,24 +106,24 @@ public class SupplieController extends SQLiteOpenHelper {
             values.put("amount",productSale.getAmount());
             values.put("ind_price",productSale.getIndPrice()+"");
 
-            db.insert(PRODUCT_SUPPLIE_TABLE, null, values);
+            db.insert(DBHelper.PRODUCT_SUPPLIE_TABLE, null, values);
             db.close();
         }
     }
     /************************************************************************/
     //delete methods
     public void deleteSupplie(int id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(PRODUCT_SUPPLIE_TABLE,"id_supplie="+id,null);
-        db.delete(SUPPLIE_TABLE, "id="+id, null);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(DBHelper.PRODUCT_SUPPLIE_TABLE,"id_supplie="+id,null);
+        db.delete(DBHelper.SUPPLIE_TABLE, "id="+id, null);
 
         readSupplies();
     }
 
     public void deleteProductSupplie(int id_product, int id_supplie) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM "+PRODUCT_SUPPLIE_TABLE+" WHERE EXISTS" +
-                "(SELECT * FROM "+PRODUCT_SUPPLIE_TABLE+"WHERE id_product="+id_product+" AND id_supplie="+id_supplie+")");
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM "+DBHelper.PRODUCT_SUPPLIE_TABLE+" WHERE EXISTS" +
+                "(SELECT * FROM "+DBHelper.PRODUCT_SUPPLIE_TABLE+"WHERE id_product="+id_product+" AND id_supplie="+id_supplie+")");
         db.close();
 
         checkEmptySupplies();
@@ -174,7 +140,7 @@ public class SupplieController extends SQLiteOpenHelper {
     /************************************************************************/
     //update methods
     public void updateSupplie(Supplie supplie){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put("id", supplie.getId());
@@ -185,15 +151,15 @@ public class SupplieController extends SQLiteOpenHelper {
         values.put("state", state);
         values.put("shipping_costs", supplie.getShipping_costs()+"");
 
-        db.update(SUPPLIE_TABLE, values, "id="+supplie.getId(), null);
+        db.update(DBHelper.SUPPLIE_TABLE, values, "id="+supplie.getId(), null);
 
         readSupplies();
     }
 
     public void updateSupplieProduct(ProductSale newLine, int id_supplie){
-        SQLiteDatabase db =this.getWritableDatabase();
+        SQLiteDatabase db =dbHelper.getWritableDatabase();
 
-        String sql = "UPDATE "+PRODUCT_SUPPLIE_TABLE+" SET amount = ?, ind_price = ? WHERE id_product = ? AND id_supplie = ?";
+        String sql = "UPDATE "+DBHelper.PRODUCT_SUPPLIE_TABLE+" SET amount = ?, ind_price = ? WHERE id_product = ? AND id_supplie = ?";
         Object[] params = {newLine.getAmount(), newLine.getIndPrice(), newLine.getProduct().getId(), id_supplie};
         db.execSQL(sql, params);
         db.close();
@@ -234,6 +200,14 @@ public class SupplieController extends SQLiteOpenHelper {
         return toret;
     }
 
+    /************************************************************************/
+    //getters && setters
 
+    public ArrayList<Supplie> getSupplies() {
+        return supplies;
+    }
 
+    public void setSupplies(ArrayList<Supplie> supplies) {
+        this.supplies = supplies;
+    }
 }

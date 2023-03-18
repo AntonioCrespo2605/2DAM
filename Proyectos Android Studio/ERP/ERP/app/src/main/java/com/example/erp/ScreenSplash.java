@@ -15,16 +15,22 @@ import com.example.erp.dataBaseObjects.Message;
 import com.example.erp.dataBaseObjects.Product;
 import com.example.erp.dataBaseObjects.ShoppingCart;
 import com.example.erp.dataBaseObjects.Supplier;
-import com.example.erp.dbControllers.DBHandler;
+import com.example.erp.dbControllers.CustomerController;
+import com.example.erp.dbControllers.DBHelper;
 import com.example.erp.dataBaseObjects.Employee;
+import com.example.erp.dbControllers.EmployeeController;
+import com.example.erp.dbControllers.ProductController;
+import com.example.erp.dbControllers.SupplierController;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class ScreenSplash extends AppCompatActivity {
-
-    private DBHandler handler;
+    private EmployeeController employeeController;
+    private ProductController productController;
+    private SupplierController supplierController;
+    private CustomerController customerController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +41,12 @@ public class ScreenSplash extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        handler=new DBHandler(this);
+        employeeController=new EmployeeController(this);
+        productController=new ProductController(this);
+        supplierController=new SupplierController(this);
+        customerController=new CustomerController(this);
 
-        initAdmin();
+        defaultValues();
 
         final Timer t = new Timer();
         t.schedule(new TimerTask() {
@@ -64,7 +73,7 @@ public class ScreenSplash extends AppCompatActivity {
         });
     }
 
-    private void initAdmin(){
+    private void defaultValues(){
         SharedPreferences sh = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sh.edit();
 
@@ -73,21 +82,21 @@ public class ScreenSplash extends AppCompatActivity {
             Toast.makeText(this, "Inicializando base de datos...", Toast.LENGTH_SHORT).show();
 
             //default employees
-            handler.addEmployee(new Employee(0,"00000000A","BOT","000000000","bot","0",0,fromIntToBitmap(R.drawable.trex),"0"));
-            handler.addEmployee(new Employee(1,"111111111A","ADMIN","000000000","administrador jefe","0",0,fromIntToBitmap(R.drawable.admin),"admin"));
+            employeeController.addEmployee(new Employee(0,"00000000A","BOT","000000000","bot","0",0,fromIntToBitmap(R.drawable.trex),"0"));
+            employeeController.addEmployee(new Employee(1,"111111111A","ADMIN","000000000","administrador jefe","0",0,fromIntToBitmap(R.drawable.admin),"admin"));
 
             //default products
-            handler.addProduct(new Product(1, "TRex","Carnívoro",1, 1000000.99,fromIntToBitmap(R.drawable.dinosaur1)));
-            handler.addProduct(new Product(2, "Espinosaurio","Carnívoro",2, 1200000.50,fromIntToBitmap(R.drawable.dinosaur1)));
-
-            //default customers
-            handler.addCustomer(new Customer(1, "Juan", "111111111", "juan@gmail.com", new ShoppingCart(), fromIntToBitmap(R.drawable.juan),new ArrayList<Message>(),"juan"));
-            handler.addCustomer(new Customer(2, "Bender","222222222","bender@hotmail.com",new ShoppingCart(), fromIntToBitmap(R.drawable.bender),new ArrayList<Message>(),"bender"));
-            handler.addCustomer(new Customer(3, "Bender2","222222222","bender2@hotmail.com",new ShoppingCart(), fromIntToBitmap(R.drawable.bender),new ArrayList<Message>(),"bender"));
+            productController.addProduct(new Product(1, "TRex","Carnívoro",1, 1000000.99,fromIntToBitmap(R.drawable.dinosaur1)));
+            productController.addProduct(new Product(2, "Espinosaurio","Carnívoro",2, 1200000.50,fromIntToBitmap(R.drawable.dinosaur1)));
 
             //default suppliers
-            handler.addSupplier(new Supplier(1, "Jurassic Park", "123123123","Av. del dinosaurio", fromIntToBitmap(R.drawable.jurassicpark)));
-            handler.addSupplier(new Supplier(2, "Tienda de dinosaurios", "321321321","Vigo", fromIntToBitmap(R.drawable.tiendadinosaurios)));
+            supplierController.addSupplier(new Supplier(1, "Jurassic Park", "123123123","Av. del dinosaurio", fromIntToBitmap(R.drawable.jurassicpark)));
+            supplierController.addSupplier(new Supplier(2, "Tienda de dinosaurios", "321321321","Vigo", fromIntToBitmap(R.drawable.tiendadinosaurios)));
+
+            //default customers
+            customerController.addCustomer(new Customer(1, "Juan", "111111111", "juan@gmail.com", new ShoppingCart(), fromIntToBitmap(R.drawable.juan),new ArrayList<Message>(),"juan"));
+            customerController.addCustomer(new Customer(2, "Bender","222222222","bender@hotmail.com",new ShoppingCart(), fromIntToBitmap(R.drawable.bender),new ArrayList<Message>(),"bender"));
+            customerController.addCustomer(new Customer(3, "Bender2","222222222","bender2@hotmail.com",new ShoppingCart(), fromIntToBitmap(R.drawable.bender),new ArrayList<Message>(),"bender"));
 
             //started for first time
             editor.putBoolean("started", true);
