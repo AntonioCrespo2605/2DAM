@@ -1,4 +1,4 @@
-package com.example.erp.imageFragments;
+package com.example.erp.fragments;
 
 import android.os.Bundle;
 
@@ -9,41 +9,32 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.erp.R;
-import com.example.erp.dbControllers.EmployeeController;
-import com.example.erp.uiControllers.ListAdapterEmployees;
+import com.example.erp.dbControllers.CustomerController;
+import com.example.erp.uiControllers.ListAdapterCustomer;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link EmployeesFragment#newInstance} factory method to
+ * Use the {@link CustomersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EmployeesFragment extends Fragment {
+public class CustomersFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    private EmployeeController employeeController;
-
+    private ListAdapterCustomer la;
+    private CustomerController customerController;
     private RecyclerView rv;
 
-    private Spinner spinner;
-    private ListAdapterEmployees la;
 
-
-    public EmployeesFragment() {
+    public CustomersFragment() {
         // Required empty public constructor
     }
 
@@ -53,11 +44,11 @@ public class EmployeesFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment EmployeesFragment.
+     * @return A new instance of fragment CustomersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EmployeesFragment newInstance(String param1, String param2) {
-        EmployeesFragment fragment = new EmployeesFragment();
+    public static CustomersFragment newInstance(String param1, String param2) {
+        CustomersFragment fragment = new CustomersFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -78,37 +69,18 @@ public class EmployeesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_employees, container, false);
+        View view=inflater.inflate(R.layout.fragment_customers, container, false);
 
-        spinner=view.findViewById(R.id.spinner);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(), R.array.workStations, R.layout.spinner_item);
-        spinner.setAdapter(adapter);
+        customerController=new CustomerController(getContext());
 
-        employeeController=new EmployeeController(getContext());
-
-        rv=view.findViewById(R.id.recyclerEmployees);
+        rv=view.findViewById(R.id.recyclerCustomers);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        la=new ListAdapterEmployees(employeeController.getEmployees(), getContext());
+        la=new ListAdapterCustomer(customerController.getCustomers(), getContext());
         rv.setAdapter(la);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String workStation=parent.getItemAtPosition(position).toString();
-                la=new ListAdapterEmployees(employeeController.getEmployeesInWorkStation(workStation), getContext());
-                rv.setAdapter(la);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         return view;
     }
-
-
 }

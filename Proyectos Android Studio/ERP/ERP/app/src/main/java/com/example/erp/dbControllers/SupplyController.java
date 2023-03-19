@@ -4,24 +4,22 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.erp.dataBaseObjects.Product;
 import com.example.erp.dataBaseObjects.ProductSale;
-import com.example.erp.dataBaseObjects.Supplie;
+import com.example.erp.dataBaseObjects.Supply;
 
 import java.util.ArrayList;
 
-public class SupplieController{
+public class SupplyController {
     private DBHelper dbHelper;
 
-    private ArrayList<Supplie>supplies;
+    private ArrayList<Supply>supplies;
     private SupplierController supplierController;
     private ProductController productController;
 
     /************************************************************************/
     //Constructor
-    public SupplieController(Context context){
+    public SupplyController(Context context){
         dbHelper=new DBHelper(context);
         readSupplies();
         supplierController=new SupplierController(context);
@@ -31,10 +29,10 @@ public class SupplieController{
     /************************************************************************/
     //reads all supplies from db
     private void readSupplies(){
-        this.supplies=new ArrayList<Supplie>();
+        this.supplies=new ArrayList<Supply>();
 
         SQLiteDatabase db=dbHelper.getReadableDatabase();
-        Cursor cursor=db.rawQuery("SELECT * FROM "+DBHelper.SUPPLIE_TABLE, null);
+        Cursor cursor=db.rawQuery("SELECT * FROM "+DBHelper.SUPPLY_TABLE, null);
         Cursor cursor2;
 
         if(cursor.moveToFirst()){
@@ -42,17 +40,17 @@ public class SupplieController{
                 boolean state;
                 if(cursor.getInt(3)==0)state=false;
                 else state=true;
-                Supplie supplie=new Supplie(cursor.getInt(0), supplierController.getSupplierById(cursor.getInt(1)), cursor.getString(2), state, Double.parseDouble(cursor.getString(4)));
+                Supply supply =new Supply(cursor.getInt(0), supplierController.getSupplierById(cursor.getInt(1)), cursor.getString(2), state, Double.parseDouble(cursor.getString(4)));
 
-                cursor2=db.rawQuery("SELECT * FROM "+DBHelper.PRODUCT_SUPPLIE_TABLE+" WHERE id_supplie="+cursor.getInt(0), null);
+                cursor2=db.rawQuery("SELECT * FROM "+DBHelper.PRODUCT_SUPPLY_TABLE+" WHERE id_supply="+cursor.getInt(0), null);
                 ArrayList<ProductSale>lines=new ArrayList<ProductSale>();
                 if(cursor2.moveToFirst()){
                     do{
                         lines.add(new ProductSale(productController.getProductById(cursor2.getInt(0)), cursor2.getInt(2), Double.parseDouble(cursor2.getString(3))));
                     }while (cursor2.moveToNext());
                 }
-                supplie.setLines(lines);
-                supplies.add(supplie);
+                supply.setLines(lines);
+                supplies.add(supply);
 
             }while(cursor.moveToNext());
         }
@@ -60,107 +58,107 @@ public class SupplieController{
 
     /************************************************************************/
     //add methods
-    public void addSupplie(Supplie supplie){
+    public void addSupply(Supply supply){
         int id=1;
-        while(existsSupplie(supplie.getId())){
-            supplie.setId(id);
+        while(existsSupply(supply.getId())){
+            supply.setId(id);
             id++;
         }
 
         SQLiteDatabase db=dbHelper.getWritableDatabase();
         ContentValues values =new ContentValues();
 
-        values.put("id", supplie.getId());
-        values.put("id_supplier", supplie.getSupplier().getId());
-        values.put("date",supplie.getDate());
+        values.put("id", supply.getId());
+        values.put("id_supplier", supply.getSupplier().getId());
+        values.put("date", supply.getDate());
         int state=0;
-        if(supplie.isState())state=1;
+        if(supply.isState())state=1;
         values.put("state",state);
-        values.put("shipping_costs", supplie.getShipping_costs()+"");
+        values.put("shipping_costs", supply.getShipping_costs()+"");
 
-        db.insert(DBHelper.SUPPLIE_TABLE, null, values);
+        db.insert(DBHelper.SUPPLY_TABLE, null, values);
         db.close();
 
-        //product_supplie
+        //product_supply
         SQLiteDatabase db2=dbHelper.getWritableDatabase();
         ContentValues values2 =new ContentValues();
 
-        for (ProductSale ps:supplie.getLines()){
+        for (ProductSale ps: supply.getLines()){
             values2.put("id_product", ps.getProduct().getId());
-            values2.put("id_supplie",supplie.getId());
+            values2.put("id_supply", supply.getId());
             values2.put("amount", ps.getAmount());
             values2.put("ind_price",ps.getIndPrice());
-            db2.insert(DBHelper.PRODUCT_SUPPLIE_TABLE, null, values);
+            db2.insert(DBHelper.PRODUCT_SUPPLY_TABLE, null, values);
         }
         db2.close();
         readSupplies();
     }
 
-    public void addProductToSupplie(ProductSale productSale, int id_supplie){
-        if(!existsProductInSupplie(productSale.getProduct().getId(), id_supplie)){
+    public void addProductToSupply(ProductSale productSale, int id_supply){
+        if(!existsProductInSupply(productSale.getProduct().getId(), id_supply)){
             SQLiteDatabase db=dbHelper.getWritableDatabase();
             ContentValues values =new ContentValues();
 
             values.put("id_product", productSale.getProduct().getId());
-            values.put("id_supplie", id_supplie);
+            values.put("id_supply", id_supply);
             values.put("amount",productSale.getAmount());
             values.put("ind_price",productSale.getIndPrice()+"");
 
-            db.insert(DBHelper.PRODUCT_SUPPLIE_TABLE, null, values);
+            db.insert(DBHelper.PRODUCT_SUPPLY_TABLE, null, values);
             db.close();
         }
     }
     /************************************************************************/
     //delete methods
-    public void deleteSupplie(int id){
+    public void deleteSupply(int id){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.delete(DBHelper.PRODUCT_SUPPLIE_TABLE,"id_supplie="+id,null);
-        db.delete(DBHelper.SUPPLIE_TABLE, "id="+id, null);
+        db.delete(DBHelper.PRODUCT_SUPPLY_TABLE,"id_supply="+id,null);
+        db.delete(DBHelper.SUPPLY_TABLE, "id="+id, null);
 
         readSupplies();
     }
 
-    public void deleteProductSupplie(int id_product, int id_supplie) {
+    public void deleteProductSupply(int id_product, int id_supply) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM "+DBHelper.PRODUCT_SUPPLIE_TABLE+" WHERE EXISTS" +
-                "(SELECT * FROM "+DBHelper.PRODUCT_SUPPLIE_TABLE+"WHERE id_product="+id_product+" AND id_supplie="+id_supplie+")");
+        db.execSQL("DELETE FROM "+DBHelper.PRODUCT_SUPPLY_TABLE+" WHERE EXISTS" +
+                "(SELECT * FROM "+DBHelper.PRODUCT_SUPPLY_TABLE+"WHERE id_product="+id_product+" AND id_supply="+id_supply+")");
         db.close();
 
         checkEmptySupplies();
     }
 
     private void checkEmptySupplies(){
-        for(Supplie s:supplies){
+        for(Supply s:supplies){
             if(s.getLines().size()==0){
-                deleteSupplie(s.getId());
+                deleteSupply(s.getId());
             }
         }
         readSupplies();
     }
     /************************************************************************/
     //update methods
-    public void updateSupplie(Supplie supplie){
+    public void updateSupply(Supply supply){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("id", supplie.getId());
-        values.put("id_supplier",supplie.getSupplier().getId());
-        values.put("date", supplie.getDate());
+        values.put("id", supply.getId());
+        values.put("id_supplier", supply.getSupplier().getId());
+        values.put("date", supply.getDate());
         int state=0;
-        if(supplie.isState())state=1;
+        if(supply.isState())state=1;
         values.put("state", state);
-        values.put("shipping_costs", supplie.getShipping_costs()+"");
+        values.put("shipping_costs", supply.getShipping_costs()+"");
 
-        db.update(DBHelper.SUPPLIE_TABLE, values, "id="+supplie.getId(), null);
+        db.update(DBHelper.SUPPLY_TABLE, values, "id="+ supply.getId(), null);
 
         readSupplies();
     }
 
-    public void updateSupplieProduct(ProductSale newLine, int id_supplie){
+    public void updateSupplyProduct(ProductSale newLine, int id_supply){
         SQLiteDatabase db =dbHelper.getWritableDatabase();
 
-        String sql = "UPDATE "+DBHelper.PRODUCT_SUPPLIE_TABLE+" SET amount = ?, ind_price = ? WHERE id_product = ? AND id_supplie = ?";
-        Object[] params = {newLine.getAmount(), newLine.getIndPrice(), newLine.getProduct().getId(), id_supplie};
+        String sql = "UPDATE "+DBHelper.PRODUCT_SUPPLY_TABLE+" SET amount = ?, ind_price = ? WHERE id_product = ? AND id_supply = ?";
+        Object[] params = {newLine.getAmount(), newLine.getIndPrice(), newLine.getProduct().getId(), id_supply};
         db.execSQL(sql, params);
         db.close();
 
@@ -168,33 +166,33 @@ public class SupplieController{
     }
     /************************************************************************/
     //information and filters about supplies
-    private boolean existsSupplie(int id){
-        for(Supplie supplie:supplies){
-            if(supplie.getId()==id)return true;
+    private boolean existsSupply(int id){
+        for(Supply supply :supplies){
+            if(supply.getId()==id)return true;
         }
         return false;
     }
 
-    private boolean existsProductInSupplie(int id_product, int id_supplie){
-        for(ProductSale productSale:getSupplieById(id_supplie).getLines()){
+    private boolean existsProductInSupply(int id_product, int id_supply){
+        for(ProductSale productSale:getSupplyById(id_supply).getLines()){
             if(productSale.getProduct().getId()==id_product)return true;
         }
         return false;
     }
 
-    private Supplie getSupplieById(int id) {
-        for(Supplie supplie:supplies){
-            if(supplie.getId()==id)return supplie;
+    private Supply getSupplyById(int id) {
+        for(Supply supply :supplies){
+            if(supply.getId()==id)return supply;
         }
         return null;
     }
 
-    public ArrayList<Supplie>getPendingSuppliesOfSupplier(int id_supplier){
-        ArrayList<Supplie>toret=new ArrayList<Supplie>();
+    public ArrayList<Supply>getPendingSuppliesOfSupplier(int id_supplier){
+        ArrayList<Supply>toret=new ArrayList<Supply>();
 
-        for(Supplie supplie:supplies){
-            if(supplie.getSupplier().getId()==id_supplier && !supplie.isState()){
-                toret.add(supplie);
+        for(Supply supply :supplies){
+            if(supply.getSupplier().getId()==id_supplier && !supply.isState()){
+                toret.add(supply);
             }
         }
         return toret;
@@ -203,11 +201,11 @@ public class SupplieController{
     /************************************************************************/
     //getters && setters
 
-    public ArrayList<Supplie> getSupplies() {
+    public ArrayList<Supply> getSupplies() {
         return supplies;
     }
 
-    public void setSupplies(ArrayList<Supplie> supplies) {
+    public void setSupplies(ArrayList<Supply> supplies) {
         this.supplies = supplies;
     }
 }

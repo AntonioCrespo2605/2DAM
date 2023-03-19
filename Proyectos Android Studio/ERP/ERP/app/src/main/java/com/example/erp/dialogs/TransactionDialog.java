@@ -1,7 +1,9 @@
 package com.example.erp.dialogs;
 
+
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +15,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Transation;
-import com.example.erp.dataTransformers.DateCustomized;
-import com.example.erp.dbControllers.TransationController;
+import com.example.erp.dataTransformers.MyMultipurpose;
 
-public class TransactionDialog extends AppCompatDialogFragment {
+public class TransactionDialog extends DialogFragment {
 
     private Button create;
     private EditText amount, reason;
     private boolean positive;
     private TextView tv;
+
+
 
     public TransactionDialog(boolean positive){
         this.positive=positive;
@@ -33,11 +37,10 @@ public class TransactionDialog extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
 
-        LayoutInflater inflater=getActivity().getLayoutInflater();
 
-        View view=inflater.inflate(R.layout.transaction_dialog, null);
+        View view=LayoutInflater.from(requireActivity()).inflate(R.layout.transaction_dialog,null);
 
         create=view.findViewById(R.id.createTransaction);
         amount=view.findViewById(R.id.inputAmount);
@@ -52,9 +55,13 @@ public class TransactionDialog extends AppCompatDialogFragment {
                 if(amount.getText().toString().equals(""))Toast.makeText(getContext(), "Cantidad incorrecta", Toast.LENGTH_SHORT).show();
                 else if(reason.getText().toString().trim().equals(""))Toast.makeText(getContext(), "adjunte un motivo", Toast.LENGTH_SHORT).show();
                 else{
-                    TransationController transationController=new TransationController(getContext());
-                    transationController.addTransation(new Transation(1, DateCustomized.getSystemDate(),reason.getText().toString(),Double.parseDouble(amount.getText().toString())));
-                    Toast.makeText(getContext(), "Transacción realizada con éxito", Toast.LENGTH_SHORT).show();
+                    Transation t;
+                    if(positive)t=new Transation(1, MyMultipurpose.getSystemDate(),reason.getText().toString(),Double.parseDouble(amount.getText().toString()));
+                    else t=new Transation(1, MyMultipurpose.getSystemDate(),reason.getText().toString(),(-1)*Double.parseDouble(amount.getText().toString()));
+
+                    TransactionDialogListener listener = (TransactionDialogListener)getTargetFragment();
+                    listener.passTransaction(t);
+
                     dismiss();
                 }
             }
@@ -63,5 +70,9 @@ public class TransactionDialog extends AppCompatDialogFragment {
         builder.setView(view);
 
         return builder.create();
+    }
+
+    public interface TransactionDialogListener{
+        void passTransaction(Transation transation);
     }
 }

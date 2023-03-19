@@ -108,6 +108,23 @@ public class ProductController{
         return null;
     }
 
+    public int getAllAmountOfProducts(){
+        int toret=0;
+        for(Product p:products){
+            toret+=p.getStock();
+        }
+        return toret;
+    }
+
+    public double getValueOfAllProducts(){
+        double toret=0;
+
+        for(Product p:products){
+            toret+=(p.getStock()*p.getCurrent_price());
+        }
+        return toret;
+    }
+
     /************************************************************************/
     //getters && setters
 

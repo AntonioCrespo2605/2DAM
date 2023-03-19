@@ -2,7 +2,7 @@ package com.example.erp.dataBaseObjects;
 
 import java.util.ArrayList;
 
-public class Supplie {
+public class Supply {
     private int id;
     private Supplier supplier;
     private String date;
@@ -10,7 +10,7 @@ public class Supplie {
     private double shipping_costs;
     private ArrayList<ProductSale>lines;
 
-    public Supplie(int id, Supplier supplier, String date, boolean state, double shipping_costs, ArrayList<ProductSale> lines) {
+    public Supply(int id, Supplier supplier, String date, boolean state, double shipping_costs, ArrayList<ProductSale> lines) {
         this.id = id;
         this.supplier = supplier;
         this.date = date;
@@ -19,7 +19,7 @@ public class Supplie {
         this.lines = lines;
     }
 
-    public Supplie(int id, Supplier supplier, String date, boolean state, double shipping_costs){
+    public Supply(int id, Supplier supplier, String date, boolean state, double shipping_costs){
         this.id = id;
         this.supplier = supplier;
         this.date = date;

@@ -13,14 +13,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.erp.dbControllers.DBHelper;
 import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.dbControllers.EmployeeController;
-import com.example.erp.imageFragments.AccountingFragment;
-import com.example.erp.imageFragments.CustomersFragment;
-import com.example.erp.imageFragments.EmployeesFragment;
-import com.example.erp.imageFragments.ProductsFragment;
-import com.example.erp.imageFragments.SuppliersFragment;
+import com.example.erp.fragments.AccountingFragment;
+import com.example.erp.fragments.CustomersFragment;
+import com.example.erp.fragments.EmployeesFragment;
+import com.example.erp.fragments.ProductsFragment;
+import com.example.erp.fragments.SuppliersFragment;
 
 public class AdminView extends AppCompatActivity implements GestureDetector.OnGestureListener {
 

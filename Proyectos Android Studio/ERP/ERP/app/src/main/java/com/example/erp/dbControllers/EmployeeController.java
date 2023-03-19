@@ -197,6 +197,14 @@ public class EmployeeController{
         return toret;
     }
 
+    public int newId(){
+        int toret=1;
+
+        while (existsEmployee(toret))toret++;
+
+        return toret;
+    }
+
     /************************************************************************/
     //getters && setters
 

@@ -79,11 +79,11 @@ public class ScreenSplash extends AppCompatActivity {
 
         boolean started = sh.getBoolean("started", false);
         if (!started) {
-            Toast.makeText(this, "Inicializando base de datos...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Inicializando base de datos por defecto...", Toast.LENGTH_SHORT).show();
 
             //default employees
             employeeController.addEmployee(new Employee(0,"00000000A","BOT","000000000","bot","BARCGB22",0, ImageCustomized.fromIntToBitmap(R.drawable.trex, this),"0"));
-            employeeController.addEmployee(new Employee(1,"111111111A","Administrador","000000000","Administrador","DEUTFRPP",0,ImageCustomized.fromIntToBitmap(R.drawable.admin, this),"admin"));
+            employeeController.addEmployee(new Employee(1,"111111111A","Administrador","000000000","Administrador Jefe","DEUTFRPP",0,ImageCustomized.fromIntToBitmap(R.drawable.admin, this),"admin"));
             employeeController.addEmployee(new Employee(2, "22222222A", "Morty","111222333","Vendedor", "ABCDUS33",600, ImageCustomized.fromIntToBitmap(R.drawable.morty, this),"morty"));
 
             //default products
@@ -101,6 +101,10 @@ public class ScreenSplash extends AppCompatActivity {
 
             //started for first time
             editor.putBoolean("started", true);
+
+            //initial money
+            editor.putFloat("money",10000000f);
+
             editor.commit();
         }
     }

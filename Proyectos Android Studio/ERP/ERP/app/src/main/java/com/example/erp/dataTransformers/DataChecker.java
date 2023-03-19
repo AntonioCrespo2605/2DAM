@@ -1,5 +1,7 @@
 package com.example.erp.dataTransformers;
 
+import android.widget.EditText;
+
 public class DataChecker {
 
     public static boolean isBankNumber(String s) {
@@ -25,4 +27,32 @@ public class DataChecker {
 
         return true;
     }
+
+    public static boolean isEmpty(EditText editText){
+        if(editText.getText().toString().trim().equals(""))return true;
+        else return false;
+    }
+
+    public static boolean isDniValid(String dni) {
+        boolean isValid = false;
+
+        // Check if the length is correct
+        if (dni.length() == 9) {
+            // Check if the first 8 characters are numerical digits
+            String digits = dni.substring(0, 8);
+            if (digits.matches("[0-9]+")) {
+                // Check if the last character is a valid letter
+                String letter = dni.substring(8).toUpperCase();
+                String validLetters = "TRWAGMYFPDXBNJZSQVHLCKE";
+                int remainder = Integer.parseInt(digits) % 23;
+                char calculatedLetter = validLetters.charAt(remainder);
+                if (calculatedLetter == letter.charAt(0)) {
+                    isValid = true;
+                }
+            }
+        }
+
+        return isValid;
+    }
+
 }

@@ -29,4 +29,27 @@
         <item>Veterinario</item>
     </string-array>
 
+    <string-array name="workStations2">
+        <item>Administrador</item>
+        <item>Analista financiero</item>
+        <item>Atención al cliente</item>
+        <item>Biomedico</item>
+        <item>Contable</item>
+        <item>Crianza</item>
+        <item>Cuidado y alimentacion</item>
+        <item>Estructuras</item>
+        <item>Genetica</item>
+        <item>Limpieza</item>
+        <item>Maquinaria</item>
+        <item>Marketing</item>
+        <item>Responsable de Administración</item>
+        <item>Responsable de I+D</item>
+        <item>Responsable de Mantenimiento</item>
+        <item>Responsable de bienestar animal</item>
+        <item>Responsable de Ventas</item>
+        <item>RRHH</item>
+        <item>Vendedor</item>
+        <item>Veterinario</item>
+    </string-array>
+
 </resources>

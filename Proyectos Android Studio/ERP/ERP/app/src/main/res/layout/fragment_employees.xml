@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".imageFragments.EmployeesFragment">
+    tools:context=".fragments.EmployeesFragment">
 
 
     <LinearLayout
@@ -36,7 +36,9 @@
                 android:layout_weight="1"
                 android:background="#E4DDD1"
                 android:entries="@array/workStations"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

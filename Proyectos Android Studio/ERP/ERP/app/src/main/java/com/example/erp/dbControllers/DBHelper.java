@@ -12,9 +12,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //table names
     static final String SUPPLIER_TABLE="supplier";
-    static final String SUPPLIE_TABLE="supplie";
+    static final String SUPPLY_TABLE="supply";
     static final String PRODUCT_TABLE="product";
-    static final String PRODUCT_SUPPLIE_TABLE="product_supplie";
+    static final String PRODUCT_SUPPLY_TABLE="product_supply";
     static final String SALE_TABLE="sale";
     static final String PRODUCT_SALE_TABLE="product_sale";
     static final String EMPLOYEE_TABLE="employee";
@@ -42,8 +42,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(queryTable);
 
-        //Create table supplie
-        queryTable="CREATE TABLE "+SUPPLIE_TABLE+" ("
+        //Create table supply
+        queryTable="CREATE TABLE "+SUPPLY_TABLE+" ("
                 +"id INTEGER PRIMARY KEY, "
                 +"id_supplier INTEGER NOT NULL REFERENCES "+SUPPLIER_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE,"
                 +"date TEXT NOT NULL, "
@@ -63,13 +63,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(queryTable);
 
-        //Create table product_supplie
-        queryTable="CREATE TABLE "+PRODUCT_SUPPLIE_TABLE+" ("
+        //Create table product_supply
+        queryTable="CREATE TABLE "+PRODUCT_SUPPLY_TABLE+" ("
                 +"id_product INTEGER NOT NULL REFERENCES "+PRODUCT_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE, "
-                +"id_supplie INTEGER NOT NULL REFERENCES "+SUPPLIE_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE,"
+                +"id_supply INTEGER NOT NULL REFERENCES "+SUPPLY_TABLE+"(id) ON DELETE CASCADE ON UPDATE CASCADE,"
                 +"amount INTEGER NOT NULL,"
                 +"ind_price TEXT NOT NULL,"
-                +"PRIMARY KEY(id_product, id_supplie));";
+                +"PRIMARY KEY(id_product, id_supply));";
 
         db.execSQL(queryTable);
 
@@ -162,8 +162,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+SALARY_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+EMPLOYEE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+CUSTOMER_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS "+PRODUCT_SUPPLIE_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS "+SUPPLIE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+PRODUCT_SUPPLY_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+SUPPLY_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+PRODUCT_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+SUPPLIER_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+SHOPPING_CART);
@@ -174,9 +174,5 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /************************************************************************/
-    //getters && setters
-
-
-
 
 }

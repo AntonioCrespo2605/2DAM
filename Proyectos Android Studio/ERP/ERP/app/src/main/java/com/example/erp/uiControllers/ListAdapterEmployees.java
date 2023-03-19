@@ -11,11 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Employee;
-import com.example.erp.dataBaseObjects.Supplier;
+import com.example.erp.fragmentsnew.NewEmployee;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,15 @@ public class ListAdapterEmployees extends RecyclerView.Adapter<ListAdapterEmploy
     private List<Employee> employees;
     private LayoutInflater inflater;
 
+    private int newId;
+
     private char firstLetter=' ';
 
-    public ListAdapterEmployees(List<Employee>employees, Context context){
+
+    public ListAdapterEmployees(List<Employee>employees,int newId, Context context){
         this.inflater=LayoutInflater.from(context);
         this.employees=orderEmployees(employees);
+        this.newId=newId;
     }
 
 
@@ -49,10 +54,16 @@ public class ListAdapterEmployees extends RecyclerView.Adapter<ListAdapterEmploy
             public void onClick(View v) {
                 if(position!=0){
 
+                }else{
+                    ((FragmentActivity)v.getContext()).getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragmentContainerView, new NewEmployee(newId)).addToBackStack(null)
+                            .commit();
                 }
             }
         });
     }
+
 
     @Override
     public int getItemCount() {

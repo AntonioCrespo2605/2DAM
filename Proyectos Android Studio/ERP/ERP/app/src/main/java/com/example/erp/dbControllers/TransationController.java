@@ -90,6 +90,13 @@ public class TransationController {
         return false;
     }
 
+    public Transation getTransactionById(int id){
+        for(Transation transation:transations){
+            if(transation.getId()==id)return transation;
+        }
+        return null;
+    }
+
 
 
 }

@@ -162,6 +162,7 @@ public class Login extends AppCompatActivity {
     private void checkPosition(Employee employee){
         switch (employee.getWorkstation().toLowerCase()){
             case "administrador":
+            case "administrador jefe":
                 Intent intent = new Intent(Login.this, AdminView.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("employeeID",employee.getId());
