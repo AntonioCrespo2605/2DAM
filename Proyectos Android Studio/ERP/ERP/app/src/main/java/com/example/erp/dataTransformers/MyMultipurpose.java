@@ -31,4 +31,14 @@ public class MyMultipurpose {
         return format.format(number);
     }
 
+    public static String capitalizeFirst(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        } else if (Character.isLetter(str.charAt(0))) {
+            return Character.toUpperCase(str.charAt(0)) + str.substring(1);
+        } else {
+            return str;
+        }
+    }
+
 }

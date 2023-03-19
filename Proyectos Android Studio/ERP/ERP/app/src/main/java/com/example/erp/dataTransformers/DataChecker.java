@@ -55,4 +55,13 @@ public class DataChecker {
         return isValid;
     }
 
+    public static boolean isEmail(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        } else {
+            String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+            return str.matches(emailRegex);
+        }
+    }
+
 }

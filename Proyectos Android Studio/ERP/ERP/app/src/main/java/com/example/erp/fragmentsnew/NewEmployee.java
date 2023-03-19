@@ -149,7 +149,8 @@ public class NewEmployee extends Fragment {
                 else if(DataChecker.isEmpty(salary)) Toast.makeText(getContext(), "Rellene el salario", Toast.LENGTH_SHORT).show();
                 else{
                     employeeController.addEmployee(
-                            new Employee(id,dni.getText().toString(),
+                            new Employee(id,
+                                    dni.getText().toString(),
                                     name.getText().toString(),
                                     phone.getText().toString(),
                                     spinner.getSelectedItem().toString(),

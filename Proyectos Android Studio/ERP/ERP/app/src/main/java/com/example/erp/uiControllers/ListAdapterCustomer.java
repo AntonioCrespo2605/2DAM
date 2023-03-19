@@ -11,10 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Customer;
+import com.example.erp.fragmentsnew.NewCustomer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +26,15 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
 
     private List<Customer>customers;
     private LayoutInflater inflater;
+    private int newId;
 
 
     private char firstLetter=' ';
 
-    public ListAdapterCustomer(List<Customer>customers, Context context){
+    public ListAdapterCustomer(List<Customer>customers, int newId, Context context){
         this.inflater=LayoutInflater.from(context);
         this.customers=orderCustomers(customers);
+        this.newId=newId;
     }
 
     @NonNull
@@ -49,6 +53,11 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
             public void onClick(View v) {
                 if(position!=0){
 
+                }else{
+                    ((FragmentActivity)v.getContext()).getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragmentContainerView, new NewCustomer(newId)).addToBackStack(null)
+                            .commit();
                 }
             }
         });

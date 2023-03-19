@@ -254,6 +254,13 @@ public class CustomerController {
         return null;
     }
 
+    public boolean existsEmailInCustomers(String email) {
+        for(Customer customer:customers){
+            if(customer.getEmail().equals(email))return true;
+        }
+        return false;
+    }
+
     /************************************************************************/
     //getters && setters
 
@@ -263,5 +270,14 @@ public class CustomerController {
 
     public void setCustomers(ArrayList<Customer> customers) {
         this.customers = customers;
+    }
+
+
+    public int newId() {
+        int toret=1;
+        while(existsCustomer(toret)){
+            toret++;
+        }
+        return toret;
     }
 }
