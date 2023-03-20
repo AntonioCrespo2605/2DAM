@@ -1,14 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragmentsnew.NewSupplier">
+    android:background="#E4DDD1"
+    android:orientation="vertical"
+    tools:context=".fragmentsnew.NewEmployee">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:background="#D3C9C0"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crear proveedor"
+            android:textAlignment="center"
+            android:textColor="#574D49"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/logoNewSupplier"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:src="@drawable/dinosaurinpackage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/a"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:src="@drawable/circleborder"
+            app:layout_constraintBottom_toBottomOf="@+id/logoNewSupplier"
+            app:layout_constraintEnd_toEndOf="@+id/logoNewSupplier"
+            app:layout_constraintStart_toStartOf="@+id/logoNewSupplier"
+            app:layout_constraintTop_toTopOf="@+id/logoNewSupplier"
+            app:tint="#E4DDD1" />
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/circle"
+            app:layout_constraintEnd_toStartOf="@+id/logoNewSupplier"
+            app:layout_constraintTop_toTopOf="@+id/logoNewSupplier"
+            app:tint="#574D49" />
+
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:src="@drawable/circle"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+            app:layout_constraintEnd_toEndOf="@+id/imageView12"
+            app:layout_constraintStart_toStartOf="@+id/imageView12"
+            app:layout_constraintTop_toTopOf="@+id/imageView12"
+            app:tint="#E4DDD1" />
+
+        <TextView
+            android:id="@+id/idNewSupplier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1000"
+            android:textColor="#574D49"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+            app:layout_constraintEnd_toEndOf="@+id/imageView12"
+            app:layout_constraintStart_toStartOf="@+id/imageView12"
+            app:layout_constraintTop_toTopOf="@+id/imageView12" />
+
+        <ImageView
+            android:id="@+id/galleryNewSupplier"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/circle"
+            app:layout_constraintBottom_toBottomOf="@+id/logoNewSupplier"
+            app:layout_constraintEnd_toEndOf="@+id/logoNewSupplier"
+            app:tint="#574D49" />
+
+        <ImageView
+            android:id="@+id/imageView16"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:src="@drawable/circle"
+            app:layout_constraintBottom_toBottomOf="@+id/galleryNewSupplier"
+            app:layout_constraintEnd_toEndOf="@+id/galleryNewSupplier"
+            app:layout_constraintStart_toStartOf="@+id/galleryNewSupplier"
+            app:layout_constraintTop_toTopOf="@+id/galleryNewSupplier"
+            app:tint="#E4DDD1" />
+
+        <ImageView
+            android:id="@+id/imageView17"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/galery"
+            app:layout_constraintBottom_toBottomOf="@+id/galleryNewSupplier"
+            app:layout_constraintEnd_toEndOf="@+id/galleryNewSupplier"
+            app:layout_constraintStart_toStartOf="@+id/galleryNewSupplier"
+            app:layout_constraintTop_toTopOf="@+id/galleryNewSupplier"
+            app:tint="#574D49" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounded_edge"
+            android:backgroundTint="#F1F1F1"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/inputNameNewSupplier"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:backgroundTint="#F1F1F1"
+                android:ems="10"
+                android:hint="Nombre"
+                android:inputType="textPersonName"
+                android:textColor="#574D49"
+                android:textColorHint="#E4DDD1"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/user"
+                app:tint="#E4DDD1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounded_edge"
+            android:backgroundTint="#F1F1F1"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/inputPhoneNewSupplier"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:backgroundTint="#F1F1F1"
+                android:ems="10"
+                android:hint="Teléfono"
+                android:inputType="phone"
+                android:textColor="#574D49"
+                android:textColorHint="#E4DDD1"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/phone"
+                app:tint="#E4DDD1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounded_edge"
+            android:backgroundTint="#F1F1F1"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/inputLocationNewSupplier"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:backgroundTint="#F1F1F1"
+                android:ems="10"
+                android:hint="Ubicación"
+                android:inputType="textPersonName"
+                android:textColor="#574D49"
+                android:textColorHint="#E4DDD1"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/location"
+                app:tint="#E4DDD1" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonCreateNewSupplier"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="60dp"
+            android:backgroundTint="#574D49"
+            android:text="crear"
+            android:textColor="#F1F1F1" />
+
+    </LinearLayout>
+
+</LinearLayout>

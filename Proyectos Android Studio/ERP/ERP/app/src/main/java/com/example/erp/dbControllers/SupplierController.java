@@ -104,6 +104,14 @@ public class SupplierController{
         return false;
     }
 
+    public int getNewId(){
+        int toret=1;
+        while(existsSupplier(toret)){
+            toret++;
+        }
+        return toret;
+    }
+
     /************************************************************************/
     //getters && setters
 

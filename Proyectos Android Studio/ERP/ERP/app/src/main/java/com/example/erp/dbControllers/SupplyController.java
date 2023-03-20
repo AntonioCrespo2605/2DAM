@@ -198,6 +198,14 @@ public class SupplyController {
         return toret;
     }
 
+    public int getNewId(){
+        int toret=1;
+        while(existsSupply(toret)){
+            toret++;
+        }
+        return toret;
+    }
+
     /************************************************************************/
     //getters && setters
 

@@ -11,16 +11,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Supplier;
 import com.example.erp.dbControllers.SupplyController;
+import com.example.erp.fragmentsnew.NewCustomer;
+import com.example.erp.fragmentsnew.NewSupplier;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppliers.ViewHolder2> {
+
+    private int newId;
 
     private List<Supplier>suppliers;
     private LayoutInflater inflater;
@@ -29,9 +34,10 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
     //it is used as controller for showing the letter(when next supplier has a new first letter)
     private char firstLetter=' ';
 
-    public ListAdapterSuppliers(List<Supplier> suppliers, Context context){
+    public ListAdapterSuppliers(List<Supplier> suppliers, int newId,Context context){
         this.inflater=LayoutInflater.from(context);
         this.suppliers=orderSuppliers(suppliers);
+        this.newId=newId;
         supplyController =new SupplyController(context);
     }
 
@@ -51,6 +57,11 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
             public void onClick(View v) {
                 if(position!=0){
                     //
+                }else{
+                    ((FragmentActivity)v.getContext()).getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragmentContainerView, new NewSupplier(newId)).addToBackStack(null)
+                            .commit();
                 }
             }
         });

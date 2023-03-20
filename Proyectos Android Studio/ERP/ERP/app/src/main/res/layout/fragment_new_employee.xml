@@ -7,6 +7,23 @@
     android:background="#E4DDD1"
     android:orientation="vertical"
     tools:context=".fragmentsnew.NewEmployee">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:background="#D3C9C0"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crear empleado"
+            android:textAlignment="center"
+            android:textColor="#574D49"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -334,7 +351,7 @@
             android:id="@+id/button3"
             android:layout_width="150dp"
             android:layout_height="70dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:backgroundTint="#574D49"
             android:text="crear"
             android:textColor="#F1F1F1" />

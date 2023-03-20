@@ -4,29 +4,35 @@ import android.widget.EditText;
 
 public class DataChecker {
 
-    public static boolean isBankNumber(String s) {
-        if (s.length() != 8 && s.length() != 11) return false;
+    public static boolean isBankNumber(String input) {
+        // First, remove any white spaces from the input string
+        input = input.replaceAll("\\s", "");
 
-        for (char c : s.toCharArray()) {
-            if (!Character.isLetterOrDigit(c)) return false;
+        // Check if the input string has between 8 and 30 alphanumeric characters
+        if (input.matches("[A-Za-z0-9]{8,30}")) {
+            // Assuming the first two characters are the country code, we can extract them
+            String countryCode = input.substring(0, 2);
+
+            // Use a switch statement to apply country-specific validation rules
+            switch (countryCode) {
+                case "ES": // Spain: First character must be a "0" or "1"
+                    if (input.charAt(0) == '0' || input.charAt(0) == '1') {
+                        return true;
+                    }
+                    break;
+                case "US": // United States: No specific validation rules for now
+                    return true;
+                case "GB": // United Kingdom: No specific validation rules for now
+                    return true;
+                // Add additional cases for other countries as needed
+                default:
+                    return false;
+            }
         }
-
-        for (int i = 0; i < 4; i++) {
-            if (!Character.isLetter(s.charAt(i))) return false;
-        }
-
-        for (int i = 4; i < 6; i++) {
-            if (!Character.isLetter(s.charAt(i))) return false;
-        }
-
-        for (int i = 6; i < 8; i++) {
-            if (!Character.isLetterOrDigit(s.charAt(i))) return false;
-        }
-
-        if (s.length() == 11 &&!Character.isLetter(s.charAt(8)))return false;
-
-        return true;
+        // If the input string does not meet the above conditions, return false
+        return false;
     }
+
 
     public static boolean isEmpty(EditText editText){
         if(editText.getText().toString().trim().equals(""))return true;

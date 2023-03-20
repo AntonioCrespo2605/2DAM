@@ -26,6 +26,7 @@ import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.dataTransformers.DataChecker;
 import com.example.erp.dataTransformers.ImageCustomized;
+import com.example.erp.dataTransformers.MyMultipurpose;
 import com.example.erp.dbControllers.EmployeeController;
 import com.example.erp.fragments.EmployeesFragment;
 
@@ -151,7 +152,7 @@ public class NewEmployee extends Fragment {
                     employeeController.addEmployee(
                             new Employee(id,
                                     dni.getText().toString(),
-                                    name.getText().toString(),
+                                    MyMultipurpose.capitalizeFirst(name.getText().toString()),
                                     phone.getText().toString(),
                                     spinner.getSelectedItem().toString(),
                                     bank.getText().toString(),
