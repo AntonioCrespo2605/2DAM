@@ -14,9 +14,9 @@ public class DataChecker {
             String countryCode = input.substring(0, 2);
 
             // Use a switch statement to apply country-specific validation rules
-            switch (countryCode) {
+            switch (countryCode.toUpperCase()) {
                 case "ES": // Spain: First character must be a "0" or "1"
-                    if (input.charAt(0) == '0' || input.charAt(0) == '1') {
+                    if (input.charAt(2) == '0' || input.charAt(2) == '1') {
                         return true;
                     }
                     break;

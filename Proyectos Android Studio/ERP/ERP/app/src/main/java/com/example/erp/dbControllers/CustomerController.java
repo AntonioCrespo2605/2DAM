@@ -261,6 +261,14 @@ public class CustomerController {
         return false;
     }
 
+    public boolean existsEmailIgnoringUser(String email, int id){
+
+        for(Customer customer:customers){
+            if(customer.getEmail().equals(email) && customer.getId()!=id)return true;
+        }
+        return false;
+    }
+
     /************************************************************************/
     //getters && setters
 

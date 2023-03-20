@@ -1,5 +1,8 @@
 package com.example.erp.dataTransformers;
 
+import com.example.erp.dataBaseObjects.ProductSale;
+import com.example.erp.dataBaseObjects.Sale;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -39,6 +42,14 @@ public class MyMultipurpose {
         } else {
             return str;
         }
+    }
+
+    public static double getTotalFromSale(Sale s){
+        double toret=0;
+        for(ProductSale ps :s.getLines()){
+            toret+=(ps.getAmount()*ps.getIndPrice());
+        }
+        return toret;
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.erp.uiControllers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Customer;
+import com.example.erp.viewsEdit.CustomersInformation;
 import com.example.erp.fragmentsnew.NewCustomer;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
     private List<Customer>customers;
     private LayoutInflater inflater;
     private int newId;
+    private Context mContext;
 
 
     private char firstLetter=' ';
@@ -35,6 +38,7 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
         this.inflater=LayoutInflater.from(context);
         this.customers=orderCustomers(customers);
         this.newId=newId;
+        this.mContext=context;
     }
 
     @NonNull
@@ -52,6 +56,9 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
             @Override
             public void onClick(View v) {
                 if(position!=0){
+                    Intent intent = new Intent(mContext, CustomersInformation.class);
+                    intent.putExtra("id", customers.get(position).getId());
+                    mContext.startActivity(intent);
 
                 }else{
                     ((FragmentActivity)v.getContext()).getSupportFragmentManager()

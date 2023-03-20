@@ -51,14 +51,14 @@ public class NewCustomer extends Fragment {
         // Required empty public constructor
     }
 
-    private int id;
+    private int id=1;
     private boolean createBy0;
     public NewCustomer(int id){
         this.id=id;
         createBy0=true;
     }
 
-    private Customer customer;
+    private Customer customer=new Customer();
     public NewCustomer(Customer customer){
         this.id=customer.getId();
         this.customer=customer;
@@ -96,7 +96,7 @@ public class NewCustomer extends Fragment {
 
     private EditText name, email, phone, pass;
     private ImageView photo, gallery;
-    private TextView newId;
+    private TextView newId, title;
     private Button create;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,11 +111,18 @@ public class NewCustomer extends Fragment {
         photo=view.findViewById(R.id.photoNewCustomer);
         gallery=view.findViewById(R.id.galleryNewCustomer);
         newId=view.findViewById(R.id.idNewCustomer);
+        title=view.findViewById(R.id.title);
 
         customerController=new CustomerController(getContext());
 
         if(!createBy0){
             create.setText("Modificar");
+            name.setText(customer.getName());
+            email.setText(customer.getEmail());
+            phone.setText(customer.getTel());
+            pass.setText(customer.getPassword());
+            photo.setImageBitmap(customer.getPhoto());
+            title.setText("Información de cliente");
         }
 
         newId.setText(""+id);
@@ -134,18 +141,29 @@ public class NewCustomer extends Fragment {
             public void onClick(View v) {
                 if(DataChecker.isEmpty(name)) Toast.makeText(getContext(), "Rellene el nombre", Toast.LENGTH_SHORT).show();
                 else if(!DataChecker.isEmail(email.getText().toString()))Toast.makeText(getContext(), "Formato de email incorrecto", Toast.LENGTH_SHORT).show();
-                else if(customerController.existsEmailInCustomers(email.getText().toString()))Toast.makeText(getContext(), "Email repetido", Toast.LENGTH_SHORT).show();
+                else if(customerController.existsEmailInCustomers(email.getText().toString())&&createBy0)Toast.makeText(getContext(), "Email repetido", Toast.LENGTH_SHORT).show();
+                else if(customerController.existsEmailIgnoringUser(email.getText().toString(), id)&& !createBy0)Toast.makeText(getContext(), "Email repetido", Toast.LENGTH_SHORT).show();
                 else if(DataChecker.isEmpty(phone)) Toast.makeText(getContext(), "Rellene el teléfono", Toast.LENGTH_SHORT).show();
                 else if(DataChecker.isEmpty(pass)) Toast.makeText(getContext(), "Rellene la contraseña", Toast.LENGTH_SHORT).show();
                 else{
-                    customerController.addCustomer(
-                            new Customer(id,
-                                    MyMultipurpose.capitalizeFirst(name.getText().toString()),
-                                    phone.getText().toString(),
-                                    email.getText().toString(),
-                                    ImageCustomized.getBitmapFromImageView(photo),
-                                    pass.getText().toString() ));
-                    returnToLastActivity();
+                    if(createBy0){
+                        customerController.addCustomer(
+                                new Customer(id,
+                                        MyMultipurpose.capitalizeFirst(name.getText().toString()),
+                                        phone.getText().toString(),
+                                        email.getText().toString(),
+                                        ImageCustomized.getBitmapFromImageView(photo),
+                                        pass.getText().toString() ));
+                        returnToLastFragment();
+                    }else{
+                        customerController.updateCustomer( new Customer(id,
+                                MyMultipurpose.capitalizeFirst(name.getText().toString()),
+                                phone.getText().toString(),
+                                email.getText().toString(),
+                                ImageCustomized.getBitmapFromImageView(photo),
+                                pass.getText().toString()));
+                        Toast.makeText(getContext(), "Usuario modificado con éxito", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -154,7 +172,7 @@ public class NewCustomer extends Fragment {
         return view;
     }
 
-    private void returnToLastActivity() {
+    private void returnToLastFragment() {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setReorderingAllowed(true);

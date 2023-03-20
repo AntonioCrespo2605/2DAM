@@ -12,7 +12,16 @@
         android:theme="@style/Theme.ERP"
         tools:targetApi="31">
         <activity
-            android:name=".AdminView"
+            android:name=".viewsEdit.CustomersInformation"
+            android:exported="false" />
+        <activity
+            android:name=".viewsEdit.SuppliersInformation"
+            android:exported="false" />
+        <activity
+            android:name=".viewsEdit.EmployeesInformation"
+            android:exported="false" />
+        <activity
+            android:name=".allUsersViews.AdminView"
             android:exported="false" />
         <activity
             android:name=".CreateUser"

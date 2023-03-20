@@ -1,4 +1,4 @@
-package com.example.erp;
+package com.example.erp.allUsersViews;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.dbControllers.EmployeeController;
 import com.example.erp.fragments.AccountingFragment;
@@ -62,6 +64,11 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
 
         Bundle b = getIntent().getExtras();
         Employee employee=employeeController.getEmployeeById(b.getInt("employeeID"));
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("adminId", employee.getId());
+        editor.commit();
 
         profile.setImageBitmap(employee.getPhoto());
         name.setText(employee.getName());
