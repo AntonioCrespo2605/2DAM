@@ -19,11 +19,6 @@ import com.example.erp.dbControllers.ProductController;
 import com.example.erp.dbControllers.TransationController;
 import com.example.erp.dialogs.TransactionDialog;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccountingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AccountingFragment extends Fragment implements TransactionDialog.TransactionDialogListener {
 
     // TODO: Rename parameter arguments, choose names that match
