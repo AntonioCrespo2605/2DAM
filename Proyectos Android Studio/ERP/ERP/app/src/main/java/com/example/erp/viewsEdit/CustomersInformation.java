@@ -16,6 +16,7 @@ import com.example.erp.allUsersViews.AdminView;
 import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.dbControllers.CustomerController;
 import com.example.erp.dbControllers.EmployeeController;
+import com.example.erp.fragments.SalesFragment;
 import com.example.erp.fragmentsnew.NewCustomer;
 
 public class CustomersInformation extends AppCompatActivity {
@@ -81,7 +82,7 @@ public class CustomersInformation extends AppCompatActivity {
             public void onClick(View v) {
                 if(fragmentSelected!=1){
                     fragmentSelected=1;
-
+                    dataSelected();
                 }
             }
         });
@@ -91,6 +92,7 @@ public class CustomersInformation extends AppCompatActivity {
             public void onClick(View v) {
                 if(fragmentSelected!=1){
                     fragmentSelected=1;
+                    dataSelected();
                 }
             }
         });
@@ -100,7 +102,7 @@ public class CustomersInformation extends AppCompatActivity {
             public void onClick(View v) {
                 if(fragmentSelected!=2){
                     fragmentSelected=2;
-
+                    bagSelected();
                 }
             }
         });
@@ -110,7 +112,7 @@ public class CustomersInformation extends AppCompatActivity {
             public void onClick(View v) {
                 if(fragmentSelected!=2){
                     fragmentSelected=2;
-
+                    bagSelected();
                 }
             }
         });
@@ -157,6 +159,28 @@ public class CustomersInformation extends AppCompatActivity {
         });
         //-----------------------------------------
 
+    }
+
+    private void dataSelected() {
+        Bundle extras=getIntent().getExtras();
+
+        NewCustomer newCustomer=new NewCustomer(customerController.getCustomerById(extras.getInt("id")));
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.fragmentContainerView, newCustomer);
+        transaction.commit();
+    }
+
+    private void bagSelected(){
+        Bundle extras=getIntent().getExtras();
+
+        SalesFragment salesFragment=new SalesFragment(extras.getInt("id"));
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.fragmentContainerView, salesFragment);
+        transaction.commit();
     }
 
     @Override

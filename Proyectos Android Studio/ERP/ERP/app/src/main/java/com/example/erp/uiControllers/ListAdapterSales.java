@@ -76,7 +76,7 @@ public class ListAdapterSales extends RecyclerView.Adapter<ListAdapterSales.View
             totalSale.setText(MyMultipurpose.format(MyMultipurpose.getTotalFromSale(sale))+" €");
             dateSale.setText(sale.getDate());
 
-            received.setColorFilter(ContextCompat.getColor(context, R.color.red), PorterDuff.Mode.SRC_IN);
+            if(!sale.isState())received.setColorFilter(ContextCompat.getColor(context, R.color.red), PorterDuff.Mode.SRC_IN);
 
         }
     }

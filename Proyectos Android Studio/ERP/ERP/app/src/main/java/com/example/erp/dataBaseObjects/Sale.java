@@ -31,6 +31,16 @@ public class Sale {
         this.lines = null;
     }
 
+    public Sale(Sale sale){
+        this.id = sale.getId();
+        this.date = sale.getDate();
+        this.shipping_costs = sale.shipping_costs;
+        this.state = sale.isState();
+        this.seller = sale.getSeller();
+        this.buyer = sale.getBuyer();
+        this.lines = sale.getLines();
+    }
+
     public int getId() {
         return id;
     }

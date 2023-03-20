@@ -24,10 +24,10 @@ public class SalesController{
     //Constructor
     public SalesController(Context context){
         dbHelper=new DBHelper(context);
-        readSales();
         productController=new ProductController(context);
         employeeController=new EmployeeController(context);
         customerController=new CustomerController(context);
+        readSales();
     }
 
 
@@ -93,7 +93,7 @@ public class SalesController{
             values2.put("id_sale",sale.getId());
             values2.put("amount", ps.getAmount());
             values2.put("ind_price",ps.getIndPrice());
-            db2.insert(DBHelper.PRODUCT_SALE_TABLE, null, values);
+            db2.insert(DBHelper.PRODUCT_SALE_TABLE, null, values2);
         }
         db2.close();
         readSales();
@@ -197,6 +197,14 @@ public class SalesController{
             if(productSale.getProduct().getId()==id_product)return true;
         }
         return false;
+    }
+
+    public ArrayList<Sale> getSalesFromCustomer(int id_customer){
+        ArrayList<Sale>toret=new ArrayList<Sale>();
+        for(Sale sale:sales){
+            if(sale.getBuyer().getId()==id_customer)toret.add(new Sale(sale));
+        }
+        return toret;
     }
 
     /************************************************************************/
