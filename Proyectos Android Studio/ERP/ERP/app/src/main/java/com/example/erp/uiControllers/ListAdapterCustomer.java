@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -56,6 +57,7 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
             @Override
             public void onClick(View v) {
                 if(position!=0){
+                    Toast.makeText(mContext, "Cargando datos de "+customers.get(position).getName(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, CustomersInformation.class);
                     intent.putExtra("id", customers.get(position).getId());
                     mContext.startActivity(intent);

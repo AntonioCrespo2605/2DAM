@@ -70,4 +70,13 @@ public class DataChecker {
         }
     }
 
+    public static boolean correctDouble(String s) {
+        try {
+            double aux=Double.parseDouble(s);
+        }catch (Exception e){
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.erp.viewsEdit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -123,7 +124,7 @@ public class CustomersInformation extends AppCompatActivity {
             public void onClick(View v) {
                 if(fragmentSelected!=3){
                     fragmentSelected=3;
-
+                    scSelected();
                 }
             }
         });
@@ -133,7 +134,7 @@ public class CustomersInformation extends AppCompatActivity {
             public void onClick(View v) {
                 if(fragmentSelected!=3){
                     fragmentSelected=3;
-
+                    scSelected();
                 }
             }
         });
@@ -143,7 +144,7 @@ public class CustomersInformation extends AppCompatActivity {
             public void onClick(View v) {
                 if(fragmentSelected!=4){
                     fragmentSelected=4;
-
+                    mailSelected();
                 }
             }
         });
@@ -153,7 +154,7 @@ public class CustomersInformation extends AppCompatActivity {
             public void onClick(View v) {
                 if(fragmentSelected!=4){
                     fragmentSelected=4;
-
+                    mailSelected();
                 }
             }
         });
@@ -162,6 +163,10 @@ public class CustomersInformation extends AppCompatActivity {
     }
 
     private void dataSelected() {
+        normalTints();
+        data.setColorFilter(ContextCompat.getColor(this, R.color.dark_brown));
+        dataText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
+
         Bundle extras=getIntent().getExtras();
 
         NewCustomer newCustomer=new NewCustomer(customerController.getCustomerById(extras.getInt("id")));
@@ -173,6 +178,9 @@ public class CustomersInformation extends AppCompatActivity {
     }
 
     private void bagSelected(){
+        normalTints();
+        bag.setColorFilter(ContextCompat.getColor(this, R.color.dark_brown));
+        bagText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
         Bundle extras=getIntent().getExtras();
 
         SalesFragment salesFragment=new SalesFragment(extras.getInt("id"));
@@ -181,6 +189,32 @@ public class CustomersInformation extends AppCompatActivity {
         transaction.setReorderingAllowed(true);
         transaction.replace(R.id.fragmentContainerView, salesFragment);
         transaction.commit();
+    }
+
+    private void mailSelected(){
+        normalTints();
+        mailbox.setColorFilter(ContextCompat.getColor(this, R.color.dark_brown));
+        mailText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
+
+    }
+
+    private void scSelected(){
+        normalTints();
+        sc.setColorFilter(ContextCompat.getColor(this, R.color.dark_brown));
+        scText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
+
+    }
+
+    private void normalTints(){
+        data.setColorFilter(ContextCompat.getColor(this, R.color.light_brown));
+        bag.setColorFilter(ContextCompat.getColor(this, R.color.light_brown));
+        sc.setColorFilter(ContextCompat.getColor(this, R.color.light_brown));
+        mailbox.setColorFilter(ContextCompat.getColor(this, R.color.light_brown));
+
+        dataText.setTextColor(ContextCompat.getColor(this, R.color.light_brown));
+        bagText.setTextColor(ContextCompat.getColor(this, R.color.light_brown));
+        scText.setTextColor(ContextCompat.getColor(this, R.color.light_brown));
+        mailText.setTextColor(ContextCompat.getColor(this, R.color.light_brown));
     }
 
     @Override

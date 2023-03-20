@@ -83,11 +83,18 @@
         </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/down"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="67dp"
                 android:background="#D3C9C0"
                 android:gravity="top"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:orientation="vertical"
+                    android:background="#959189"></LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -98,7 +105,7 @@
                     <ImageView
                         android:id="@+id/employeesOption"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/employees"
                         app:tint="#E4DDD1" />
@@ -106,7 +113,7 @@
                     <ImageView
                         android:id="@+id/customersOption"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/customers"
                         app:tint="#E4DDD1" />
@@ -114,7 +121,7 @@
                     <ImageView
                         android:id="@+id/productsOption"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/dinosaur"
                         app:tint="#574D49" />
@@ -122,7 +129,7 @@
                     <ImageView
                         android:id="@+id/suppliersOption"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/suppliers"
                         app:tint="#E4DDD1" />
@@ -130,7 +137,7 @@
                     <ImageView
                         android:id="@+id/moneyOption"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/accounting"
                         app:tint="#E4DDD1" />

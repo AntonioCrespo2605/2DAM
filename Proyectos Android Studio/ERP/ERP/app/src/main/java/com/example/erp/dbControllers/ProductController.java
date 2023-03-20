@@ -125,6 +125,12 @@ public class ProductController{
         return toret;
     }
 
+    public int newId(){
+        int toret=1;
+        while(existsProduct(toret))toret++;
+        return toret;
+    }
+
     /************************************************************************/
     //getters && setters
 

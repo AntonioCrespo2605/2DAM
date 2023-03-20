@@ -1,5 +1,6 @@
 package com.example.erp.uiControllers;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,21 +11,26 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Product;
+import com.example.erp.fragmentsnew.NewCustomer;
+import com.example.erp.fragmentsnew.NewProduct;
 
 import java.util.List;
 
 public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.MyViewHolder> {
     private Context context;
     private List<Product> mData;
+    private int newId;
 
     //Constructor
-    public ProductRecyclerViewAdapter(Context context, List<Product>mData){
+    public ProductRecyclerViewAdapter(Context context, int newId,List<Product>mData){
         this.context=context;
         this.mData=mData;
+        this.newId=newId;
     }
 
     //new View for each product
@@ -39,7 +45,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
 
     //values to each element of the view with the products data
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if(position==0){
             holder.imgProduct.setVisibility(View.GONE);
             holder.productStock.setVisibility(View.GONE);
@@ -55,6 +61,14 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(position!=0){
+
+                }else{
+                    ((FragmentActivity)v.getContext()).getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragmentContainerView,new NewProduct(newId)).addToBackStack(null)
+                            .commit();
+                }
 
             }
         });

@@ -26,14 +26,29 @@
             cardview:layout_constraintStart_toStartOf="parent"
             cardview:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/productImage"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:src="@drawable/trex"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/rounded_edge"
+                android:backgroundTint="@color/white_brown">
+
+                <ImageView
+                    android:id="@+id/productImage"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/trex" />
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/bordersquare" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/productName"

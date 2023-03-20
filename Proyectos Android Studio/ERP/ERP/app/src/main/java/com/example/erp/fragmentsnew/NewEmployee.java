@@ -148,6 +148,7 @@ public class NewEmployee extends Fragment {
                 else if(!DataChecker.isBankNumber(bank.getText().toString())) Toast.makeText(getContext(), "Formato de cuenta bancaria incorrecto", Toast.LENGTH_SHORT).show();
                 else if(DataChecker.isEmpty(password)) Toast.makeText(getContext(), "Rellene la contraseña", Toast.LENGTH_SHORT).show();
                 else if(DataChecker.isEmpty(salary)) Toast.makeText(getContext(), "Rellene el salario", Toast.LENGTH_SHORT).show();
+                else if(DataChecker.correctDouble(salary.getText().toString())) Toast.makeText(getContext(), "Formato de salario incorrecto", Toast.LENGTH_SHORT).show();
                 else{
                     employeeController.addEmployee(
                             new Employee(id,
