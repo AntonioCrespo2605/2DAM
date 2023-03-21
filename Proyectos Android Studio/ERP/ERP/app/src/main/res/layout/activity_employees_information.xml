@@ -76,7 +76,7 @@
 
       <androidx.fragment.app.FragmentContainerView
           android:id="@+id/fragmentContainerView"
-          android:name="com.example.erp.fragments.ProductsFragment"
+          android:name="com.example.erp.fragmentsnew.NewEmployee"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           tools:layout="@layout/fragment_products" />
@@ -119,7 +119,7 @@
           android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/empleadosText"
+            android:id="@+id/employeesText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -131,7 +131,7 @@
             />
 
         <TextView
-            android:id="@+id/clientesText"
+            android:id="@+id/moneyText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

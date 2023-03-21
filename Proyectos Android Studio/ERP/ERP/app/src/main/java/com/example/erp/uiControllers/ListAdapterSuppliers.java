@@ -56,7 +56,10 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
             @Override
             public void onClick(View v) {
                 if(position!=0){
-                    //
+                    ((FragmentActivity)v.getContext()).getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragmentContainerView, new NewSupplier(suppliers.get(position))).addToBackStack(null)
+                            .commit();
                 }else{
                     ((FragmentActivity)v.getContext()).getSupportFragmentManager()
                             .beginTransaction()

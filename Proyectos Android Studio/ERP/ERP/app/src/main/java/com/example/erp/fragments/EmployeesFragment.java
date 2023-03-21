@@ -47,14 +47,14 @@ public class EmployeesFragment extends Fragment {
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        la=new ListAdapterEmployees(employeeController.getEmployees(), employeeController.newId(), getContext());
+        la=new ListAdapterEmployees(employeeController.getEmployees(), employeeController.newId(), getContext(), getActivity());
         rv.setAdapter(la);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String workStation=parent.getItemAtPosition(position).toString();
-                la=new ListAdapterEmployees(employeeController.getEmployeesInWorkStation(workStation), employeeController.newId(), getContext());
+                la=new ListAdapterEmployees(employeeController.getEmployeesInWorkStation(workStation), employeeController.newId(), getContext(), getActivity());
                 rv.setAdapter(la);
             }
 

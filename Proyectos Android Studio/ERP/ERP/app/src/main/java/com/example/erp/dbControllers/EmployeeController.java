@@ -94,9 +94,10 @@ public class EmployeeController{
     }
 
     public void addSalary(Salary salary, int idEmployee){
+        SQLiteDatabase db=dbHelper.getWritableDatabase();
+        ContentValues values =new ContentValues();
+
         if(!existsSalary(salary.getDate(), idEmployee)) {
-            SQLiteDatabase db=dbHelper.getWritableDatabase();
-            ContentValues values =new ContentValues();
 
             values.put("date", salary.getDate());
             values.put("id_employee", idEmployee);
@@ -104,8 +105,16 @@ public class EmployeeController{
 
             db.insert(DBHelper.SALARY_TABLE, null, values);
             db.close();
-            readEmployees();
+        }else{
+            values.put("id_employee", idEmployee);
+            values.put("date", salary.getDate());
+
+            values.put("salary", salary.getSalary() + getSalary(idEmployee, salary.getDate()).getSalary());
+
+            db.update(DBHelper.SALARY_TABLE, values, "id_employee="+idEmployee+" AND date=\'"+salary.getDate()+"\'",null);
+            db.close();
         }
+        readEmployees();
     }
 
     /************************************************************************/
@@ -121,7 +130,7 @@ public class EmployeeController{
     public void deleteSalary(int id_employee, String date){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("DELETE FROM "+DBHelper.SALARY_TABLE+" WHERE EXISTS" +
-                "(SELECT * FROM "+DBHelper.SALARY_TABLE+" WHERE id_employee="+id_employee+" AND date="+date+")");
+                "(SELECT * FROM "+DBHelper.SALARY_TABLE+" WHERE id_employee="+id_employee+" AND date=\''"+date+"\')");
         db.close();
 
         readEmployees();
@@ -149,16 +158,27 @@ public class EmployeeController{
         readEmployees();
     }
 
-    private void updateSalary(int id_employee, Salary salary){
+    public void updateSalary(int id_employee, String oldDate, Salary newSalary){
         SQLiteDatabase db =dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        if(oldDate.equals(newSalary.getDate())||!existsSalary(newSalary.getDate(),id_employee)){
+            values.put("id_employee", id_employee);
+            values.put("date", newSalary.getDate());
+            values.put("salary", newSalary.getSalary());
 
-        values.put("id_employee", id_employee);
-        values.put("date", salary.getDate());
-        values.put("salary", salary.getSalary());
+            db.update(DBHelper.SALARY_TABLE, values, "id_employee="+id_employee+" AND date=\'"+oldDate+"\'",null);
+            db.close();
+        }else{
+            deleteSalary(id_employee,oldDate);
 
-        db.update(DBHelper.SALARY_TABLE, values, "id_employee="+id_employee+" AND date="+salary.getDate(),null);
-        db.close();
+            values.put("id_employee", id_employee);
+            values.put("date", newSalary.getDate());
+
+            values.put("salary", newSalary.getSalary() + getSalary(id_employee, newSalary.getDate()).getSalary());
+
+            db.update(DBHelper.SALARY_TABLE, values, "id_employee="+id_employee+" AND date=\'"+newSalary.getDate()+"\'",null);
+            db.close();
+        }
 
         readEmployees();
     }
@@ -203,6 +223,24 @@ public class EmployeeController{
         while (existsEmployee(toret))toret++;
 
         return toret;
+    }
+
+    public ArrayList<Salary>getSalariesFromEmployee(int idEmployee){
+        for(Employee e:employees){
+            if(e.getId()==idEmployee)return e.getSalaries();
+        }
+        return new ArrayList<Salary>();
+    }
+
+    public Salary getSalary(int id_employee, String date){
+        for(Employee e:employees){
+            if(e.getId()==id_employee){
+                for(Salary salary:e.getSalaries()){
+                    if(salary.getDate()==date)return salary;
+                }
+            }
+        }
+        return null;
     }
 
     /************************************************************************/

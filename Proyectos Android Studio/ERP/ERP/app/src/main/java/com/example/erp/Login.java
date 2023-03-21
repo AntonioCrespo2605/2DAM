@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erp.allUsersViews.AdminView;
+import com.example.erp.dataTransformers.DataChecker;
 import com.example.erp.dbControllers.CustomerController;
 import com.example.erp.dataBaseObjects.Customer;
 import com.example.erp.dataBaseObjects.Employee;
@@ -94,6 +95,7 @@ public class Login extends AppCompatActivity {
             image1.setImageResource(R.drawable.usericon);
             input1.setHint("Correo electrónico");
             button.setText("Iniciar\nSesión");
+            input2.setVisibility(View.VISIBLE);
         }else{
             interfaceEmployee=true;
             link1.setVisibility(View.INVISIBLE);
@@ -102,6 +104,7 @@ public class Login extends AppCompatActivity {
             image1.setImageResource(R.drawable.trex);
             input1.setHint("Identificador");
             button.setText("Gestionar");
+            input2.setVisibility(View.VISIBLE);
         }
     }
 
@@ -154,7 +157,7 @@ public class Login extends AppCompatActivity {
                 }
             }
             if(finded) Toast.makeText(this, "Usuario ya existente", Toast.LENGTH_SHORT).show();
-            else if(correctEmailFormat(input1.getText().toString()))createUser(input1.getText().toString());
+            else if(DataChecker.isEmail(input1.getText().toString()))createUser();
             else Toast.makeText(this, "Formato de correo erróneo", Toast.LENGTH_SHORT).show();
         }
     }
@@ -178,18 +181,11 @@ public class Login extends AppCompatActivity {
         Toast.makeText(this, "Usuario:"+customer.getName(), Toast.LENGTH_SHORT).show();
     }
 
-    private void createUser(String email){
+    private void createUser(){
         Intent intent = new Intent(Login.this, CreateUser.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("email",input1.getText().toString().trim());
         startActivity(intent);
         finish();
-    }
-
-    private static boolean correctEmailFormat(String email){
-        email=email.trim();
-        String pattern = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$";
-        return email.matches(pattern);
     }
 
 }

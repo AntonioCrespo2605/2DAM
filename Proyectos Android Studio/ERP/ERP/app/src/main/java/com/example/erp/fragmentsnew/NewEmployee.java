@@ -18,9 +18,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Employee;
@@ -36,7 +38,7 @@ import java.io.IOException;
 public class NewEmployee extends Fragment {
 
     public NewEmployee() {
-        // Required empty public constructor
+        createBy0=true;
     }
 
     private int id=1;
@@ -56,14 +58,14 @@ public class NewEmployee extends Fragment {
     private EditText name, dni, phone, bank, password, salary;
     private Spinner spinner;
     private Button create;
-    private TextView newId;
+    private TextView newId, title;
     private ImageView photo, gallery;
     private EmployeeController employeeController;
+    private LinearLayout ll;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view=inflater.inflate(R.layout.fragment_new_employee, container, false);
 
@@ -78,15 +80,38 @@ public class NewEmployee extends Fragment {
         newId=view.findViewById(R.id.idNewEmployee);
         photo=view.findViewById(R.id.photoNewEmployee);
         gallery=view.findViewById(R.id.galleryNewEmployee);
+        title=view.findViewById(R.id.titleEmployee);
+        ll=view.findViewById(R.id.ll_job);
+
+        employeeController=new EmployeeController(getContext());
 
         ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(), R.array.workStations2, R.layout.spinner_item2);
         spinner.setAdapter(adapter);
 
         if(!createBy0){
             create.setText("Modificar");
-        }
+            name.setText(employee.getName());
+            dni.setText(employee.getDni());
+            phone.setText(employee.getTel());
+            bank.setText(employee.getBank_number());
+            password.setText(employee.getPassword());
+            salary.setText(employee.getCurrent_salary()+"");
+            create.setText("Modificar");
+            photo.setImageBitmap(employee.getPhoto());
+            title.setText("Información de empleado");
+            if(employee.getWorkstation().equalsIgnoreCase("Administrador jefe")||employee.getId()==getActivity().getSharedPreferences("MyPrefs", getActivity().MODE_PRIVATE).getInt("adminId", 1)){
+                spinner.setVisibility(View.INVISIBLE);
+                ll.setVisibility(View.INVISIBLE);
+            }else{
+                for(int i=0; i<20; i++){
+                    if(spinner.getItemAtPosition(i).toString().equalsIgnoreCase(employee.getWorkstation())){
+                        spinner.setSelection(i, true);
+                        break;
+                    }
+                }
 
-        employeeController=new EmployeeController(getContext());
+            }
+        }
 
         newId.setText(""+id);
 
@@ -108,19 +133,40 @@ public class NewEmployee extends Fragment {
                 else if(!DataChecker.isBankNumber(bank.getText().toString())) Toast.makeText(getContext(), "Formato de cuenta bancaria incorrecto", Toast.LENGTH_SHORT).show();
                 else if(DataChecker.isEmpty(password)) Toast.makeText(getContext(), "Rellene la contraseña", Toast.LENGTH_SHORT).show();
                 else if(DataChecker.isEmpty(salary)) Toast.makeText(getContext(), "Rellene el salario", Toast.LENGTH_SHORT).show();
-                else if(DataChecker.correctDouble(salary.getText().toString())) Toast.makeText(getContext(), "Formato de salario incorrecto", Toast.LENGTH_SHORT).show();
+                else if(!DataChecker.correctDouble(salary.getText().toString())) Toast.makeText(getContext(), "Formato de salario incorrecto", Toast.LENGTH_SHORT).show();
                 else{
-                    employeeController.addEmployee(
-                            new Employee(id,
-                                    dni.getText().toString(),
-                                    MyMultipurpose.capitalizeFirst(name.getText().toString()),
-                                    phone.getText().toString(),
-                                    spinner.getSelectedItem().toString(),
-                                    bank.getText().toString(),
-                                    Double.parseDouble(salary.getText().toString()),
-                                    ImageCustomized.getBitmapFromImageView(photo),
-                                    password.getText().toString() ));
-                    returnToLastActivity();
+                    if(createBy0){
+                        employeeController.addEmployee(
+                                new Employee(id,
+                                        dni.getText().toString(),
+                                        MyMultipurpose.capitalizeFirst(name.getText().toString()),
+                                        phone.getText().toString(),
+                                        spinner.getSelectedItem().toString(),
+                                        bank.getText().toString(),
+                                        Double.parseDouble(salary.getText().toString()),
+                                        ImageCustomized.getBitmapFromImageView(photo),
+                                        password.getText().toString()));
+                        returnToLastActivity();
+                    }else {
+                        String job=spinner.getSelectedItem().toString();
+                        String n="Empleado";
+                        if(id==1){
+                            job="Administrador Jefe";
+                            n="Administrador Jefe";
+                        }
+
+                        employeeController.updateEmployee(
+                                new Employee(id,
+                                        dni.getText().toString(),
+                                        MyMultipurpose.capitalizeFirst(name.getText().toString()),
+                                        phone.getText().toString(),
+                                        job,
+                                        bank.getText().toString(),
+                                        Double.parseDouble(salary.getText().toString()),
+                                        ImageCustomized.getBitmapFromImageView(photo),
+                                        password.getText().toString()));
+                        Toast.makeText(getContext(), n+" modificado con éxito", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

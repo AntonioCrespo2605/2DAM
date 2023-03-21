@@ -48,7 +48,7 @@ public class CustomersInformation extends AppCompatActivity {
         customerController=new CustomerController(this);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        admin=employeeController.getEmployeeById(sharedPreferences.getInt("employeeID", 1));
+        admin=employeeController.getEmployeeById(sharedPreferences.getInt("adminId", 1));
 
         Bundle extras=getIntent().getExtras();
 

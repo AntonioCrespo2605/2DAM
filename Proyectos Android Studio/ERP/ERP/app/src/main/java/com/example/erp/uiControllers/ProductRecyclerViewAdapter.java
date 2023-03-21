@@ -62,7 +62,10 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
             @Override
             public void onClick(View v) {
                 if(position!=0){
-
+                    ((FragmentActivity)v.getContext()).getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragmentContainerView,new NewProduct(mData.get(position))).addToBackStack(null)
+                            .commit();
                 }else{
                     ((FragmentActivity)v.getContext()).getSupportFragmentManager()
                             .beginTransaction()

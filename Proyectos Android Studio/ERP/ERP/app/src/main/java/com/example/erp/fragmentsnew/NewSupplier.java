@@ -75,6 +75,11 @@ public class NewSupplier extends Fragment {
 
         if(!createBy0){
             create.setText("Modificar");
+            logo.setImageBitmap(supplier.getLogo());
+            name.setText(supplier.getName());
+            newId.setText(supplier.getId()+"");
+            phone.setText(supplier.getTel());
+            location.setText(supplier.getAddress());
         }
 
         newId.setText(""+id);
@@ -95,13 +100,21 @@ public class NewSupplier extends Fragment {
                 else if(DataChecker.isEmpty(phone)) Toast.makeText(getContext(), "Rellene el teléfono", Toast.LENGTH_SHORT).show();
                 else if(DataChecker.isEmpty(location)) Toast.makeText(getContext(), "Rellene la dirección", Toast.LENGTH_SHORT).show();
                 else{
-                    supplierController.addSupplier(
-                            new Supplier(id,
-                                    MyMultipurpose.capitalizeFirst(name.getText().toString()),
-                                    phone.getText().toString(),
-                                    location.getText().toString(),
-                                    ImageCustomized.getBitmapFromImageView(logo)));
-
+                    if(createBy0) {
+                        supplierController.addSupplier(
+                                new Supplier(id,
+                                        MyMultipurpose.capitalizeFirst(name.getText().toString()),
+                                        phone.getText().toString(),
+                                        location.getText().toString(),
+                                        ImageCustomized.getBitmapFromImageView(logo)));
+                    }else{
+                        supplierController.updateSupplier(
+                                new Supplier(id,
+                                        MyMultipurpose.capitalizeFirst(name.getText().toString()),
+                                        phone.getText().toString(),
+                                        location.getText().toString(),
+                                        ImageCustomized.getBitmapFromImageView(logo)));
+                    }
                     returnToLastActivity();
                 }
             }

@@ -1,7 +1,9 @@
 package com.example.erp.uiControllers;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.fragmentsnew.NewEmployee;
+import com.example.erp.viewsEdit.EmployeesInformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +33,17 @@ public class ListAdapterEmployees extends RecyclerView.Adapter<ListAdapterEmploy
     private int newId;
 
     private char firstLetter=' ';
+    private Context mContext;
+
+    private Activity activity;
 
 
-    public ListAdapterEmployees(List<Employee>employees,int newId, Context context){
+    public ListAdapterEmployees(List<Employee>employees,int newId, Context context, Activity activity){
         this.inflater=LayoutInflater.from(context);
         this.employees=orderEmployees(employees);
         this.newId=newId;
+        this.mContext=context;
+        this.activity=activity;
     }
 
 
@@ -53,12 +62,17 @@ public class ListAdapterEmployees extends RecyclerView.Adapter<ListAdapterEmploy
             @Override
             public void onClick(View v) {
                 if(position!=0){
-
+                    Toast.makeText(mContext, "Cargando datos de "+employees.get(position).getName(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, EmployeesInformation.class);
+                    intent.putExtra("id", employees.get(position).getId());
+                    mContext.startActivity(intent);
+                    activity.finish();
                 }else{
                     ((FragmentActivity)v.getContext()).getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragmentContainerView, new NewEmployee(newId)).addToBackStack(null)
                             .commit();
+
                 }
             }
         });

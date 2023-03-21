@@ -8,6 +8,7 @@
     <string-array name="workStations">
         <item>Todos</item>
         <item>Administrador</item>
+        <item>Administrador Jefe</item>
         <item>Analista financiero</item>
         <item>Atención al cliente</item>
         <item>Biomedico</item>

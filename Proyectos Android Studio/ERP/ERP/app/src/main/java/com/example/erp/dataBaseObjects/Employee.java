@@ -2,6 +2,8 @@ package com.example.erp.dataBaseObjects;
 
 import android.graphics.Bitmap;
 
+import com.example.erp.dataTransformers.MyMultipurpose;
+
 import java.util.ArrayList;
 
 public class Employee {
@@ -23,7 +25,7 @@ public class Employee {
         this.tel = tel;
         this.workstation = workstation;
         this.bank_number = bank_number;
-        this.current_salary = current_salary;
+        this.current_salary = MyMultipurpose.round(current_salary);
         this.salaries = salaries;
         this.photo=photo;
         this.password=password;
@@ -143,3 +145,4 @@ public class Employee {
         this.password = password;
     }
 }
+

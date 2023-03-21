@@ -82,6 +82,7 @@ public class NewProduct extends Fragment {
             price.setText(product.getCurrent_price()+"");
             description.setText(product.getDescription());
             create.setText("modificar");
+            photo.setImageBitmap(product.getPhoto());
         }
 
         gallery.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +112,6 @@ public class NewProduct extends Fragment {
                                         Double.parseDouble(price.getText().toString()),
                                         ImageCustomized.getBitmapFromImageView(photo)));
 
-                        returnToLastFragment();
                     }else{
                         productController.updateProduct(
                                 new Product(newId,
@@ -121,6 +121,7 @@ public class NewProduct extends Fragment {
                                         Double.parseDouble(price.getText().toString()),
                                         ImageCustomized.getBitmapFromImageView(photo)));
                     }
+                    returnToLastFragment();
 
                 }
             }
