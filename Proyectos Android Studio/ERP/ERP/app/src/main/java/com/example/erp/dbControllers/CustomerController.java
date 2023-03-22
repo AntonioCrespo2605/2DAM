@@ -172,8 +172,8 @@ public class CustomerController {
 
     public void deleteMessage(int id_customer, String date){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM "+DBHelper.MESSAGE_TABLE+" WHERE EXISTS" +
-                "(SELECT * FROM "+DBHelper.MESSAGE_TABLE+" WHERE id_customer="+id_customer+" AND date="+"\'"+date+"\'"+")");
+
+        db.delete(DBHelper.MESSAGE_TABLE, "id_customer="+id_customer+" AND date="+"\'"+date+"\'",null);
         db.close();
 
         readCustomers();
@@ -198,7 +198,7 @@ public class CustomerController {
         readCustomers();
     }
 
-    private void updateMessage(int id_customer, Message message){
+    public void updateMessage(int id_customer, Message message){
         SQLiteDatabase db =dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -209,7 +209,7 @@ public class CustomerController {
         if(message.isReceived())received=1;
         values.put("received",received);
 
-        db.update(DBHelper.MESSAGE_TABLE, values, "id_customer="+id_customer+" AND date="+message.getDate(),null);
+        db.update(DBHelper.MESSAGE_TABLE, values, "id_customer="+id_customer+" AND date=\'"+message.getDate()+"\'",null);
         db.close();
 
         readCustomers();
@@ -267,6 +267,13 @@ public class CustomerController {
             if(customer.getEmail().equals(email) && customer.getId()!=id)return true;
         }
         return false;
+    }
+
+    public ArrayList<Message> getMessagesFromCustomer(int id){
+        for(Customer customer:customers){
+            if(customer.getId()==id)return customer.getMailbox();
+        }
+        return null;
     }
 
     /************************************************************************/

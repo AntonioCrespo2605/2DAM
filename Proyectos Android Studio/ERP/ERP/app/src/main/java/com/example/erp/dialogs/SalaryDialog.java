@@ -21,6 +21,7 @@ import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.dataBaseObjects.Salary;
 import com.example.erp.dataTransformers.DataChecker;
 import com.example.erp.dataTransformers.MyMultipurpose;
+import com.example.erp.dbControllers.EmployeeController;
 import com.example.erp.fragments.SalariesFragment;
 
 public class SalaryDialog extends DialogFragment {
@@ -28,17 +29,21 @@ public class SalaryDialog extends DialogFragment {
     private Salary salary;
     private Employee employee;
     private boolean isNew;
+    private EmployeeController employeeController;
+    private OnRefreshAdapterListener mListener;
 
-    public SalaryDialog(Salary salary, Employee employee){
+    public SalaryDialog(Salary salary, Employee employee, Context context){
         isNew=false;
         this.employee=employee;
         this.salary=salary;
+        this.employeeController=new EmployeeController(context);
     }
 
-    public SalaryDialog(Employee empoyee){
+    public SalaryDialog(Employee empoyee, Context context){
         isNew=true;
         this.employee=empoyee;
         this.salary=new Salary(12.0,"21/03/2023 22:59:00");
+        this.employeeController=new EmployeeController(context);
     }
 
 
@@ -46,6 +51,7 @@ public class SalaryDialog extends DialogFragment {
     private ImageView reload;
     private Button create;
     private EditText amount;
+
 
     @NonNull
     @Override
@@ -86,6 +92,16 @@ public class SalaryDialog extends DialogFragment {
             public void onClick(View v) {
                 if(!DataChecker.correctDouble(amount.getText().toString())) Toast.makeText(view.getContext(), "Formato de cantidad incorrecto", Toast.LENGTH_SHORT).show();
                 else {
+                    if(isNew){
+                        employeeController.addSalary(new Salary(Double.parseDouble(amount.getText().toString()), date.getText().toString()+" "+hour.getText().toString() ), employee.getId());
+                    }else{
+                        employeeController.updateSalary(employee.getId(),
+                                salary.getDate(),
+                                new Salary(Double.parseDouble(amount.getText().toString()), date.getText().toString()+" "+date.getText().toString() ));
+                    }
+
+                    mListener.onRefreshAdapter();
+                    dismiss();
 
                 }
             }
@@ -94,6 +110,21 @@ public class SalaryDialog extends DialogFragment {
         builder.setView(view);
 
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        try {
+            mListener = (SalaryDialog.OnRefreshAdapterListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnDialogButtonClickListener");
+        }
+    }
+
+    public interface OnRefreshAdapterListener {
+        void onRefreshAdapter();
     }
 
 }

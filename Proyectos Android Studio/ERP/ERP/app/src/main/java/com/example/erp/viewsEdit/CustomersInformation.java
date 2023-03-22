@@ -17,10 +17,13 @@ import com.example.erp.allUsersViews.AdminView;
 import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.dbControllers.CustomerController;
 import com.example.erp.dbControllers.EmployeeController;
+import com.example.erp.dialogs.MessageDialog;
+import com.example.erp.fragments.MailFragment;
 import com.example.erp.fragments.SalesFragment;
+import com.example.erp.fragments.ShoppingCartFragment;
 import com.example.erp.fragmentsnew.NewCustomer;
 
-public class CustomersInformation extends AppCompatActivity {
+public class CustomersInformation extends AppCompatActivity implements MessageDialog.OnDialogButtonClickListener {
     private Employee admin;
     private EmployeeController employeeController;
     private CustomerController customerController;
@@ -196,6 +199,14 @@ public class CustomersInformation extends AppCompatActivity {
         mailbox.setColorFilter(ContextCompat.getColor(this, R.color.dark_brown));
         mailText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
 
+        Bundle extras=getIntent().getExtras();
+
+        MailFragment mailFragment=new MailFragment(extras.getInt("id"));
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.fragmentContainerView, mailFragment);
+        transaction.commit();
     }
 
     private void scSelected(){
@@ -203,6 +214,15 @@ public class CustomersInformation extends AppCompatActivity {
         sc.setColorFilter(ContextCompat.getColor(this, R.color.dark_brown));
         scText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
 
+
+        Bundle extras=getIntent().getExtras();
+
+        ShoppingCartFragment fragment=new ShoppingCartFragment(extras.getInt("id"));
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.fragmentContainerView, fragment);
+        transaction.commit();
     }
 
     private void normalTints(){
@@ -226,4 +246,8 @@ public class CustomersInformation extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    @Override
+    public void onButtonClick() {
+        mailSelected();
+    }
 }

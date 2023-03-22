@@ -21,7 +21,7 @@ import com.example.erp.uiControllers.ListAdapterSalary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SalariesFragment extends Fragment {
+public class SalariesFragment extends Fragment implements SalaryDialog.OnRefreshAdapterListener {
 
     private ListAdapterSalary la;
     private RecyclerView rv;
@@ -36,7 +36,6 @@ public class SalariesFragment extends Fragment {
         this.id_employee=id_employee;
         this.employeeController=new EmployeeController(context);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,4 +52,9 @@ public class SalariesFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onRefreshAdapter() {
+        la=new ListAdapterSalary(employeeController.getSalariesFromEmployee(id_employee), employeeController.getEmployeeById(id_employee), getActivity(), this);
+        rv.setAdapter(la);
+    }
 }

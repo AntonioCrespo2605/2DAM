@@ -18,12 +18,14 @@ import com.example.erp.allUsersViews.AdminView;
 import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.dataBaseObjects.Salary;
 import com.example.erp.dbControllers.EmployeeController;
+import com.example.erp.dialogs.MessageDialog;
+import com.example.erp.dialogs.SalaryDialog;
 import com.example.erp.fragments.SalariesFragment;
 import com.example.erp.fragmentsnew.NewEmployee;
 
 import java.util.List;
 
-public class EmployeesInformation extends AppCompatActivity {
+public class EmployeesInformation extends AppCompatActivity implements SalaryDialog.OnRefreshAdapterListener {
     private EmployeeController employeeController;
     private Employee admin;
 
@@ -155,5 +157,10 @@ public class EmployeesInformation extends AppCompatActivity {
         startActivity(intent);
         finish();
         super.onBackPressed();
+    }
+
+    @Override
+    public void onRefreshAdapter() {
+        moneySelected();
     }
 }

@@ -28,7 +28,7 @@ import com.example.erp.fragments.SalariesFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAdapterSalary extends RecyclerView.Adapter<ListAdapterSalary.ViewHolder6> {
+public class ListAdapterSalary extends RecyclerView.Adapter<ListAdapterSalary.ViewHolder6> implements  SalaryDialog.OnRefreshAdapterListener{
     private List<Salary>salaries;
     private LayoutInflater layoutInflater;
     private Employee employee;
@@ -68,8 +68,8 @@ public class ListAdapterSalary extends RecyclerView.Adapter<ListAdapterSalary.Vi
             public void onClick(View v) {
                 SalaryDialog salaryDialog;
 
-                if(position!=0)salaryDialog = new SalaryDialog(salaries.get(position), employee);
-                else salaryDialog = new SalaryDialog(employee);
+                if(position!=0)salaryDialog = new SalaryDialog(salaries.get(position), employee,context);
+                else salaryDialog = new SalaryDialog(employee,context);
 
                 salaryDialog.show(fragment.getChildFragmentManager(), null);
             }
@@ -116,6 +116,11 @@ public class ListAdapterSalary extends RecyclerView.Adapter<ListAdapterSalary.Vi
     @Override
     public int getItemCount() {
         return salaries.size();
+    }
+
+    @Override
+    public void onRefreshAdapter() {
+        this.salaries=employeeController.getSalariesFromEmployee(employee.getId());
     }
 
     public class ViewHolder6 extends RecyclerView.ViewHolder{
