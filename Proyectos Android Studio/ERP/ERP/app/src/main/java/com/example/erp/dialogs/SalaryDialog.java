@@ -1,15 +1,19 @@
 package com.example.erp.dialogs;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +27,9 @@ import com.example.erp.dataTransformers.DataChecker;
 import com.example.erp.dataTransformers.MyMultipurpose;
 import com.example.erp.dbControllers.EmployeeController;
 import com.example.erp.fragments.SalariesFragment;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 public class SalaryDialog extends DialogFragment {
 
@@ -51,6 +58,8 @@ public class SalaryDialog extends DialogFragment {
     private ImageView reload;
     private Button create;
     private EditText amount;
+    private DatePickerDialog datePickerDialog;
+    int m, h;
 
 
     @NonNull
@@ -97,7 +106,7 @@ public class SalaryDialog extends DialogFragment {
                     }else{
                         employeeController.updateSalary(employee.getId(),
                                 salary.getDate(),
-                                new Salary(Double.parseDouble(amount.getText().toString()), date.getText().toString()+" "+date.getText().toString() ));
+                                new Salary(Double.parseDouble(amount.getText().toString()), date.getText().toString()+" "+hour.getText().toString()));
                     }
 
                     mListener.onRefreshAdapter();
@@ -107,9 +116,59 @@ public class SalaryDialog extends DialogFragment {
             }
         });
 
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c=Calendar.getInstance();
+                int day=c.get(Calendar.DAY_OF_MONTH);
+                int month=c.get(Calendar.MONTH);
+                int year=c.get(Calendar.YEAR);
+
+                int style=DatePickerDialog.THEME_HOLO_DARK;
+
+                datePickerDialog=new DatePickerDialog(getContext(),style ,new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String dAux=dayOfMonth+"";
+                        String mAux=(month+1)+"";
+                        if(dayOfMonth<10)dAux="0"+dayOfMonth;
+                        if(month<9)mAux="0"+(month+1);
+                        date.setText(dAux+"/"+mAux+"/"+year+"");
+                    }
+                }, day, month, year);
+
+                datePickerDialog.show();
+            }
+        });
+
+        hour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popTimePicker(v);
+            }
+        });
+
         builder.setView(view);
 
         return builder.create();
+    }
+
+    private void popTimePicker(View v) {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener= new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                h=hourOfDay;
+                m=minute;
+
+                hour.setText(String.format(Locale.getDefault(), "%02d:%02d", h, m)+":00");
+
+            }
+        };
+        int style = AlertDialog.THEME_HOLO_DARK;
+
+        TimePickerDialog timePickerDialog=new TimePickerDialog(getContext(), style, onTimeSetListener, h, m, true);
+        timePickerDialog.setTitle("Hora");
+        timePickerDialog.show();
     }
 
     @Override

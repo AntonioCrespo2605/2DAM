@@ -130,7 +130,7 @@ public class EmployeeController{
     public void deleteSalary(int id_employee, String date){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("DELETE FROM "+DBHelper.SALARY_TABLE+" WHERE EXISTS" +
-                "(SELECT * FROM "+DBHelper.SALARY_TABLE+" WHERE id_employee="+id_employee+" AND date=\''"+date+"\')");
+                "(SELECT * FROM "+DBHelper.SALARY_TABLE+" WHERE id_employee="+id_employee+" AND date=\'"+date+"\')");
         db.close();
 
         readEmployees();
