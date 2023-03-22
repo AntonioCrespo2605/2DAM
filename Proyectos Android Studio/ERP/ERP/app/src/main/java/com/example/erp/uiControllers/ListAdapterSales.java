@@ -1,6 +1,9 @@
 package com.example.erp.uiControllers;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Sale;
 import com.example.erp.dataTransformers.MyMultipurpose;
+import com.example.erp.dbControllers.CustomerController;
+import com.example.erp.dbControllers.SalesController;
 
 import java.util.List;
 
@@ -24,11 +29,13 @@ public class ListAdapterSales extends RecyclerView.Adapter<ListAdapterSales.View
     private Context context;
     private List<Sale> sales;
     private LayoutInflater inflater;
+    private SalesController salesController;
 
     public ListAdapterSales(List<Sale>sales, Context context){
         this.inflater=LayoutInflater.from(context);
         this.sales=sales;
         this.context=context;
+        this.salesController=new SalesController(context);
     }
 
     @NonNull
@@ -39,13 +46,46 @@ public class ListAdapterSales extends RecyclerView.Adapter<ListAdapterSales.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListAdapterSales.ViewHolder4 holder, int position) {
+    public void onBindViewHolder(@NonNull ListAdapterSales.ViewHolder4 holder, @SuppressLint("RecyclerView") int position) {
         holder.binData(sales.get(position));
 
         holder.ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        holder.ll.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Borrar Compra")
+                        .setMessage("Está a punto de eliminar esta compra.\n¿Está segur@?");
+
+                builder.setPositiveButton("Sí,Bórrala", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        salesController.deleteSale(sales.get(position).getId());
+                        sales.remove(position);
+                        notifyDataSetChanged();
+                    }
+                });
+
+                builder.setNegativeButton("No, déjalo estar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                AlertDialog dialog=builder.create();
+                dialog.show();
+
+
+
+                return true;
             }
         });
 

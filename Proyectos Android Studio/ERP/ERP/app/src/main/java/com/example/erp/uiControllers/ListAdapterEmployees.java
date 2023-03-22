@@ -2,7 +2,9 @@ package com.example.erp.uiControllers;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Employee;
+import com.example.erp.dbControllers.EmployeeController;
 import com.example.erp.fragmentsnew.NewEmployee;
 import com.example.erp.viewsEdit.EmployeesInformation;
 
@@ -36,14 +39,18 @@ public class ListAdapterEmployees extends RecyclerView.Adapter<ListAdapterEmploy
     private Context mContext;
 
     private Activity activity;
+    private EmployeeController employeeController;
+    private int idAdmin;
 
 
-    public ListAdapterEmployees(List<Employee>employees,int newId, Context context, Activity activity){
+    public ListAdapterEmployees(List<Employee>employees,int newId, Context context, Activity activity, int idAdmin){
         this.inflater=LayoutInflater.from(context);
         this.employees=orderEmployees(employees);
         this.newId=newId;
         this.mContext=context;
         this.activity=activity;
+        this.employeeController=new EmployeeController(context);
+        this.idAdmin=idAdmin;
     }
 
 
@@ -76,6 +83,41 @@ public class ListAdapterEmployees extends RecyclerView.Adapter<ListAdapterEmploy
                 }
             }
         });
+
+        holder.ll_employee.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(employees.get(position).getId()!=1 && employees.get(position).getId()!=idAdmin){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setTitle("Borrar empleado")
+                            .setMessage("Si borra un empleado también borrará las compras y sus sueldos asociados.\n¿Está segur@?");
+
+                    builder.setPositiveButton("Sí,Bórralo", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            employeeController.deleteEmployee(employees.get(position).getId());
+                            employees.remove(position);
+                            notifyDataSetChanged();
+                        }
+                    });
+
+                    builder.setNegativeButton("No, déjalo estar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    AlertDialog dialog=builder.create();
+                    dialog.show();
+                }
+
+                return true;
+            }
+        });
+
+
+
     }
 
 

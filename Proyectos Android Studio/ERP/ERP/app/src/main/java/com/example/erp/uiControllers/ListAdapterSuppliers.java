@@ -1,7 +1,9 @@
 package com.example.erp.uiControllers;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Supplier;
+import com.example.erp.dbControllers.SupplierController;
 import com.example.erp.dbControllers.SupplyController;
 import com.example.erp.fragmentsnew.NewCustomer;
 import com.example.erp.fragmentsnew.NewSupplier;
@@ -30,6 +33,8 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
     private List<Supplier>suppliers;
     private LayoutInflater inflater;
     private SupplyController supplyController;
+    private SupplierController supplierController;
+    private Context context;
 
     //it is used as controller for showing the letter(when next supplier has a new first letter)
     private char firstLetter=' ';
@@ -38,7 +43,9 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
         this.inflater=LayoutInflater.from(context);
         this.suppliers=orderSuppliers(suppliers);
         this.newId=newId;
-        supplyController =new SupplyController(context);
+        this.supplyController =new SupplyController(context);
+        this.supplierController=new SupplierController(context);
+        this.context=context;
     }
 
     @NonNull
@@ -68,6 +75,42 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
                 }
             }
         });
+
+        holder.ll_supplier.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(position!=0){
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Borrar proveedor")
+                            .setMessage("Si borra un proveedor también borrará las compras asociadas.\n¿Está segur@?");
+
+                    builder.setPositiveButton("Sí,Bórralo", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            supplierController.deleteSupplier(suppliers.get(position).getId());
+                            suppliers.remove(position);
+                            notifyDataSetChanged();
+                        }
+                    });
+
+                    builder.setNegativeButton("No, déjalo estar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    AlertDialog dialog=builder.create();
+                    dialog.show();
+
+                }
+                return true;
+            }
+
+        });
+
+
     }
 
     @Override

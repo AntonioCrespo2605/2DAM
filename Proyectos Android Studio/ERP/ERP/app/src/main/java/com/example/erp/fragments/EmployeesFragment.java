@@ -25,10 +25,15 @@ public class EmployeesFragment extends Fragment {
 
     private Spinner spinner;
     private ListAdapterEmployees la;
+    private int idAdmin;
 
 
     public EmployeesFragment() {
         // Required empty public constructor
+    }
+
+    public EmployeesFragment(int idAdmin){
+        this.idAdmin=idAdmin;
     }
 
     @Override
@@ -47,14 +52,14 @@ public class EmployeesFragment extends Fragment {
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        la=new ListAdapterEmployees(employeeController.getEmployees(), employeeController.newId(), getContext(), getActivity());
+        la=new ListAdapterEmployees(employeeController.getEmployees(), employeeController.newId(), getContext(), getActivity(), idAdmin);
         rv.setAdapter(la);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String workStation=parent.getItemAtPosition(position).toString();
-                la=new ListAdapterEmployees(employeeController.getEmployeesInWorkStation(workStation), employeeController.newId(), getContext(), getActivity());
+                la=new ListAdapterEmployees(employeeController.getEmployeesInWorkStation(workStation), employeeController.newId(), getContext(), getActivity(), idAdmin);
                 rv.setAdapter(la);
             }
 

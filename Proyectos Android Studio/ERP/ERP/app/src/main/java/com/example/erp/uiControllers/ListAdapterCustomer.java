@@ -1,7 +1,9 @@
 package com.example.erp.uiControllers;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Customer;
+import com.example.erp.dbControllers.CustomerController;
 import com.example.erp.viewsEdit.CustomersInformation;
 import com.example.erp.fragmentsnew.NewCustomer;
 
@@ -31,6 +34,7 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
     private LayoutInflater inflater;
     private int newId;
     private Context mContext;
+    private CustomerController customerController;
 
 
     private char firstLetter=' ';
@@ -40,6 +44,7 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
         this.customers=orderCustomers(customers);
         this.newId=newId;
         this.mContext=context;
+        this.customerController=new CustomerController(mContext);
     }
 
     @NonNull
@@ -70,6 +75,42 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
                 }
             }
         });
+
+        holder.ll_customer.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(position!=0){
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setTitle("Borrar Cliente")
+                            .setMessage("Si borra un cliente también borrará las compras asociadas.\n¿Está segur@?");
+
+                    builder.setPositiveButton("Sí,Bórralo", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            customerController.deleteCustomer(customers.get(position).getId());
+                            customers.remove(position);
+                            notifyDataSetChanged();
+                        }
+                    });
+
+                    builder.setNegativeButton("No, déjalo estar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    AlertDialog dialog=builder.create();
+                    dialog.show();
+
+                }
+
+                return false;
+            }
+        });
+
+
     }
 
     @Override

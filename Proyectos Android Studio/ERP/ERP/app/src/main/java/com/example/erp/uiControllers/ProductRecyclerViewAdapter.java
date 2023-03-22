@@ -1,7 +1,9 @@
 package com.example.erp.uiControllers;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Product;
+import com.example.erp.dbControllers.ProductController;
 import com.example.erp.fragmentsnew.NewCustomer;
 import com.example.erp.fragmentsnew.NewProduct;
 
@@ -25,12 +28,14 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
     private Context context;
     private List<Product> mData;
     private int newId;
+    private ProductController productController;
 
     //Constructor
     public ProductRecyclerViewAdapter(Context context, int newId,List<Product>mData){
         this.context=context;
         this.mData=mData;
         this.newId=newId;
+        this.productController=new ProductController(context);
     }
 
     //new View for each product
@@ -79,6 +84,34 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+
+                if(position!=0){
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Borrar producto")
+                            .setMessage("Si borra un producto también borrará las compras asociadas.\n¿Está segur@?");
+
+                    builder.setPositiveButton("Sí,Bórralo", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            productController.deleteProduct(mData.get(position).getId());
+                            mData.remove(position);
+                            notifyDataSetChanged();
+                        }
+                    });
+
+                    builder.setNegativeButton("No, déjalo estar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    AlertDialog dialog=builder.create();
+                    dialog.show();
+
+                }
+
                 return true;
             }
         });

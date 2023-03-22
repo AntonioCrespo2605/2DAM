@@ -36,6 +36,7 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
 
     //variable for controlling the current fragment. It is needed to swipe
     private int fragmentSelected=3;
+    private int idAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
             public void onClick(View v) {
                 if(fragmentSelected!=1){
                     fragmentSelected=1;
-                    employeeSelected();
+                    employeeSelected(idAdmin);
                 }
             }
         });
@@ -128,15 +129,17 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
     }
 
     //down menu options
-    private void employeeSelected(){
+    private void employeeSelected(int idAdmin){
         normalTints();
         employeeOp.setColorFilter(ContextCompat.getColor(this, R.color.dark_brown));
         empleadosText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
 
+        EmployeesFragment employeesFragment=new EmployeesFragment(idAdmin);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setReorderingAllowed(true);
-        transaction.replace(R.id.fragmentContainerView, EmployeesFragment.class, null);
+        transaction.replace(R.id.fragmentContainerView, employeesFragment, null);
         transaction.commit();
 
     }
@@ -251,7 +254,7 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
     private void changeFragment() {
         switch (fragmentSelected){
             case 1:
-                employeeSelected();
+                employeeSelected(idAdmin);
                 break;
             case 2:
                 customerSelected();

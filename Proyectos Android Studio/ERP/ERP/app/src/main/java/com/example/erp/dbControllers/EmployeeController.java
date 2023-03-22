@@ -246,7 +246,17 @@ public class EmployeeController{
     /************************************************************************/
     //getters && setters
 
-    public ArrayList<Employee> getEmployees() {
+    public ArrayList<Employee> getEmployeesWithoutBots() {
+        ArrayList<Employee>toret=new ArrayList<Employee>();
+
+        toret.addAll(employees);
+
+        toret.remove(0);
+
+        return toret;
+    }
+
+    public ArrayList<Employee>getEmployees(){
         return employees;
     }
 
