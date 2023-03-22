@@ -36,8 +36,8 @@ public class LinesInSaleFragment extends Fragment{
         this.sale=salesController.getSaleById(idSale);
     }
 
-    private TextView numberTicket, dateTicket, base, shipping_costs, total;
-    private Button addLine;
+    private TextView numberTicket, dateTicket, hourTicket, base, shipping_costs, total;
+    private Button addLine, ok;
     private CheckBox checkBox;
 
 
@@ -56,7 +56,7 @@ public class LinesInSaleFragment extends Fragment{
         la.setOnItemClickListener(new ListAdapterTicket.OnItemClickListener() {
             @Override
             public void onItemClick() {
-
+                setVariables();
             }
         });
 
@@ -67,12 +67,29 @@ public class LinesInSaleFragment extends Fragment{
         total=view.findViewById(R.id.totalTicket);
         addLine=view.findViewById(R.id.addToTicket);
         checkBox=view.findViewById(R.id.checkRecived);
+        hourTicket=view.findViewById(R.id.hourTicket);
+        ok=view.findViewById(R.id.buttonOk);
 
         numberTicket.setText("Ticket "+sale.getId());
-        dateTicket.setText(sale.getDate());
-        shipping_costs.setText("Gastos de envío: "+ MyMultipurpose.format(sale.getShipping_costs())+"€");
+        dateTicket.setText(MyMultipurpose.separateFromDate(sale.getDate(), true));
+        hourTicket.setText(MyMultipurpose.separateFromDate(sale.getDate(), true));
+        shipping_costs.setText(MyMultipurpose.format(sale.getShipping_costs())+"");
 
         setVariables();
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                salesController.updateSale(new Sale(sale.getId(), ));
+            }
+        });
+
+        addLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return view;
     }

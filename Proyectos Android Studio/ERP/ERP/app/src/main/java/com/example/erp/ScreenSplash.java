@@ -115,7 +115,7 @@ public class ScreenSplash extends AppCompatActivity {
                     MyMultipurpose.getSystemDate(),
                     10,
                     true,
-                    new Employee(2, "22222222A", "Morty","111222333","Vendedor", "ABCDUS33",600, ImageCustomized.fromIntToBitmap(R.drawable.morty, this),"morty"),
+                    new Employee(0,"00000000A","BOT","000000000","bot","BARCGB22",0, ImageCustomized.fromIntToBitmap(R.drawable.trex, this),"0"),
                     new Customer(1, "Juan", "111111111", "juan@gmail.com", new ShoppingCart(), ImageCustomized.fromIntToBitmap(R.drawable.juan,this),new ArrayList<Message>(),"juan"),
                     lines
             ));
