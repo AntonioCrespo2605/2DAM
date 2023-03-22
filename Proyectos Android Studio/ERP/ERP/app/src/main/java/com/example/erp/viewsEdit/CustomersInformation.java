@@ -23,7 +23,7 @@ import com.example.erp.fragments.SalesFragment;
 import com.example.erp.fragments.ShoppingCartFragment;
 import com.example.erp.fragmentsnew.NewCustomer;
 
-public class CustomersInformation extends AppCompatActivity implements MessageDialog.OnDialogButtonClickListener {
+public class CustomersInformation extends AppCompatActivity implements MessageDialog.OnDialogButtonClickListener{
     private Employee admin;
     private EmployeeController employeeController;
     private CustomerController customerController;

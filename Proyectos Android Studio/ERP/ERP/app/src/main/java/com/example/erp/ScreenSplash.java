@@ -108,7 +108,7 @@ public class ScreenSplash extends AppCompatActivity {
             customerController.addCustomer(new Customer(3, "Bender2","222222222","bender2@hotmail.com",new ShoppingCart(), ImageCustomized.fromIntToBitmap(R.drawable.bender,this),new ArrayList<Message>(),"bender"));
 
             //default sales
-            ProductSale ps=new ProductSale(new Product(1, "TRex","Carnívoro",1, 1000000.99,ImageCustomized.fromIntToBitmap(R.drawable.dinosaur1,this)), 2, 1000000 );
+            ProductSale ps=new ProductSale(new Product(1, "TRex","Carnívoro",1, 1000000.99,ImageCustomized.fromIntToBitmap(R.drawable.dinosaur1,this)), 4, 1000000 );
             ArrayList<ProductSale>lines=new ArrayList<ProductSale>();
             lines.add(ps);
             salesController.addSale(new Sale(1,

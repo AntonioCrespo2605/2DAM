@@ -125,11 +125,12 @@ public class SalesController{
 
     public void deleteProductSale(int id_product, int id_sale){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM "+DBHelper.PRODUCT_SALE_TABLE+" WHERE EXISTS" +
-                "(SELECT * FROM "+DBHelper.PRODUCT_SALE_TABLE+"WHERE id_product="+id_product+" AND id_sale="+id_sale+")");
+        db.delete(DBHelper.PRODUCT_SALE_TABLE,"id_sale="+id_sale+" AND id_product="+id_product,null);
+
         db.close();
 
-        checkEmptySales();
+        readSales();
+        //checkEmptySales();
     }
 
     private void checkEmptySales(){
@@ -161,7 +162,7 @@ public class SalesController{
         readSales();
     }
 
-    private void updateProductSale(ProductSale productSale, int id_sale){
+    public void updateProductSale(ProductSale productSale, int id_sale){
         SQLiteDatabase db =dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 

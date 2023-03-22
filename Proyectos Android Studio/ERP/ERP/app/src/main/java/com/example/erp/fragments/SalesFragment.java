@@ -3,6 +3,8 @@ package com.example.erp.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +45,24 @@ public class SalesFragment extends Fragment {
         la=new ListAdapterSales(salesController.getSalesFromCustomer(id_customer),getContext());
         rv.setAdapter(la);
 
+        la.setOnItemClickListener(new ListAdapterSales.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                salesController=new SalesController(getContext());
+                LinesInSaleFragment newFragment = new LinesInSaleFragment(salesController.getSalesFromCustomer(id_customer).get(position).getId(), getContext());
+
+                fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+
         return view;
     }
+
+
 }

@@ -21,6 +21,7 @@ import com.example.erp.dataBaseObjects.Sale;
 import com.example.erp.dataTransformers.MyMultipurpose;
 import com.example.erp.dbControllers.CustomerController;
 import com.example.erp.dbControllers.SalesController;
+import com.example.erp.dialogs.MessageDialog;
 
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class ListAdapterSales extends RecyclerView.Adapter<ListAdapterSales.View
         holder.ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                itemClickListener.onItemClick(position);
             }
         });
 
@@ -82,8 +83,6 @@ public class ListAdapterSales extends RecyclerView.Adapter<ListAdapterSales.View
 
                 AlertDialog dialog=builder.create();
                 dialog.show();
-
-
 
                 return true;
             }
@@ -119,5 +118,15 @@ public class ListAdapterSales extends RecyclerView.Adapter<ListAdapterSales.View
             if(!sale.isState())received.setColorFilter(ContextCompat.getColor(context, R.color.red), PorterDuff.Mode.SRC_IN);
 
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    private OnItemClickListener itemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        itemClickListener = listener;
     }
 }
