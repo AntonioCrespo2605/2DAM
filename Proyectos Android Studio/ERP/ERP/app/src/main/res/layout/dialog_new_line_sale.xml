@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_edge"
+        android:backgroundTint="@color/light_brown"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir producto"
+            android:textColor="@color/dark_brown"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selecciona un producto"
+                android:textColor="@color/dark_brown"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinnerAddProduct"
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:background="@drawable/rounded_edge"
+                android:backgroundTint="@color/white_brown"
+                android:entries="@array/workStations"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio"
+                android:textColor="@color/dark_brown"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/inputPriceAddProduct"
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:inputType="numberDecimal"
+                android:background="@drawable/rounded_edge"
+                android:backgroundTint="@color/white_brown"
+                android:textColor="@color/dark_brown"
+                android:hint="Precio"
+                android:paddingLeft="10dp"
+                android:textColorHint="@color/light_brown"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cantidad"
+                android:textColor="@color/dark_brown"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/inputAmounAddProduct"
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:background="@drawable/rounded_edge"
+                android:backgroundTint="@color/white_brown"
+                android:textColor="@color/dark_brown"
+                android:hint="Cantidad"
+                android:paddingLeft="10dp"
+                android:textColorHint="@color/light_brown"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/dark_brown"
+            android:text="Añadir"
+            android:textSize="12dp"
+            tools:ignore="TextSizeCheck"
+            android:textColor="@color/white_brown"/>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

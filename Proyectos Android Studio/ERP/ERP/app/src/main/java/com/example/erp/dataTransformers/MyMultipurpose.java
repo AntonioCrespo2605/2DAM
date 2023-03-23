@@ -93,4 +93,20 @@ public class MyMultipurpose {
         return toret;
     }
 
+    public static String deformat(String money) {
+        if(DataChecker.correctDouble(money))return money;
+        else{
+            String toret="";
+            for(int i = 0; i < money.length(); i++){
+                if(money.charAt(i)!='.')toret+=money.charAt(i);
+            }
+
+            String toret2="";
+            for(int i=0; i<toret.length();i++){
+                if(toret.charAt(i)!=',')toret2+=toret.charAt(i);
+                else toret2+='.';
+            }
+            return toret2;
+        }
+    }
 }

@@ -27,14 +27,12 @@ public class ListAdapterTicket extends RecyclerView.Adapter<ListAdapterTicket.Vi
     private List<ProductSale>lines;
     private SalesController salesController;
     private LayoutInflater inflater;
-    private Context context;
     private Sale sale;
 
     public ListAdapterTicket(Sale sale, Context context){
         this.lines=sale.getLines();
         this.salesController=new SalesController(context);
         this.inflater=LayoutInflater.from(context);
-        this.context=context;
         this.sale=sale;
     }
 
@@ -55,6 +53,7 @@ public class ListAdapterTicket extends RecyclerView.Adapter<ListAdapterTicket.Vi
             public boolean onLongClick(View v) {
                 if(lines.get(position).getAmount() == 1 ){
                     salesController.deleteProductSale(lines.get(position).getProduct().getId(), sale.getId());
+                    lines.remove(position);
                 }else{
                     lines.get(position).setAmount(lines.get(position).getAmount()-1);
 

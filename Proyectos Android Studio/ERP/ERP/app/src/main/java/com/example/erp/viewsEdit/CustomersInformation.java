@@ -11,22 +11,31 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.erp.R;
 import com.example.erp.allUsersViews.AdminView;
 import com.example.erp.dataBaseObjects.Employee;
+import com.example.erp.dataBaseObjects.Product;
+import com.example.erp.dataBaseObjects.ProductSale;
 import com.example.erp.dbControllers.CustomerController;
 import com.example.erp.dbControllers.EmployeeController;
+import com.example.erp.dbControllers.SalesController;
+import com.example.erp.dialogs.AddProductToSaleDialog;
 import com.example.erp.dialogs.MessageDialog;
 import com.example.erp.fragments.MailFragment;
 import com.example.erp.fragments.SalesFragment;
 import com.example.erp.fragments.ShoppingCartFragment;
 import com.example.erp.fragmentsnew.NewCustomer;
+import com.example.erp.uiControllers.ListAdapterTicket;
+
+import java.util.ArrayList;
 
 public class CustomersInformation extends AppCompatActivity implements MessageDialog.OnDialogButtonClickListener{
     private Employee admin;
     private EmployeeController employeeController;
     private CustomerController customerController;
+    private SalesController salesController;
 
     //top menu
     private TextView name;
@@ -49,6 +58,7 @@ public class CustomersInformation extends AppCompatActivity implements MessageDi
 
         employeeController=new EmployeeController(this);
         customerController=new CustomerController(this);
+        salesController=new SalesController(this);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         admin=employeeController.getEmployeeById(sharedPreferences.getInt("adminId", 1));
