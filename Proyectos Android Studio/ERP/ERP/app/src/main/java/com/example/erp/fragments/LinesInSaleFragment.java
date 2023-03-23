@@ -153,7 +153,7 @@ public class LinesInSaleFragment extends Fragment{
     }
 
     private void returnToLastFragment() {
-            
+
     }
 
     private void updateProductsBuyed(Product product, int amount, double price) {
