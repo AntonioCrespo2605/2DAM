@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,6 +66,7 @@ public class FragmentSaleEmployee extends Fragment implements TextWatcher {
     private Fragment fragment=this;
     private ArrayList<Product>allProducts;
     private double topay=0;
+
 
     public FragmentSaleEmployee(Customer customer, Employee employee, Context context){
         this.salesController=new SalesController(context);
@@ -129,10 +132,17 @@ public class FragmentSaleEmployee extends Fragment implements TextWatcher {
                 else{
                     newSale();
 
+                    /*
                     ((FragmentActivity)getContext()).getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragmentContainerView, new FragmentCustomersAdminView(employee)).addToBackStack(null)
-                            .commit();
+                            .commit();*/
+
+                    FragmentManager fragmentManager = ((FragmentActivity)getContext()).getSupportFragmentManager();
+                    FragmentCustomersAdminView fcav = new FragmentCustomersAdminView(employee);
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.fragmentContainerView, fcav);
+                    transaction.commit();
                 }
             }
         });

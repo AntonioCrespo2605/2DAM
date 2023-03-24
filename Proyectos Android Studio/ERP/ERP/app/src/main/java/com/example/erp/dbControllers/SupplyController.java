@@ -9,6 +9,7 @@ import com.example.erp.dataBaseObjects.ProductSale;
 import com.example.erp.dataBaseObjects.Supply;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SupplyController {
     private DBHelper dbHelper;
@@ -21,9 +22,9 @@ public class SupplyController {
     //Constructor
     public SupplyController(Context context){
         dbHelper=new DBHelper(context);
-        readSupplies();
         supplierController=new SupplierController(context);
         productController=new ProductController(context);
+        readSupplies();
     }
 
     /************************************************************************/
@@ -180,13 +181,6 @@ public class SupplyController {
         return false;
     }
 
-    private Supply getSupplyById(int id) {
-        for(Supply supply :supplies){
-            if(supply.getId()==id)return supply;
-        }
-        return null;
-    }
-
     public ArrayList<Supply>getPendingSuppliesOfSupplier(int id_supplier){
         ArrayList<Supply>toret=new ArrayList<Supply>();
 
@@ -219,4 +213,18 @@ public class SupplyController {
     }
 
 
+    public List<Supply> getSuppliesOfSupplier(int idSupplier) {
+        ArrayList<Supply>toret=new ArrayList<Supply>();
+        for(Supply s:supplies){
+            if(s.getSupplier().getId()==idSupplier)toret.add(new Supply(s));
+        }
+        return toret;
+    }
+
+    public Supply getSupplyById(int id){
+        for(Supply s:supplies){
+            if(s.getId()==id)return s;
+        }
+        return null;
+    }
 }

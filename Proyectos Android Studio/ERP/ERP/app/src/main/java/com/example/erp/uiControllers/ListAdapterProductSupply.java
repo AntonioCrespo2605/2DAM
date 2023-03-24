@@ -1,4 +1,4 @@
-package com.example.erp.uiControllersEmployees;
+package com.example.erp.uiControllers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,47 +15,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Product;
 import com.example.erp.dataTransformers.MyMultipurpose;
-import com.example.erp.dbControllers.ProductController;
-
-import java.util.ArrayList;
+import com.example.erp.uiControllersEmployees.ListAdapterProductsInSale;
 import java.util.List;
 
-public class ListAdapterProductsInSale extends RecyclerView.Adapter<ListAdapterProductsInSale.ViewHolder>{
-
+public class ListAdapterProductSupply extends RecyclerView.Adapter<ListAdapterProductSupply.ViewHolder>{
     private List<Product> products;
     private LayoutInflater inflater;
     private Context mContext;
-    private ProductController productController;
 
     private boolean isDialog=false;
-    private char firstLetter=' ';
 
-    public ListAdapterProductsInSale(List<Product>products, Context context){
+    public ListAdapterProductSupply(List<Product>products, Context context){
         this.inflater=LayoutInflater.from(context);
         this.products=orderProducts(products);
         this.mContext=context;
-        this.productController=new ProductController(mContext);
-    }
-
-
-    public ListAdapterProductsInSale(List<Product>products, Context context, boolean isDialog, boolean showAll){
-        this.inflater=LayoutInflater.from(context);
-        this.products=orderProducts(products);
-        if(!showAll)this.products=filterStock(this.products);
-        this.mContext=context;
-        this.productController=new ProductController(mContext);
-        this.isDialog=isDialog;
     }
 
     @NonNull
     @Override
-    public ListAdapterProductsInSale.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListAdapterProductSupply.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view=inflater.inflate(R.layout.row_product_sale, null);
-        return new ListAdapterProductsInSale.ViewHolder(view);
+        return new ListAdapterProductSupply.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ListAdapterProductsInSale.ViewHolder holder,@SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(final ListAdapterProductSupply.ViewHolder holder,@SuppressLint("RecyclerView") final int position) {
         holder.binData(products.get(position));
 
         if(!isDialog){
@@ -73,7 +57,6 @@ public class ListAdapterProductsInSale extends RecyclerView.Adapter<ListAdapterP
                     listener2.onItemSelected(products.get(position).getId());
                 }
             });
-
         }
     }
 
@@ -98,16 +81,6 @@ public class ListAdapterProductsInSale extends RecyclerView.Adapter<ListAdapterP
 
         return products;
     }
-    private List<Product> filterStock(List<Product> products) {
-        ArrayList<Product>toret=new ArrayList<Product>();
-
-        for(Product product:products){
-            if(product.getStock()>0)toret.add(product);
-        }
-
-        return toret;
-    }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private LinearLayout ll;
@@ -132,23 +105,20 @@ public class ListAdapterProductsInSale extends RecyclerView.Adapter<ListAdapterP
 
     }
 
-    public OnItemDeleteListener listener;
+    public ListAdapterProductsInSale.OnItemDeleteListener listener;
     public interface OnItemDeleteListener{
         void onItemDelete(int idProduct);
     }
-    public void setOnItemDelete(OnItemDeleteListener item){
+    public void setOnItemDelete(ListAdapterProductsInSale.OnItemDeleteListener item){
         this.listener=item;
     }
     //-----------------------------------
-    public OnItemSelectedListener listener2;
+    public ListAdapterProductsInSale.OnItemSelectedListener listener2;
     public interface OnItemSelectedListener{
         void onItemSelected(int idProduct);
     }
 
-    public void setOnItemSelected(OnItemSelectedListener item){
+    public void setOnItemSelected(ListAdapterProductsInSale.OnItemSelectedListener item){
         this.listener2=item;
     }
-
-
-
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_edge"
+        android:backgroundTint="@color/light_brown"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Correo masivo"
+            android:textSize="20dp"
+            android:textColor="@color/dark_brown"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            />
+
+        <EditText
+            android:id="@+id/input"
+            android:padding="5dp"
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:background="@drawable/rounded_edge"
+            android:backgroundTint="@color/white_brown"
+            android:inputType="textMultiLine"
+            android:hint="escribe aquí tu mensaje"
+            android:textSize="16dp"
+            android:textColorHint="@color/light_brown"
+            android:textColor="@color/dark_brown"
+            />
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enviar"
+            android:backgroundTint="@color/dark_brown"
+            android:textColor="@color/white_brown"
+            android:layout_margin="10dp"
+            />
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

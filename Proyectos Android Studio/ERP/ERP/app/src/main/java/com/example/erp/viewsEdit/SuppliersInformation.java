@@ -2,6 +2,7 @@ package com.example.erp.viewsEdit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -15,6 +16,7 @@ import com.example.erp.R;
 import com.example.erp.dbControllers.EmployeeController;
 import com.example.erp.dbControllers.SupplierController;
 import com.example.erp.fragmentsAdminView.SuppliesFragment;
+import com.example.erp.fragmentsEmployeeView.FragmentCustomersAdminView;
 import com.example.erp.fragmentsNewAdminView.NewSupplier;
 
 public class SuppliersInformation extends AppCompatActivity {
@@ -99,11 +101,10 @@ public class SuppliersInformation extends AppCompatActivity {
             supplyOption.setColorFilter(ContextCompat.getColor(this, R.color.dark_brown));
             supplyText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
 
-            SuppliesFragment suppliesFragment=new SuppliesFragment(idSupplier);
+            SuppliesFragment suppliesFragment=new SuppliesFragment(supplierController.getSupplierById(idSupplier), this);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.setReorderingAllowed(true);
             transaction.replace(R.id.fragmentContainerView, suppliesFragment);
             transaction.commit();
         }

@@ -18,15 +18,18 @@
         <activity
             android:name=".viewsEdit.CustomersInformation"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".viewsEdit.SuppliersInformation"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".viewsEdit.EmployeesInformation"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".allUsersViews.AdminView"
             android:exported="false"
@@ -35,7 +38,8 @@
         <activity
             android:name=".CreateUser"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".Login"
             android:exported="false"

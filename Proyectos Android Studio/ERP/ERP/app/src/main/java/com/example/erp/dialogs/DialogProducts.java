@@ -23,8 +23,15 @@ public class DialogProducts extends DialogFragment {
     private ArrayList<Product>products;
     public DialogProducts(ArrayList<Product>products){
         this.products=products;
+        this.showall=false;
     }
 
+    public DialogProducts(ArrayList<Product>products, boolean showall){
+        this.products=products;
+        this.showall=showall;
+    }
+
+    private boolean showall;
     private ListAdapterProductsInSale la;
     private RecyclerView rv;
     @NonNull
@@ -37,7 +44,7 @@ public class DialogProducts extends DialogFragment {
         rv=view.findViewById(R.id.rcDialog);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        la=new ListAdapterProductsInSale(products,getContext(),true);
+        la=new ListAdapterProductsInSale(products,getContext(),true,showall);
 
         la.setOnItemSelected(new ListAdapterProductsInSale.OnItemSelectedListener() {
             @Override

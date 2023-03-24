@@ -20,12 +20,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.erp.Login;
 import com.example.erp.R;
 import com.example.erp.ScreenSplash;
 import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.dbControllers.EmployeeController;
+import com.example.erp.dialogs.DialogMasiveEmail;
+import com.example.erp.dialogs.TransactionDialog;
 import com.example.erp.fragmentsAdminView.AccountingFragment;
 import com.example.erp.fragmentsAdminView.CustomersFragment;
 import com.example.erp.fragmentsAdminView.EmployeesFragment;
@@ -246,9 +249,10 @@ public class AdminView extends AppCompatActivity implements NavigationView.OnNav
                 break;
 
             case R.id.log:
+                Toast.makeText(this, "En desarrollo", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.email:
+            case R.id.globalMail:massiveEmail();
                 break;
 
             case R.id.github_menu:githubMenu();
@@ -274,6 +278,11 @@ public class AdminView extends AppCompatActivity implements NavigationView.OnNav
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void massiveEmail(){
+        DialogMasiveEmail dialog=new DialogMasiveEmail(this);
+        dialog.show(getSupportFragmentManager(), null);
     }
 
     private void githubMenu(){
@@ -306,7 +315,8 @@ public class AdminView extends AppCompatActivity implements NavigationView.OnNav
 
                         SharedPreferences preferences = getSharedPreferences("myPrefs", getApplicationContext().MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
-                        editor.clear();
+                        editor.putBoolean("started", false);
+                        editor.putFloat("money", 10000000f);
                         editor.commit();
 
                         Intent intent = new Intent(getApplicationContext(), ScreenSplash.class);

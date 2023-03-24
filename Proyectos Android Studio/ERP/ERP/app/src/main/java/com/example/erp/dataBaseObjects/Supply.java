@@ -25,7 +25,16 @@ public class Supply {
         this.date = date;
         this.state = state;
         this.shipping_costs = shipping_costs;
-        this.lines = null;
+        this.lines = new ArrayList<ProductSale>();
+    }
+
+    public Supply(Supply supply){
+        this.id = supply.getId();
+        this.supplier = supply.getSupplier();
+        this.date = supply.getDate();
+        this.state = supply.isState();
+        this.shipping_costs = supply.getShipping_costs();
+        this.lines = supply.getLines();
     }
 
     public int getId() {

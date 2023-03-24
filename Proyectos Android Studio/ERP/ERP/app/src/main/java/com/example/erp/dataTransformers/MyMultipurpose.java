@@ -2,6 +2,7 @@ package com.example.erp.dataTransformers;
 
 import com.example.erp.dataBaseObjects.ProductSale;
 import com.example.erp.dataBaseObjects.Sale;
+import com.example.erp.dataBaseObjects.Supply;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -108,5 +109,13 @@ public class MyMultipurpose {
             }
             return toret2;
         }
+    }
+
+    public static int getTotalProductsFromSupply(Supply supply){
+        int toret=0;
+        for(ProductSale ps : supply.getLines()){
+            toret+=ps.getAmount();
+        }
+        return toret;
     }
 }
