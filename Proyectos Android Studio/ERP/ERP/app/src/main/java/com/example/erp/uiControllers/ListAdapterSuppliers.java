@@ -51,6 +51,7 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
         this.supplyController =new SupplyController(context);
         this.supplierController=new SupplierController(context);
         this.context=context;
+        this.activity=activity;
     }
 
     @NonNull

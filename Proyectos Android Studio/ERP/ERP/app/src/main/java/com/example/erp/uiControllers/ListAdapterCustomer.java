@@ -106,7 +106,7 @@ public class ListAdapterCustomer extends RecyclerView.Adapter<ListAdapterCustome
 
                 }
 
-                return false;
+                return true;
             }
         });
 

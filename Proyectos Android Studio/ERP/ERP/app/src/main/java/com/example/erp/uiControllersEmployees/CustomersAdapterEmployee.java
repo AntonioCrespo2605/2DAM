@@ -23,6 +23,7 @@ import com.example.erp.dataBaseObjects.Customer;
 import com.example.erp.dbControllers.CustomerController;
 import com.example.erp.fragmentsNewAdminView.NewCustomer;
 import com.example.erp.uiControllers.ListAdapterCustomer;
+import com.example.erp.uiControllers.ListAdapterTicket;
 import com.example.erp.viewsEdit.CustomersInformation;
 
 import java.util.ArrayList;
@@ -59,7 +60,9 @@ public class CustomersAdapterEmployee extends RecyclerView.Adapter<CustomersAdap
         holder.ll_customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
+                //
+
+                listener.onCustomerClick(customers.get(position).getId());
             }
         });
     }
@@ -113,5 +116,15 @@ public class CustomersAdapterEmployee extends RecyclerView.Adapter<CustomersAdap
             emailCustomer.setText(item.getEmail());
             profile.setImageBitmap(item.getPhoto());
         }
+    }
+
+    public interface OnCustomerClickListener{
+        void onCustomerClick(int idCustomer);
+    }
+
+    public OnCustomerClickListener listener;
+
+    public void setOnCustomerClickListener(CustomersAdapterEmployee.OnCustomerClickListener listener) {
+        this.listener = listener;
     }
 }

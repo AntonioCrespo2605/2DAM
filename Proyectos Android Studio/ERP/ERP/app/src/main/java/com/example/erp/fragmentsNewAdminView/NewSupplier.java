@@ -33,7 +33,7 @@ import java.io.IOException;
 public class NewSupplier extends Fragment {
 
     public NewSupplier() {
-        // Required empty public constructor
+        createBy0=true;
     }
 
     private int id;
@@ -44,11 +44,6 @@ public class NewSupplier extends Fragment {
     }
 
     private Supplier supplier;
-    public NewSupplier(Supplier supplier){
-        this.id=supplier.getId();
-        this.supplier=supplier;
-        this.createBy0=false;
-    }
 
     public NewSupplier(Supplier supplier, boolean fromSupplier){
         this.id=supplier.getId();

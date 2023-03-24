@@ -14,6 +14,15 @@ public class Product {
 
     }
 
+    public Product(Product product){
+        this.id = product.getId();
+        this.name = product.getName();
+        this.description = product.getDescription();
+        this.stock = product.getStock();
+        this.current_price = product.getStock();
+        this.photo=product.getPhoto();
+    }
+
     public Product(int id, String name, String description, int stock, double current_price, Bitmap photo) {
         this.id = id;
         this.name = name;
