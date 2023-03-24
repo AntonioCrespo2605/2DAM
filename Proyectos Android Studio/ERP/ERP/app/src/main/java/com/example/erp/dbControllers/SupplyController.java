@@ -206,6 +206,7 @@ public class SupplyController {
         return toret;
     }
 
+
     /************************************************************************/
     //getters && setters
 
@@ -216,4 +217,6 @@ public class SupplyController {
     public void setSupplies(ArrayList<Supply> supplies) {
         this.supplies = supplies;
     }
+
+
 }

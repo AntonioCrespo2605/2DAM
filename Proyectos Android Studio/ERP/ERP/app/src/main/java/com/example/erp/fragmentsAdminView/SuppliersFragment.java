@@ -35,7 +35,7 @@ public class SuppliersFragment extends Fragment {
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        la=new ListAdapterSuppliers(supplierController.getSuppliers(), supplierController.getNewId(), getContext());
+        la=new ListAdapterSuppliers(supplierController.getSuppliers(), supplierController.getNewId(), getContext(), getActivity());
         rv.setAdapter(la);
 
         return view;

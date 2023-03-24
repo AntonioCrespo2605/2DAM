@@ -1,9 +1,11 @@
 package com.example.erp.uiControllers;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -21,6 +24,8 @@ import com.example.erp.dataBaseObjects.Supplier;
 import com.example.erp.dbControllers.SupplierController;
 import com.example.erp.dbControllers.SupplyController;
 import com.example.erp.fragmentsNewAdminView.NewSupplier;
+import com.example.erp.viewsEdit.EmployeesInformation;
+import com.example.erp.viewsEdit.SuppliersInformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +39,12 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
     private SupplyController supplyController;
     private SupplierController supplierController;
     private Context context;
+    private Activity activity;
 
     //it is used as controller for showing the letter(when next supplier has a new first letter)
     private char firstLetter=' ';
 
-    public ListAdapterSuppliers(List<Supplier> suppliers, int newId,Context context){
+    public ListAdapterSuppliers(List<Supplier> suppliers, int newId,Context context, Activity activity){
         this.inflater=LayoutInflater.from(context);
         this.suppliers=orderSuppliers(suppliers);
         this.newId=newId;
@@ -62,10 +68,11 @@ public class ListAdapterSuppliers extends RecyclerView.Adapter<ListAdapterSuppli
             @Override
             public void onClick(View v) {
                 if(position!=0){
-                    ((FragmentActivity)v.getContext()).getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragmentContainerView, new NewSupplier(suppliers.get(position))).addToBackStack(null)
-                            .commit();
+                    Toast.makeText(context, "Cargando datos de "+suppliers.get(position).getName(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, SuppliersInformation.class);
+                    intent.putExtra("id", suppliers.get(position).getId());
+                    context.startActivity(intent);
+                    activity.finish();
                 }else{
                     ((FragmentActivity)v.getContext()).getSupportFragmentManager()
                             .beginTransaction()

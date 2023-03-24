@@ -37,17 +37,24 @@ public class NewSupplier extends Fragment {
     }
 
     private int id;
-    private boolean createBy0;
+    private boolean createBy0, fromSupplier=false;
     public NewSupplier(int id){
         this.id=id;
-        createBy0=true;
+        this.createBy0=true;
     }
 
     private Supplier supplier;
     public NewSupplier(Supplier supplier){
         this.id=supplier.getId();
         this.supplier=supplier;
-        createBy0=false;
+        this.createBy0=false;
+    }
+
+    public NewSupplier(Supplier supplier, boolean fromSupplier){
+        this.id=supplier.getId();
+        this.supplier=supplier;
+        this.createBy0=false;
+        this.fromSupplier=fromSupplier;
     }
 
     private SupplierController supplierController;
@@ -106,6 +113,7 @@ public class NewSupplier extends Fragment {
                                         phone.getText().toString(),
                                         location.getText().toString(),
                                         ImageCustomized.getBitmapFromImageView(logo)));
+                        Toast.makeText(getContext(), "Proveedor creado con éxito", Toast.LENGTH_SHORT).show();
                     }else{
                         supplierController.updateSupplier(
                                 new Supplier(id,
@@ -113,8 +121,10 @@ public class NewSupplier extends Fragment {
                                         phone.getText().toString(),
                                         location.getText().toString(),
                                         ImageCustomized.getBitmapFromImageView(logo)));
+                        Toast.makeText(getContext(), "Cambios de proveedor registrados", Toast.LENGTH_SHORT).show();
                     }
-                    returnToLastActivity();
+
+                    if(!fromSupplier)returnToLastActivity();
                 }
             }
         });

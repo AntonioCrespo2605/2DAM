@@ -76,7 +76,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragmentContainerView"
-                android:name="com.example.erp.fragmentsAdminView.ProductsFragment"
+                android:name="com.example.erp.fragmentsNewAdminView.NewSupplier"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:layout="@layout/fragment_products" />
@@ -96,7 +96,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/employeesOption"
+                    android:id="@+id/suppliersOption"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -104,7 +104,7 @@
                     app:tint="#574D49" />
 
                 <ImageView
-                    android:id="@+id/moneyOption"
+                    android:id="@+id/suppliesOption"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -119,7 +119,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/empleadosText"
+                    android:id="@+id/suppliersText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -131,7 +131,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/clientesText"
+                    android:id="@+id/suppliesText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

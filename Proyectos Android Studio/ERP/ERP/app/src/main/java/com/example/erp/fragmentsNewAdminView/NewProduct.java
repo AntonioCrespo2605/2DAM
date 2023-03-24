@@ -55,7 +55,7 @@ public class NewProduct extends Fragment {
     private ImageView photo;
     private RelativeLayout gallery;
     private Button create;
-    private TextView id;
+    private TextView id, title;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,6 +70,7 @@ public class NewProduct extends Fragment {
         id=view.findViewById(R.id.idNewProduct);
         gallery=view.findViewById(R.id.galleryNewProduct);
         photo=view.findViewById(R.id.photoNewProduct);
+        title=view.findViewById(R.id.titleProduct);
 
         productController=new ProductController(getContext());
 
@@ -82,6 +83,7 @@ public class NewProduct extends Fragment {
             description.setText(product.getDescription());
             create.setText("modificar");
             photo.setImageBitmap(product.getPhoto());
+            title.setText("Informacion de producto");
         }
 
         gallery.setOnClickListener(new View.OnClickListener() {
