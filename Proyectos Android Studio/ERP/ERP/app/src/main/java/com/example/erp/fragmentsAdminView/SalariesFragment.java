@@ -1,4 +1,4 @@
-package com.example.erp.fragments;
+package com.example.erp.fragmentsAdminView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,16 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.erp.R;
-import com.example.erp.dataBaseObjects.Salary;
 import com.example.erp.dbControllers.EmployeeController;
 import com.example.erp.dialogs.SalaryDialog;
 import com.example.erp.uiControllers.ListAdapterSalary;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SalariesFragment extends Fragment implements SalaryDialog.OnRefreshAdapterListener {
 

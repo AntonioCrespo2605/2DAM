@@ -1,4 +1,4 @@
-package com.example.erp.fragments;
+package com.example.erp.fragmentsAdminView;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;

@@ -20,8 +20,7 @@ import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Supplier;
 import com.example.erp.dbControllers.SupplierController;
 import com.example.erp.dbControllers.SupplyController;
-import com.example.erp.fragmentsnew.NewCustomer;
-import com.example.erp.fragmentsnew.NewSupplier;
+import com.example.erp.fragmentsNewAdminView.NewSupplier;
 
 import java.util.ArrayList;
 import java.util.List;

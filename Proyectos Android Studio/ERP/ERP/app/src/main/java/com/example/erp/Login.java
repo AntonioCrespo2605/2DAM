@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erp.allUsersViews.AdminView;
+import com.example.erp.allUsersViews.SellerActivity;
 import com.example.erp.dataTransformers.DataChecker;
 import com.example.erp.dbControllers.CustomerController;
 import com.example.erp.dataBaseObjects.Customer;
@@ -172,7 +173,13 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case "bot":
-                Toast.makeText(this, "Accediendo como bot", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No se puede acceder como bot", Toast.LENGTH_SHORT).show();
+                break;
+            case "vendedor":
+                Intent intent2 = new Intent(Login.this, SellerActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent2.putExtra("employeeID",employee.getId());
+                startActivity(intent2);
                 break;
         }
     }

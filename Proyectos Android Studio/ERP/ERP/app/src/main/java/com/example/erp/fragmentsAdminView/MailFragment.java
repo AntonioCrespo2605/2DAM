@@ -1,4 +1,4 @@
-package com.example.erp.fragments;
+package com.example.erp.fragmentsAdminView;
 
 import android.os.Bundle;
 
@@ -9,13 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import com.example.erp.R;
 import com.example.erp.dbControllers.CustomerController;
-import com.example.erp.dbControllers.EmployeeController;
-import com.example.erp.uiControllers.ListAdapterEmployees;
 import com.example.erp.uiControllers.ListAdapterMail;
 
 public class MailFragment extends Fragment {

@@ -11,19 +11,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.erp.R;
 import com.example.erp.allUsersViews.AdminView;
 import com.example.erp.dataBaseObjects.Employee;
-import com.example.erp.dataBaseObjects.Salary;
 import com.example.erp.dbControllers.EmployeeController;
-import com.example.erp.dialogs.MessageDialog;
 import com.example.erp.dialogs.SalaryDialog;
-import com.example.erp.fragments.SalariesFragment;
-import com.example.erp.fragmentsnew.NewEmployee;
-
-import java.util.List;
+import com.example.erp.fragmentsAdminView.SalariesFragment;
+import com.example.erp.fragmentsNewAdminView.NewEmployee;
 
 public class EmployeesInformation extends AppCompatActivity implements SalaryDialog.OnRefreshAdapterListener {
     private EmployeeController employeeController;

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="myTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Color del icono de menú -->
+        <item name="android:textColorSecondary">@color/dark_brown</item>
+    </style>
+</resources>

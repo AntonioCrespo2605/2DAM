@@ -22,7 +22,7 @@ import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Customer;
 import com.example.erp.dbControllers.CustomerController;
 import com.example.erp.viewsEdit.CustomersInformation;
-import com.example.erp.fragmentsnew.NewCustomer;
+import com.example.erp.fragmentsNewAdminView.NewCustomer;
 
 import java.util.ArrayList;
 import java.util.List;

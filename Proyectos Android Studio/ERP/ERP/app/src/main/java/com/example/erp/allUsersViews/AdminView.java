@@ -1,58 +1,91 @@
 package com.example.erp.allUsersViews;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.erp.Login;
 import com.example.erp.R;
+import com.example.erp.ScreenSplash;
 import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.dbControllers.EmployeeController;
-import com.example.erp.fragments.AccountingFragment;
-import com.example.erp.fragments.CustomersFragment;
-import com.example.erp.fragments.EmployeesFragment;
-import com.example.erp.fragments.ProductsFragment;
-import com.example.erp.fragments.SuppliersFragment;
+import com.example.erp.fragmentsAdminView.AccountingFragment;
+import com.example.erp.fragmentsAdminView.CustomersFragment;
+import com.example.erp.fragmentsAdminView.EmployeesFragment;
+import com.example.erp.fragmentsAdminView.ProductsFragment;
+import com.example.erp.fragmentsAdminView.SuppliersFragment;
+import com.google.android.material.navigation.NavigationView;
 
-public class AdminView extends AppCompatActivity implements GestureDetector.OnGestureListener {
+import java.io.File;
 
+public class AdminView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
+    private DrawerLayout drawerLayout;
     private EmployeeController employeeController;
-    private ImageView employeeOp, customerOp, productOp, supplierOp, moneyOp, menu, profile;
-    private TextView name, empleadosText, clientesText, productosText, proveedoresText, contabilidadText;
+    private ImageView employeeOp, customerOp, productOp, supplierOp, moneyOp, profile, profileHeaderMenu;
+    private TextView name, empleadosText, clientesText, productosText, proveedoresText, contabilidadText, nameHeaderMenu, idHeaderMenu;
 
-    //variables for swipping
-    private static final int MIN_DISTANCE=150;
-    private float x1, x2, y1, y2;
-    private GestureDetector gestureDetector;
 
     //variable for controlling the current fragment. It is needed to swipe
     private int fragmentSelected=3;
     private int idAdmin;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_view);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
+        employeeController=new EmployeeController(this);
+
+        Bundle b = getIntent().getExtras();
+        Employee employee=employeeController.getEmployeeById(b.getInt("employeeID"));
+        idAdmin=employee.getId();
+
+        Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        View headerView = navigationView.getHeaderView(0);
+        profileHeaderMenu = headerView.findViewById(R.id.profileHeader);
+        nameHeaderMenu=headerView.findViewById(R.id.nameHeader);
+        idHeaderMenu=headerView.findViewById(R.id.idHeader);
+
+        profileHeaderMenu.setImageBitmap(employee.getPhoto());
+        nameHeaderMenu.setText(employee.getName());
+        idHeaderMenu.setText("ID: "+employee.getId());
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav,
+                R.string.close_nav);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
 
         employeeOp=findViewById(R.id.employeesOption);
         customerOp=findViewById(R.id.customersOption);
         productOp=findViewById(R.id.productsOption);
         supplierOp=findViewById(R.id.suppliersOption);
         moneyOp=findViewById(R.id.moneyOption);
-        menu=findViewById(R.id.menuImg);
         profile=findViewById(R.id.profile);
         name=findViewById(R.id.employeeName);
         empleadosText=findViewById(R.id.empleadosText);
@@ -61,10 +94,7 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
         proveedoresText=findViewById(R.id.proveedoresText);
         contabilidadText=findViewById(R.id.contabilidadText);
 
-        employeeController=new EmployeeController(this);
 
-        Bundle b = getIntent().getExtras();
-        Employee employee=employeeController.getEmployeeById(b.getInt("employeeID"));
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -123,9 +153,6 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
                 }
             }
         });
-
-        //initialize of gesture detector
-        gestureDetector=new GestureDetector(AdminView.this, this);
     }
 
     //down menu options
@@ -207,102 +234,105 @@ public class AdminView extends AppCompatActivity implements GestureDetector.OnGe
         contabilidadText.setTextColor(ContextCompat.getColor(this, R.color.light_brown));
     }
 
-    //override on touch event for scrolling
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        gestureDetector.onTouchEvent(event);
-        switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
-                y1 = event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                y2 = event.getY();
-
-                float valueX=x2-x1;
-                float valueY=y2-y1;
-
-
-                if(Math.abs(valueX)>MIN_DISTANCE){
-                    if(x2>x1){
-                        swipeLeft();
-                    }else{
-                        swipeRight();
-                    }
-                }
-                break;
-
-        }
-
-        return super.onTouchEvent(event);
-    }
-
-    public void swipeLeft() {
-        fragmentSelected--;
-        if(fragmentSelected<1)fragmentSelected=5;
-        changeFragment();
-    }
-
-    public void swipeRight() {
-        fragmentSelected++;
-        if(fragmentSelected>5)fragmentSelected=1;
-        changeFragment();
-    }
-
-    private void changeFragment() {
-        switch (fragmentSelected){
-            case 1:
-                employeeSelected(idAdmin);
-                break;
-            case 2:
-                customerSelected();
-                break;
-            case 3:
-                productSelected();
-                break;
-            case 4:
-                supplierSelected();
-                break;
-            case 5:
-                moneySelected();
-                break;
-        }
-    }
-
-    @Override
-    public boolean onDown(@NonNull MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public void onShowPress(@NonNull MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(@NonNull MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(@NonNull MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onFling(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
-        return false;
-    }
-
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.seller:sellerMenu();
+                break;
+
+            case R.id.log:
+                break;
+
+            case R.id.email:
+                break;
+
+            case R.id.github_menu:githubMenu();
+                break;
+
+            case R.id.deleteAll:deleteAll();
+                break;
+
+            case R.id.exit:exitMenu();
+                break;
+
+            case R.id.logOut:logOutMenu();
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void githubMenu(){
+        String url = "https://github.com/AntonioCrespo2605/2DAM/tree/main/Proyectos%20Android%20Studio/ERP";
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
+    }
+
+    private void exitMenu(){
+        finishAffinity();
+    }
+
+    private void logOutMenu(){
+        finish();
+    }
+
+    private void deleteAll(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Borrar datos")
+                .setMessage("¿Está seguro que desea borrar la base de datos?\nLa aplicación se reiniciará si acepta")
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        File[] files = getApplicationContext().getDatabasePath("dinosDB").getParentFile().listFiles();
+                        for (File file : files) {
+                            if (file.getName().endsWith(".sqlite")||file.getName().endsWith(".sqlite-journal")) {
+                                file.delete();
+                            }
+                        }
+
+                        SharedPreferences preferences = getSharedPreferences("myPrefs", getApplicationContext().MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear();
+                        editor.commit();
+
+                        Intent intent = new Intent(getApplicationContext(), ScreenSplash.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+
+
+    }
+    private void sellerMenu(){
+        Intent intent2 = new Intent(this, SellerActivity.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.putExtra("employeeID",idAdmin);
+        startActivity(intent2);
+        finish();
+    }
+
+
+
+
 }

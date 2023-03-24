@@ -28,7 +28,7 @@ public class Sale {
         this.state = state;
         this.seller = seller;
         this.buyer = buyer;
-        this.lines = null;
+        this.lines = new ArrayList<ProductSale>();
     }
 
     public Sale(Sale sale){

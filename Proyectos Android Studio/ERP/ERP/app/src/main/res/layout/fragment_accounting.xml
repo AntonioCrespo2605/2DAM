@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#E4DDD1"
     android:orientation="vertical"
-    tools:context=".fragments.AccountingFragment">
+    tools:context=".fragmentsAdminView.AccountingFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

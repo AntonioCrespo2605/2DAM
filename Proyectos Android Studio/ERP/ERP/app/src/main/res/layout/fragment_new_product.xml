@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#E4DDD1"
     android:orientation="vertical"
-    tools:context=".fragmentsnew.NewProduct">
+    tools:context=".fragmentsNewAdminView.NewProduct">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -9,12 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erp.R;
@@ -23,7 +20,6 @@ import com.example.erp.dataBaseObjects.Salary;
 import com.example.erp.dataTransformers.MyMultipurpose;
 import com.example.erp.dbControllers.EmployeeController;
 import com.example.erp.dialogs.SalaryDialog;
-import com.example.erp.fragments.SalariesFragment;
 
 import java.util.ArrayList;
 import java.util.List;

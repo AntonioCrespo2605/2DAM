@@ -1,5 +1,8 @@
-package com.example.erp.fragments;
+package com.example.erp.fragmentsAdminView;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -7,17 +10,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.erp.R;
@@ -30,11 +33,12 @@ import com.example.erp.dataTransformers.MyMultipurpose;
 import com.example.erp.dbControllers.EmployeeController;
 import com.example.erp.dbControllers.SalesController;
 import com.example.erp.dialogs.AddProductToSaleDialog;
-import com.example.erp.dialogs.TransactionDialog;
 import com.example.erp.uiControllers.ListAdapterTicket;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class LinesInSaleFragment extends Fragment{
 
@@ -149,6 +153,38 @@ public class LinesInSaleFragment extends Fragment{
             }
         });
 
+        hourTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popTimePicker();
+            }
+        });
+
+        dateTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c=Calendar.getInstance();
+                int day=c.get(Calendar.DAY_OF_MONTH);
+                int month=c.get(Calendar.MONTH);
+                int year=c.get(Calendar.YEAR);
+
+                int style= DatePickerDialog.THEME_HOLO_DARK;
+
+                DatePickerDialog datePickerDialog=new DatePickerDialog(getContext(),style ,new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String dAux=dayOfMonth+"";
+                        String mAux=(month+1)+"";
+                        if(dayOfMonth<10)dAux="0"+dayOfMonth;
+                        if(month<9)mAux="0"+(month+1);
+                        dateTicket.setText(dAux+"/"+mAux+"/"+year+"");
+                    }
+                }, day, month, year);
+
+                datePickerDialog.show();
+            }
+        });
+
         return view;
     }
 
@@ -229,5 +265,24 @@ public class LinesInSaleFragment extends Fragment{
         adapter.setDropDownViewResource(R.layout.spinner_item3);
         spinner.setAdapter(adapter);
         spinner.setSelection(pos);
+    }
+
+    private int h, m;
+    private void popTimePicker() {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener= new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                h=hourOfDay;
+                m=minute;
+
+                hourTicket.setText(String.format(Locale.getDefault(), "%02d:%02d", h, m)+":00");
+
+            }
+        };
+        int style = AlertDialog.THEME_HOLO_DARK;
+
+        TimePickerDialog timePickerDialog=new TimePickerDialog(getContext(), style, onTimeSetListener, h, m, true);
+        timePickerDialog.setTitle("Hora");
+        timePickerDialog.show();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.erp.fragmentsnew;
+package com.example.erp.fragmentsNewAdminView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.SharedPreferences;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Employee;
@@ -30,7 +29,7 @@ import com.example.erp.dataTransformers.DataChecker;
 import com.example.erp.dataTransformers.ImageCustomized;
 import com.example.erp.dataTransformers.MyMultipurpose;
 import com.example.erp.dbControllers.EmployeeController;
-import com.example.erp.fragments.EmployeesFragment;
+import com.example.erp.fragmentsAdminView.EmployeesFragment;
 
 import java.io.IOException;
 

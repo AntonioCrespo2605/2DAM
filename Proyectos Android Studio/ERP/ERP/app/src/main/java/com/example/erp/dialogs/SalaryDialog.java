@@ -26,7 +26,6 @@ import com.example.erp.dataBaseObjects.Salary;
 import com.example.erp.dataTransformers.DataChecker;
 import com.example.erp.dataTransformers.MyMultipurpose;
 import com.example.erp.dbControllers.EmployeeController;
-import com.example.erp.fragments.SalariesFragment;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -144,7 +143,7 @@ public class SalaryDialog extends DialogFragment {
         hour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popTimePicker(v);
+                popTimePicker();
             }
         });
 
@@ -153,7 +152,7 @@ public class SalaryDialog extends DialogFragment {
         return builder.create();
     }
 
-    private void popTimePicker(View v) {
+    private void popTimePicker() {
         TimePickerDialog.OnTimeSetListener onTimeSetListener= new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {

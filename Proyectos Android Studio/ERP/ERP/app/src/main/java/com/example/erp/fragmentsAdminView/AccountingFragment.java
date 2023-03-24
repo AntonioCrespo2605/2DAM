@@ -1,4 +1,4 @@
-package com.example.erp.fragments;
+package com.example.erp.fragmentsAdminView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -81,7 +81,6 @@ public class AccountingFragment extends Fragment implements TransactionDialog.Tr
     public void passTransaction(Transation transation) {
         SharedPreferences sh = getContext().getSharedPreferences("MyPrefs", getContext().MODE_PRIVATE);
         SharedPreferences.Editor editor = sh.edit();
-
 
         double m=sh.getFloat("money",10000000);
 

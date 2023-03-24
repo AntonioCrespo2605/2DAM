@@ -1,4 +1,4 @@
-package com.example.erp.fragmentsnew;
+package com.example.erp.fragmentsNewAdminView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,8 +26,7 @@ import com.example.erp.dataBaseObjects.Product;
 import com.example.erp.dataTransformers.DataChecker;
 import com.example.erp.dataTransformers.ImageCustomized;
 import com.example.erp.dbControllers.ProductController;
-import com.example.erp.fragments.CustomersFragment;
-import com.example.erp.fragments.ProductsFragment;
+import com.example.erp.fragmentsAdminView.ProductsFragment;
 
 import java.io.IOException;
 

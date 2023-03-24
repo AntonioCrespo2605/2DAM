@@ -1,4 +1,4 @@
-package com.example.erp.fragments;
+package com.example.erp.fragmentsAdminView;
 
 import android.os.Bundle;
 
@@ -11,8 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.erp.R;
+import com.example.erp.dataBaseObjects.Customer;
+import com.example.erp.dataBaseObjects.Employee;
+import com.example.erp.dataBaseObjects.Sale;
+import com.example.erp.dataTransformers.MyMultipurpose;
 import com.example.erp.dbControllers.SalesController;
 import com.example.erp.uiControllers.ListAdapterSales;
 
@@ -23,14 +28,19 @@ public class SalesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public SalesFragment(int id_customer){
-        this.id_customer=id_customer;
+    private Employee employee;
+    private Customer customer;
+    public SalesFragment(Customer customer, Employee employee){
+        this.customer=customer;
+        this.id_customer=customer.getId();
+        this.employee=employee;
     }
 
     private int id_customer=1;
     private RecyclerView rv;
     private SalesController salesController;
     private ListAdapterSales la;
+    private LinearLayout ll;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +70,22 @@ public class SalesFragment extends Fragment {
             }
         });
 
+
+        ll=view.findViewById(R.id.createTicketLL);
+        ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Sale sale=new Sale(1, MyMultipurpose.getSystemDate(), 0, false, employee, customer);
+                salesController.addSale(sale);
+
+                SalesFragment salesFragment=new SalesFragment(customer, employee);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setReorderingAllowed(true);
+                transaction.replace(R.id.fragmentContainerView, salesFragment);
+                transaction.commit();
+            }
+        });
 
         return view;
     }

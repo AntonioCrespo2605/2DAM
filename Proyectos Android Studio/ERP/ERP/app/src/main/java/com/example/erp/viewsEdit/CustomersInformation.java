@@ -11,25 +11,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.erp.R;
 import com.example.erp.allUsersViews.AdminView;
 import com.example.erp.dataBaseObjects.Employee;
-import com.example.erp.dataBaseObjects.Product;
-import com.example.erp.dataBaseObjects.ProductSale;
 import com.example.erp.dbControllers.CustomerController;
 import com.example.erp.dbControllers.EmployeeController;
 import com.example.erp.dbControllers.SalesController;
-import com.example.erp.dialogs.AddProductToSaleDialog;
 import com.example.erp.dialogs.MessageDialog;
-import com.example.erp.fragments.MailFragment;
-import com.example.erp.fragments.SalesFragment;
-import com.example.erp.fragments.ShoppingCartFragment;
-import com.example.erp.fragmentsnew.NewCustomer;
-import com.example.erp.uiControllers.ListAdapterTicket;
-
-import java.util.ArrayList;
+import com.example.erp.fragmentsAdminView.MailFragment;
+import com.example.erp.fragmentsAdminView.SalesFragment;
+import com.example.erp.fragmentsAdminView.ShoppingCartFragment;
+import com.example.erp.fragmentsNewAdminView.NewCustomer;
 
 public class CustomersInformation extends AppCompatActivity implements MessageDialog.OnDialogButtonClickListener{
     private Employee admin;
@@ -196,7 +189,7 @@ public class CustomersInformation extends AppCompatActivity implements MessageDi
         bagText.setTextColor(ContextCompat.getColor(this, R.color.dark_brown));
         Bundle extras=getIntent().getExtras();
 
-        SalesFragment salesFragment=new SalesFragment(extras.getInt("id"));
+        SalesFragment salesFragment=new SalesFragment(customerController.getCustomerById(extras.getInt("id")), admin);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setReorderingAllowed(true);

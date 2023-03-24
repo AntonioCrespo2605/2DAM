@@ -1,4 +1,4 @@
-package com.example.erp.fragmentsnew;
+package com.example.erp.fragmentsNewAdminView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,12 +22,12 @@ import android.widget.Toast;
 
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Customer;
-import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.dataTransformers.DataChecker;
 import com.example.erp.dataTransformers.ImageCustomized;
 import com.example.erp.dataTransformers.MyMultipurpose;
 import com.example.erp.dbControllers.CustomerController;
-import com.example.erp.fragments.CustomersFragment;
+import com.example.erp.fragmentsAdminView.CustomersFragment;
+import com.example.erp.fragmentsEmployeeView.FragmentCustomersAdminView;
 
 import java.io.IOException;
 
@@ -37,7 +37,7 @@ public class NewCustomer extends Fragment {
         // Required empty public constructor
     }
     private int id=1;
-    private boolean createBy0;
+    private boolean createBy0, fromEmployee=false;
     public NewCustomer(int id){
         this.id=id;
         createBy0=true;
@@ -48,6 +48,12 @@ public class NewCustomer extends Fragment {
         this.id=customer.getId();
         this.customer=customer;
         createBy0=false;
+    }
+
+    public NewCustomer(int id, boolean fromEmployee){
+        createBy0=true;
+        this.fromEmployee=true;
+        this.id=id;
     }
 
     private CustomerController customerController;
@@ -131,11 +137,19 @@ public class NewCustomer extends Fragment {
     }
 
     private void returnToLastFragment() {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setReorderingAllowed(true);
-        transaction.replace(R.id.fragmentContainerView, CustomersFragment.class, null);
-        transaction.commit();
+        if(!fromEmployee){
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setReorderingAllowed(true);
+            transaction.replace(R.id.fragmentContainerView, CustomersFragment.class, null);
+            transaction.commit();
+        }else{
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setReorderingAllowed(true);
+            transaction.replace(R.id.fragmentContainerView, FragmentCustomersAdminView.class, null);
+            transaction.commit();
+        }
     }
 
     private static final int REQUEST_PICK_IMAGE = 1;

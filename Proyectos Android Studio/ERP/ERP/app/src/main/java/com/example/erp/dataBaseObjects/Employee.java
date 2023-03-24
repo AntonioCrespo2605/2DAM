@@ -57,6 +57,10 @@ public class Employee {
         this.password=employee.getPassword();
     }
 
+    public Employee(int id){
+        this.id=id;
+    }
+
     public Employee(){
         this.id=-10;
     }

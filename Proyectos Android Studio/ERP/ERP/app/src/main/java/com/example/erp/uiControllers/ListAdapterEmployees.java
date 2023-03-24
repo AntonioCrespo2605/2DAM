@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Employee;
 import com.example.erp.dbControllers.EmployeeController;
-import com.example.erp.fragmentsnew.NewEmployee;
+import com.example.erp.fragmentsNewAdminView.NewEmployee;
 import com.example.erp.viewsEdit.EmployeesInformation;
 
 import java.util.ArrayList;

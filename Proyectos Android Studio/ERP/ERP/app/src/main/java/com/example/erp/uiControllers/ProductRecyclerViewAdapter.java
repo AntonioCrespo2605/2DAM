@@ -19,8 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.erp.R;
 import com.example.erp.dataBaseObjects.Product;
 import com.example.erp.dbControllers.ProductController;
-import com.example.erp.fragmentsnew.NewCustomer;
-import com.example.erp.fragmentsnew.NewProduct;
+import com.example.erp.fragmentsNewAdminView.NewProduct;
 
 import java.util.List;
 
