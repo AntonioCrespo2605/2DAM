@@ -174,11 +174,12 @@ public class FragmentSaleEmployee extends Fragment implements TextWatcher {
         Sale s=new Sale(1,MyMultipurpose.getSystemDate(),sc,false, employee, customer, lines);
         salesController.addSale(s);
 
+        /*
         for(Product product:buyedProducts){
-            Product aux=productController.getProductById(product.getId());
+            Product aux=new Product(productController.getProductById(product.getId()));
             aux.setStock(aux.getStock()-product.getStock());
             productController.updateProduct(aux);
-        }
+        }*/
 
         SharedPreferences sh = getActivity().getSharedPreferences("MyPrefs", getActivity().MODE_PRIVATE);
         SharedPreferences.Editor editor = sh.edit();

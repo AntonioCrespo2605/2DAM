@@ -41,7 +41,7 @@ public class SellerActivity extends AppCompatActivity implements NavigationView.
         Bundle extras=getIntent().getExtras();
         seller=employeeController.getEmployeeById(extras.getInt("employeeID", 0));
 
-        Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);

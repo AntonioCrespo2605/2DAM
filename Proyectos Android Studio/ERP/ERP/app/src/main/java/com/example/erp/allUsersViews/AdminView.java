@@ -258,7 +258,8 @@ public class AdminView extends AppCompatActivity implements NavigationView.OnNav
             case R.id.github_menu:githubMenu();
                 break;
 
-            case R.id.deleteAll:deleteAll();
+            case R.id.deleteAll:Toast.makeText(this, "En desarrollo", Toast.LENGTH_SHORT).show();
+                //deleteAll();
                 break;
 
             case R.id.exit:exitMenu();
